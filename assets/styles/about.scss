@@ -1,0 +1,103 @@
+.about {
+  margin-top: 2.2rem;
+  margin-bottom: 2.2rem;
+  text-align: center;
+
+  @include media-query($on-mobile) {
+    margin-bottom: 3rem;
+  } 
+  
+
+
+}
+
+
+  h1.name{
+    font-size: 1.55rem;
+  }
+
+  h2.nickname{
+    font-size: 1.35rem;
+    font-weight: 300;
+    margin-top: -0.75rem !important;
+  }
+
+  div.headline p{
+    margin: 0 auto;
+    opacity: 0.9;
+    max-width: 393px;
+    line-height: 1.688;
+  }
+  
+  img#profile-pic{
+    width: 175px;
+    border-radius: 100%;
+    user-select: none;
+    background-color: $black;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -webkit-animation: 0.5s ease-in forwards fadein;
+    animation: 0.5s ease-in forwards fadein;
+    opacity: 1;
+    border: 3px solid #fff;
+  }
+  
+  
+$redColor: rgba(244,67,54,1);
+$blueColor: rgba(33,150,243,1);
+
+.flex-center {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+
+
+.fa-1x{
+  color: #0d122b;
+  text-decoration: none;
+  padding: 10px;
+   -webkit-animation: icon3d 200ms 12;
+          animation: icon3d 200ms 12;
+ }
+ 
+ .quarto-dark .fa-1x{
+   color: #eaeaea;
+ }
+ 
+.fa-1x:hover{
+   -webkit-animation: icon3d 200ms infinite;
+          animation: icon3d 200ms infinite;
+  
+ }
+
+
+@keyframes icon3d {
+  0% {
+    text-shadow: 1.25px 1px rgba(244,67,54,1), -1.25px -1.5px rgba(33,150,243,1);
+  }
+  25% {
+    text-shadow: -1.25px -1.5px rgba(244,67,54,1), 1.25px 1px rgba(33,150,243,1);
+  }
+  50% {
+    text-shadow: 1.25px -1px rgba(244,67,54,1), -2px 1px rgba(33,150,243,1);
+  }
+  75% {
+    text-shadow: -2px -1px rgba(244,67,54,1), -1.25px -1px rgba(33,150,243,1);
+  }
+  100% {
+    text-shadow: -1.25px 0 rgba(244,67,54,1)r, 1.25px -4px rgba(33,150,243,1);
+  }
+}
+
+  
