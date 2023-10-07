@@ -214,8 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-population-to-samples" id="toc-from-population-to-samples" class="nav-link active" data-scroll-target="#from-population-to-samples">From Population to Samples</a></li>
-  <li><a href="#the-ideal-of-population-and-the-reality-of-sampling" id="toc-the-ideal-of-population-and-the-reality-of-sampling" class="nav-link" data-scroll-target="#the-ideal-of-population-and-the-reality-of-sampling">The Ideal of Population and the Reality of Sampling</a>
+  <li><a href="#the-ideal-of-population-and-the-reality-of-sampling" id="toc-the-ideal-of-population-and-the-reality-of-sampling" class="nav-link active" data-scroll-target="#the-ideal-of-population-and-the-reality-of-sampling">The Ideal of Population and the Reality of Sampling</a>
   <ul class="collapse">
   <li><a href="#limitations-and-potential-bias-in-sampling" id="toc-limitations-and-potential-bias-in-sampling" class="nav-link" data-scroll-target="#limitations-and-potential-bias-in-sampling">Limitations and Potential Bias in Sampling</a></li>
   </ul></li>
@@ -235,8 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<section id="from-population-to-samples" class="level2">
-<h2 class="anchored" data-anchor-id="from-population-to-samples">From Population to Samples</h2>
 <p>Statistics enables us to distill valuable insights from unstructured information, commonly referred to as data. This acquired knowledge empowers us to develop a deeper comprehension of the subject matter at hand, facilitating the exploration of questions that span a wide spectrum, such as:</p>
 <ul>
 <li><p>What is the profile of our customer base?</p></li>
@@ -244,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li><p>Does consistent alcohol consumption correlate with an elevated risk of experiencing a heart attack?</p></li>
 <li><p>“What magnitude of sales increase can I anticipate for the upcoming year with a 20% boost in advertising expenditure?</p></li>
 </ul>
-</section>
 <section id="the-ideal-of-population-and-the-reality-of-sampling" class="level2">
 <h2 class="anchored" data-anchor-id="the-ideal-of-population-and-the-reality-of-sampling">The Ideal of Population and the Reality of Sampling</h2>
 <p>To comprehensively explore and enhance our understanding of a given issue, it is ideal to possess data pertaining to all entities impacted by that issue. For instance, in our pursuit of gaining deeper insights into our customer base, the ideal scenario involves having access to data for <strong>every single one</strong> of our customers. In this comprehensive dataset, we would find detailed information regarding each customer’s age, income, purchasing history, and other relevant attributes. Such a dataset would empower us to attain a holistic understanding of our customer base’s profile. In statistical terms, when we allude to data encompassing all entities affected by the issue of interest, we are referring to the <strong>population</strong>. Naturally, this population is contingent upon the specific focus of interest. For instance, if our objective shifted from understanding the profile of our overall customer base to that of our Swiss customers specifically, our population would comprise solely our Swiss customer subset.</p>
@@ -256,11 +252,11 @@ document.addEventListener('DOMContentLoaded', function () {
 </section>
 <section id="sampling-in-practice-exploring-our-consumer-base-annual-income" class="level2">
 <h2 class="anchored" data-anchor-id="sampling-in-practice-exploring-our-consumer-base-annual-income">Sampling in Practice: Exploring Our Consumer Base Annual Income</h2>
-<p>To illustrate these concepts, let’s delve into an example using a <a href="https://www.kaggle.com/datasets/dev0914sharma/customer-clustering">dataset from Kaggle</a>. This dataset contains 2,000 observations encompassing various information about them, including their age, annual income, and education level. For the sake of this demonstration, let’s envision that this dataset encapsulates information about every single one of our customers, effectively serving as a representation of our customer population. Now, let’s suppose our objective is to gain a more profound insight into the annual income distribution among our customers.</p>
+<p>To illustrate these concepts, let’s delve into an example using a <a href="https://www.kaggle.com/datasets/dev0914sharma/customer-clustering">dataset from Kaggle</a>. This dataset contains information about 2,000 customers various characteristics about them, including their age, annual income, and education level. For the sake of this demonstration, let’s envision that this dataset encapsulates information about every single one of our customers, effectively serving as a representation of our customer population. Now, let’s suppose our objective is to gain a more profound insight into the annual income distribution among our customers.</p>
 <section id="annual-income-distribution-for-our-population" class="level3">
 <h3 class="anchored" data-anchor-id="annual-income-distribution-for-our-population">Annual Income Distribution for Our Population</h3>
 <p>Hence, we can promptly delve into the examination of the data distribution, which we can observe through a histogram on <a href="#fig-population-distribution">Figure&nbsp;1</a>. This analysis unveils that the distribution of customer incomes exhibits an approximate normality, featuring an average annual income of $120,950 with a moderate degree of variability (Standard Deviation = $38,110). This implies that a substantial proportion of customers have incomes that closely align with the mean value, while fewer customers fall within the income extremes. Additionally, it is worth noting a slight rightward skew in the plot, indicating a minority of individuals with substantially higher incomes compared to the majority.</p>
-<div class="cell">
+<div class="cell invertImage">
 <div class="cell-output-display">
 <div id="fig-population-distribution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -275,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <h3 class="anchored" data-anchor-id="collecting-a-small-customer-sample-and-exploring-their-annual-income">“Collecting” a Small Customer Sample and Exploring their Annual Income</h3>
 <p>Having briefly explored the distribution of our customers’ annual income population, we must acknowledge the practical challenge of obtaining data from the entire population. Therefore, we opt to acquire a representative sample, a feasible alternative. In this scenario, we decide to select an easily obtainable sample of 20 customers, each having an equal probability of being included in the sample. Following the acquisition of this sample, we proceed to analyze their annual income distribution, which can be observed on <a href="#fig-20-sample-distribution">Figure&nbsp;2</a> revealing several noteworthy disparities.</p>
 <p>Firstly, we observe that certain income brackets, present in the population data, remain absent in our sample. Additionally, we notice a higher proportion of high-income customers in comparison to the population. These disparities culminate in a higher average customer annual income (Mean = $137,320) and increased variability (Standard Deviation = $47,770) within the sample. Consequently, if we were to draw inferences based on this data, our conclusions would suggest that individuals in the sample exhibit a higher average income and greater income variability compared to the population.</p>
-<div class="cell">
+<div class="cell invertImage">
 <div class="cell-output-display">
 <div id="fig-20-sample-distribution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
