@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2021-12-28">
 
-<title>Francesc Busquet - Statistics Foundations: Sampling error</title>
+<title>Francesc Busquet - Statistics Foundations (II): Sampling error</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Statistics Foundations: Sampling error</h1>
+      <h1 class="title">Statistics Foundations (II): Sampling error</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">statistics</div>
               </div>
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <section id="building-on-previous-insights-recap-from-our-previous-post" class="level2">
 <h2 class="anchored" data-anchor-id="building-on-previous-insights-recap-from-our-previous-post">Building on Previous Insights: Recap from Our Previous Post</h2>
-<p>In our previous post on the Statistics Foundations series, we highlighted the potency of statistics as a valuable tool for further understanding issues of interest through data. To do so, we would ideally want to study the whole population, which represents the complete collection of entities affected by the issue under investigation. However, in most cases, obtaining data for every entity within this population is simply unfeasible due to constraints such as cost and logistics or even impossible. Consequently, we employ a strategy of working with samples—subsets of this population that are randomly selected in a manner ensuring that every entity has an equal probability of being selected.</p>
+<p>In our <a href="../../posts/2021-09-25-statistics-foundations-population-and-sample/">previous post on the Statistics Foundations series</a>, we highlighted the potency of statistics as a valuable tool for further understanding issues of interest through data. To do so, we would ideally want to study the whole population, which represents the complete collection of entities affected by the issue under investigation. However, in most cases, obtaining data for every entity within this population is simply unfeasible due to constraints such as cost and logistics or even impossible. Consequently, we employ a strategy of working with samples—subsets of this population that are randomly selected in a manner ensuring that every entity has an equal probability of being selected.</p>
 <p>These samples, though more manageable in size, serve as our window into the broader population, enabling us to draw conclusions and glean insights about the population—a process known as inference. However, it’s important to acknowledge that working with samples introduces a critical challenge: the inherent limitations stemming from their smaller size in comparison to the population. As a consequence, we inevitably encounter errors in our analyses.</p>
 <p>The essence of these errors lies in the inability of small samples to capture all the intricate nuances present within the population. While we can gain valuable insights and broad trends from our samples, the finer details and subtle variations within the population often elude our grasp. Thus, we find ourselves contending with sampling errors that can influence the accuracy of our conclusions.</p>
 </section>
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 class="anchored" data-anchor-id="examining-sampling-errors-in-data-summarization-the-case-of-the-mean">Examining Sampling Errors in Data Summarization: The Case of the Mean</h2>
 <p>At the core of statistical analysis lies the foundational task of data summarization—a process that condenses data into a concise and understandable format. This fundamental procedure yields a clear and easily comprehensible overview of the data, facilitating a straightforward grasp of its essential characteristics.</p>
 <p>Among these essential characteristics, two prominently stand out: central tendency and variability. Central tendency relates to the value around which the different data points cluster around. Conversely, variability quantifies the extent to which data points deviate from this central point, providing insights into the dispersion or spread of data relative to its central location. For instance, the mean serves as an example of a central tendency measure, while the standard deviation exemplifies a variability measure.</p>
-<p>To visually illustrate the impact of sampling error, we will once again utilize the <a href="https://www.kaggle.com/datasets/dev0914sharma/customer-clustering">Kaggle dataset</a> used in in our previous post. This dataset contains information on 2,000 supermarket customers, including their age, annual income, and education level. For the purposes of this analysis, we will assume that this dataset represents our entire customer population.</p>
+<p>To visually illustrate the impact of sampling error, we will once again utilize the <a href="https://www.kaggle.com/datasets/dev0914sharma/customer-clustering">Kaggle dataset</a> used in in our <a href="../../posts/2021-09-25-statistics-foundations-population-and-sample/">previous post</a>. This dataset contains information on 2,000 supermarket customers, including their age, annual income, and education level. For the purposes of this analysis, we will assume that this dataset represents our entire customer population.</p>
 <p>Let’s envision a scenario: our objective is to rapidly glean insights into the annual income of our customers. One straightforward strategy to achieve this is by computing the mean income, which furnishes us with a succinct metric representing the central tendency around which the majority of our customers’ annual incomes gravitate. In this endeavor, we observe that the mean annual income stands at a noteworthy $120,950. In essence, this figure signifies that the bulk of our customers possess incomes clustered around this point.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p><span class="math inline">\(\sqrt{Var(\bar{X})} = SE\)</span></p>
 <p>This expression can be translated into the following form:</p>
 <p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SE\)</span></p>
-<p>Here, <span class="math inline">\(σ\)</span> represents the population standard deviation, and <span class="math inline">\(n\)</span> is the sample size. Establishing an inverse relationship between the standard error and the sample size: as the sample size increases, the standard error decreases. This principle aligns with our intuitive understanding, as seen in the previous post of the statistics foundations serious, and as visually depicted in <a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a>.</p>
+<p>Here, <span class="math inline">\(σ\)</span> represents the population standard deviation, and <span class="math inline">\(n\)</span> is the sample size. Establishing an inverse relationship between the standard error and the sample size: as the sample size increases, the standard error decreases. This principle aligns with our intuitive understanding, as seen in the <a href="../../posts/2021-09-25-statistics-foundations-population-and-sample/">previous post</a> of the statistics foundations serious, and as visually depicted in <a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Standard Error Derivation">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -344,7 +344,7 @@ Standard Error Derivation
 <li><p>The mean from different samples exhibits variability.</p></li>
 <li><p>Despite this variability, the average of mean values from various samples tends to closely align with the population average.</p></li>
 <li><p>A normal distribution pattern is evident in the distribution of annual income means from different samples, indicating that samples with means close to the population mean are more likely.</p></li>
-<li><p>Larger sample sizes reduce the margin for error and yield more accurate estimates, as they better capture the population’s intricacies.</p></li>
+<li><p>Larger sample sizes reduce the standard error and yield more accurate estimates, as they better capture the population’s intricacies.</p></li>
 </ul></li>
 <li><p>When extracting multiple samples of the same size from a population and calculating their means, the average of these sample means corresponds to the population mean. This allows us to quantify the degree of error associated with that sample size by measuring their variability, i.e., how much they deviate from the population mean.</p></li>
 <li><p>Standard Error (SE) is mathematically linked to the population’s standard deviation and sample size.</p></li>
