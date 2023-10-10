@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 </div>
 <p>As observed, the mean value within this sample diverges from that of the broader population. Specifically, the mean for this sample stands at $137,320, contrasting with the population mean of $120,950. This difference amounts to $16,370, and it encapsulates what we commonly refer to as “error.” Notably, in this instance, we possess knowledge about the population, allowing us to discern this difference.</p>
-<p>For this reason, the terminology we use to describe the metrics summarizing the data characteristics varies depending on whether they are computed within the population or a sample. In the former case, they are referred to as <strong>parameters</strong>, whereas in the latter, they are known as <strong>statistics</strong>.</p>
+<p>For this reason, the terminology we use to describe the metrics summarizing the data characteristics varies depending on whether they are computed within the population or a sample. In the former case, they are referred to as <strong>parameters</strong>, whereas in the latter, they are known as <strong>statistics</strong>. In statistical notation, parameters are typically denoted by Greek letters, such as <span class="math inline">\(\sigma\)</span> for the standard deviation or <span class="math inline">\(\mu\)</span> for the mean, while statistics are denoted by Latin letters, such as <span class="math inline">\(m\)</span> for the mean and <span class="math inline">\(s\)</span> for the standard deviation.</p>
 </section>
 <section id="randomness-and-sampling-extracting-several-means-of-20-observations" class="level3">
 <h3 class="anchored" data-anchor-id="randomness-and-sampling-extracting-several-means-of-20-observations">Randomness and sampling: Extracting several means of 20 observations</h3>
@@ -324,6 +324,23 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 </div>
 <p><a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a> provides insights akin to those observed with 20 observations: the distribution of means exhibits a bell-shaped pattern, with the average closely approximating the population mean. However, a significant distinction emerges: the range within which sample means deviate from the overall mean, equivalent to the population average, is notably narrower. In essence, the variability is considerably reduced, indicating that the margin for error when using samples of 150 observations is substantially smaller than that with samples of 20.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Central Limit Theorem">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Central Limit Theorem
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the previous examples, we’ve observed that when we calculate means from various samples, these means tend to follow a particular pattern – a bell-shaped distribution known as a normal distribution. This is not just a coincidence; it’s a fundamental concept in statistics called the <strong>Central Limit Theorem</strong>.</p>
+<p>The Central Limit Theorem tells us that, regardless of the original shape of the population’s distribution, when we repeatedly draw samples from that population and calculate their means, those sample means will follow a normal distribution. This is a powerful idea because it allows us to make certain assumptions and conduct statistical analyses even when we don’t know the shape of the population’s distribution.</p>
+</div>
+</div>
+</div>
 <p>In this scenario, the distribution of means spans from $109,374 to $132,064, resulting in an error range of -$11,576 to $11,114 relative to the population mean. This range is significantly tighter compared to the error range obtained from samples of 20, where the deviation ranged from -$26,768 to $40,215.</p>
 </section>
 </section>
@@ -337,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SE\)</span></p>
 <p>Here, <span class="math inline">\(σ\)</span> represents the population standard deviation and <span class="math inline">\(n\)</span> is the sample size. Establishing an inverse relationship between the standard error and the sample size: as the sample size increases, the standard error decreases. This principle aligns with our intuitive understanding, as seen in the <a href="../../posts/2021-09-25-statistics-foundations-population-and-sample/">previous post</a> for the statistics foundations series, and as visually depicted in <a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Standard Error Derivation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -346,7 +363,7 @@ Standard Error Derivation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let’s recall that the mean of any variable is equal to the sum of the values of each observation of that variable divided by the total number of observations (which equals our sample size): <span class="math inline">\(\frac{1}{n}\sum_{i=1}^{n}X_i\)</span>. Therefore, we can rewrite the previous formula as follows:</p>
 <p><span class="math inline">\(\sqrt{\text{Var}\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)} = SE\)</span></p>
