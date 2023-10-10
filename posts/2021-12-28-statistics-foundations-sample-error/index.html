@@ -352,7 +352,7 @@ Standard Error Derivation
 <p><span class="math inline">\(\sqrt{\text{Var}\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)} = SE\)</span></p>
 <p>We also know that the variance of a random variable multiplied by a constant “a” is equal to the variance of that variable multiplied by the square of that constant, i.e., <span class="math inline">\(Var(aR) = a^2Var(R)\)</span>, where <span class="math inline">\(a\)</span> is a constant, and <span class="math inline">\(R\)</span> is a random variable. This means that:</p>
 <p><span class="math inline">\(\sqrt{\frac{1}{n^2}\text{Var}\left(\sum_{i=1}^{n}X_i\right)} = SE\)</span></p>
-<p>Additionally, when dealing with a set of pairwise independent random variables (where the variability in one doesn’t depend on the others, as in our case), the variance of their sum is equal to the sum of their individual variances, i.e., <span class="math inline">\(\text{Var}[R_1 + R_2 + \cdots + R_n] = \text{Var}[R_1] + \text{Var}[R_2] + \cdots + \text{Var}[R_n]\)</span>, where <span class="math inline">\(R_1, R_2,…, R_n\)</span> are pairwise independent random variables. This allows us to rewrite the formula for SE as:</p>
+<p>Additionally, when dealing with a set of pairwise independent random variables (where the variability in one doesn’t depend on the others, as in our case), the variance of their sum is equal to the sum of their individual variances, i.e., <span class="math inline">\(\text{Var}[R_1 + R_2 + \cdots + R_n]\)</span> <span class="math inline">\(=\)</span> <span class="math inline">\(\text{Var}[R_1] + \text{Var}[R_2] + \cdots + \text{Var}[R_n]\)</span>, where <span class="math inline">\(R_1, R_2,…, R_n\)</span> are pairwise independent random variables. This allows us to rewrite the formula for SE as:</p>
 <p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}Var(X_i)} = SE\)</span></p>
 <p>Let’s remember that our individual variables, denoted as <span class="math inline">\(X_i\)</span>, come from a population with variance equal to <span class="math inline">\(\sigma^2\)</span>. So, our formula becomes:</p>
 <p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}\sigma^2} = SE\)</span></p>
@@ -389,7 +389,7 @@ Standard Error Derivation
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reading the "population" and visualizing it</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reading the "population" and visualizing it</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
