@@ -229,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <ul class="collapse">
   <li><a href="#estimating-the-standard-error" id="toc-estimating-the-standard-error" class="nav-link" data-scroll-target="#estimating-the-standard-error">Estimating the standard error</a></li>
   </ul></li>
+  <li><a href="#a-final-note" id="toc-a-final-note" class="nav-link" data-scroll-target="#a-final-note">A final note</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
@@ -350,11 +351,11 @@ Central Limit Theorem
 <section id="measuring-the-sampling-error" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-the-sampling-error">Measuring the sampling error</h2>
 <p>Through the repetitive extraction of samples of consistent size from a given population, as demonstrated in our previous examples (with both 20 and 150-sized samples), we gain valuable insights into the potential magnitude of errors associated with samples of a particular size.</p>
-<p>As we’ve witnessed, the average of multiple means calculated from samples of identical size closely aligns with, or is essentially identical to, the true mean of the population. Consequently, the spread or dispersion of these computed means from this point provides a measure of the magnitude of the sampling error. Put simply, the variability in the mean derived from multiple samples of equal size offers a quantifiable measure of the magnitude of the sampling error for samples of that particular size. This measure is commonly known as the <strong>standard error of the mean</strong> (which we will abbreviate as SE).</p>
+<p>As we’ve witnessed, the average of multiple means calculated from samples of identical size closely aligns with, or is essentially identical to, the true mean of the population. Consequently, the spread or dispersion of these computed means from this point provides a measure of the magnitude of the sampling error. Put simply, the variability in the mean derived from multiple samples of equal size offers a quantifiable measure of the magnitude of the sampling error for samples of that particular size. This measure is commonly known as the <strong>standard error of the mean</strong> (which we will abbreviate as SEM).</p>
 <p>Mathematically, we can express this as the standard error of the mean being equal to the standard deviation of the means of the different samples. Specifically, we prefer using the standard deviation rather than the variance because the former has the same units as the mean, while the latter has squared units. For instance, in the case of annual income, the units for variance would be in dollars squared (<span class="math inline">\(\$^2\)</span>), while for the standard error, it’s just in dollars ($). In other words:</p>
-<p><span class="math inline">\(\sqrt{Var(\bar{X})} = SE\)</span></p>
+<p><span class="math inline">\(\sqrt{Var(\bar{X})} = SEM\)</span></p>
 <p>This expression can be translated into the following form:</p>
-<p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SE\)</span></p>
+<p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SEM\)</span></p>
 <p>Here, <span class="math inline">\(σ\)</span> represents the population standard deviation and <span class="math inline">\(n\)</span> is the sample size. Establishing an inverse relationship between the standard error and the sample size: as the sample size increases, the standard error decreases. This principle aligns with our intuitive understanding, as seen in the <a href="../../posts/2021-09-25-statistics-foundations-population-and-sample/">previous post</a> for the statistics foundations series, and as visually depicted in <a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Standard Error Derivation">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -369,17 +370,17 @@ Standard Error Derivation
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let’s recall that the mean of any variable is equal to the sum of the values of each observation of that variable divided by the total number of observations (which equals our sample size): <span class="math inline">\(\frac{1}{n}\sum_{i=1}^{n}X_i\)</span>. Therefore, we can rewrite the previous formula as follows:</p>
-<p><span class="math inline">\(\sqrt{\text{Var}\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)} = SE\)</span></p>
+<p><span class="math inline">\(\sqrt{\text{Var}\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)} = SEM\)</span></p>
 <p>We also know that the variance of a random variable multiplied by a constant “a” is equal to the variance of that variable multiplied by the square of that constant, i.e., <span class="math inline">\(Var(aR) = a^2Var(R)\)</span>, where <span class="math inline">\(a\)</span> is a constant, and <span class="math inline">\(R\)</span> is a random variable. This means that:</p>
-<p><span class="math inline">\(\sqrt{\frac{1}{n^2}\text{Var}\left(\sum_{i=1}^{n}X_i\right)} = SE\)</span></p>
-<p>Additionally, when dealing with a set of pairwise independent random variables (where the variability in one doesn’t depend on the others, as in our case), the variance of their sum is equal to the sum of their individual variances, i.e., <span class="math inline">\(\text{Var}[R_1 + R_2 + \cdots + R_n]\)</span> <span class="math inline">\(=\)</span> <span class="math inline">\(\text{Var}[R_1] + \text{Var}[R_2] + \cdots + \text{Var}[R_n]\)</span>, where <span class="math inline">\(R_1, R_2,…, R_n\)</span> are pairwise independent random variables. This allows us to rewrite the formula for SE as:</p>
-<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}Var(X_i)} = SE\)</span></p>
+<p><span class="math inline">\(\sqrt{\frac{1}{n^2}\text{Var}\left(\sum_{i=1}^{n}X_i\right)} = SEM\)</span></p>
+<p>Additionally, when dealing with a set of pairwise independent random variables (where the variability in one doesn’t depend on the others, as in our case), the variance of their sum is equal to the sum of their individual variances, i.e., <span class="math inline">\(\text{Var}[R_1 + R_2 + \cdots + R_n]\)</span> <span class="math inline">\(=\)</span> <span class="math inline">\(\text{Var}[R_1] + \text{Var}[R_2] + \cdots + \text{Var}[R_n]\)</span>, where <span class="math inline">\(R_1, R_2,…, R_n\)</span> are pairwise independent random variables. This allows us to rewrite the formula for SEM as:</p>
+<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}Var(X_i)} = SEM\)</span></p>
 <p>Let’s remember that our individual variables, denoted as <span class="math inline">\(X_i\)</span>, come from a population with variance equal to <span class="math inline">\(\sigma^2\)</span>. So, our formula becomes:</p>
-<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}\sigma^2} = SE\)</span></p>
+<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}\sum_{i = 1}^{n}\sigma^2} = SEM\)</span></p>
 <p>Since we’re summing up <span class="math inline">\(n\)</span> identical values, we can simplify further:</p>
-<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}n\sigma^2} = SE\)</span></p>
+<p><span class="math inline">\(\sqrt{\frac{1}{n^{2}}n\sigma^2} = SEM\)</span></p>
 <p>Ultimately, this can be further simplified to:</p>
-<p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SE\)</span></p>
+<p><span class="math inline">\(\frac{\sigma}{\sqrt{n}} = SEM\)</span></p>
 </div>
 </div>
 </div>
@@ -396,6 +397,11 @@ Standard Error Derivation
 <p>By making this substitution, we arrive at an approximation for the standard error. It provides us with a measure of the potential error we may encounter when drawing conclusions from a sample, all without the need for complete information about the population.</p>
 </section>
 </section>
+<section id="a-final-note" class="level2">
+<h2 class="anchored" data-anchor-id="a-final-note">A final note</h2>
+<p>Throughout this post, we’ve centered our attention on the standard error of the mean. Yet, it’s imperative to acknowledge that other statistics, such as variance and standard deviation, likewise harbor their own standard errors. Throughout this post, we’ve centered our attention on the standard error of the mean. Yet, it’s imperative to acknowledge that other statistics, such as variance and standard deviation, likewise harbor their own standard errors. When we compute these statistics from a sample, the values we obtain can deviate from those of the population, consequently introducing an element of error into our analyses.</p>
+<p>However, it’s crucial to acknowledge that the formulas we’ve previously derived for calculating the standard error aren’t universally applicable to all statistics. These formulas have been derived with the mean as their reference point. Nevertheless, it’s worth noting that the fundamental concept behind deriving formulas for computing the standard error for other statistics remains consistent: It is based on the variability of a specific statistic obtained from various samples of the same size.</p>
+</section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <ul>
@@ -411,10 +417,10 @@ Standard Error Derivation
 <li><p>Larger sample sizes reduce the standard error and yield more accurate estimates, as they better capture the population’s intricacies.</p></li>
 </ul></li>
 <li><p>When extracting multiple samples of the same size from a population and calculating their means, the average of these sample means corresponds to the population mean. This allows us to quantify the degree of error associated with that sample size by measuring their variability, i.e., how much they deviate from the population mean.</p></li>
-<li><p>Standard Error (SE) is mathematically linked to the population’s standard deviation and sample size.</p></li>
-<li><p>In practice, we estimate the SE using our sample’s standard deviation.</p></li>
+<li><p>Standard error of the mean (SEM) is mathematically linked to the population’s standard deviation and sample size.</p></li>
+<li><p>In practice, we estimate the SEM using our sample’s standard deviation.</p></li>
 <li><p>Increasing the sample size results in a smaller standard error.</p></li>
-<li><p>SE serves as a valuable tool for quantifying the precision of sample-based estimates and is essential for robust statistical analysis.</p></li>
+<li><p>Standard error serves as a valuable tool for quantifying the precision of sample-based estimates and is essential for robust statistical analysis.</p></li>
 </ul>
 <div class="cell">
 <details>
