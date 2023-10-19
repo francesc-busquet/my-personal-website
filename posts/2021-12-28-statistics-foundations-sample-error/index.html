@@ -220,9 +220,9 @@ document.addEventListener('DOMContentLoaded', function () {
   <li><a href="#building-on-previous-insights-recap-from-our-previous-post" id="toc-building-on-previous-insights-recap-from-our-previous-post" class="nav-link active" data-scroll-target="#building-on-previous-insights-recap-from-our-previous-post">Building on Previous Insights: Recap from Our Previous Post</a></li>
   <li><a href="#examining-sampling-errors-in-data-summarization-the-case-of-the-mean" id="toc-examining-sampling-errors-in-data-summarization-the-case-of-the-mean" class="nav-link" data-scroll-target="#examining-sampling-errors-in-data-summarization-the-case-of-the-mean">Examining Sampling Errors in Data Summarization: The Case of the Mean</a>
   <ul class="collapse">
-  <li><a href="#sampling-20-customers-and-calculating-their-annual-income-mean" id="toc-sampling-20-customers-and-calculating-their-annual-income-mean" class="nav-link" data-scroll-target="#sampling-20-customers-and-calculating-their-annual-income-mean">Sampling 20 customers and calculating their annual income mean</a></li>
-  <li><a href="#randomness-and-sampling-extracting-several-means-of-20-observations" id="toc-randomness-and-sampling-extracting-several-means-of-20-observations" class="nav-link" data-scroll-target="#randomness-and-sampling-extracting-several-means-of-20-observations">Randomness and sampling: Extracting several means of 20 observations</a></li>
-  <li><a href="#digging-deeper-exploring-mean-customer-annual-income-with-10000-different-20-samples" id="toc-digging-deeper-exploring-mean-customer-annual-income-with-10000-different-20-samples" class="nav-link" data-scroll-target="#digging-deeper-exploring-mean-customer-annual-income-with-10000-different-20-samples">Digging deeper: Exploring mean customer annual income with 10,000 different 20 samples</a></li>
+  <li><a href="#sampling-40-customers-and-calculating-their-annual-income-mean" id="toc-sampling-40-customers-and-calculating-their-annual-income-mean" class="nav-link" data-scroll-target="#sampling-40-customers-and-calculating-their-annual-income-mean">Sampling 40 customers and calculating their annual income mean</a></li>
+  <li><a href="#randomness-and-sampling-extracting-several-means-of-40-observations" id="toc-randomness-and-sampling-extracting-several-means-of-40-observations" class="nav-link" data-scroll-target="#randomness-and-sampling-extracting-several-means-of-40-observations">Randomness and sampling: Extracting several means of 40 observations</a></li>
+  <li><a href="#digging-deeper-exploring-mean-customer-annual-income-with-10000-different-40-samples" id="toc-digging-deeper-exploring-mean-customer-annual-income-with-10000-different-40-samples" class="nav-link" data-scroll-target="#digging-deeper-exploring-mean-customer-annual-income-with-10000-different-40-samples">Digging deeper: Exploring mean customer annual income with 10,000 different 40 samples</a></li>
   <li><a href="#increasing-sample-size-and-analyzing-mean-annual-income-distribution-of-10000-samples" id="toc-increasing-sample-size-and-analyzing-mean-annual-income-distribution-of-10000-samples" class="nav-link" data-scroll-target="#increasing-sample-size-and-analyzing-mean-annual-income-distribution-of-10000-samples">Increasing sample size and analyzing mean annual income distribution of 10,000 samples</a></li>
   </ul></li>
   <li><a href="#measuring-the-sampling-error" id="toc-measuring-the-sampling-error" class="nav-link" data-scroll-target="#measuring-the-sampling-error">Measuring the sampling error</a>
@@ -262,72 +262,72 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 </div>
 </div>
-<section id="sampling-20-customers-and-calculating-their-annual-income-mean" class="level3">
-<h3 class="anchored" data-anchor-id="sampling-20-customers-and-calculating-their-annual-income-mean">Sampling 20 customers and calculating their annual income mean</h3>
-<p>In this hypothetical case, we possess information about the sample. Consequently, we can obtain information about our population without any error by directly observing it. Therefore, now we know that our population has an average annual income of $120,950. However, in real-life scenarios, and as previously said, obtaining data for the whole population may be unfeasible or even not possible. For this reason, we will assume that we extract a random sample of 20 customers and compute the mean annual income from this sample.</p>
+<section id="sampling-40-customers-and-calculating-their-annual-income-mean" class="level3">
+<h3 class="anchored" data-anchor-id="sampling-40-customers-and-calculating-their-annual-income-mean">Sampling 40 customers and calculating their annual income mean</h3>
+<p>In this hypothetical case, we possess information about the sample. Consequently, we can obtain information about our population without any error by directly observing it. Therefore, now we know that our population has an average annual income of $120,950. However, in real-life scenarios, and as previously said, obtaining data for the whole population may be unfeasible or even not possible. For this reason, we will assume that we extract a random sample of 40 customers and compute the mean annual income from this sample.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-20-sample-distribution-error" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-40-sample-distribution-error" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/fig-20-sample-distribution-error-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Customer annual income distribution for our sample with 20 observations (thousands, $)</figcaption>
+<p><img src="index_files/figure-html/fig-40-sample-distribution-error-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Customer annual income distribution for our sample with 40 observations (thousands, $)</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As observed, the mean value within this sample diverges from that of the broader population. Specifically, the mean for this sample stands at $137,320, contrasting with the population mean of $120,950. This difference amounts to $16,370, and it encapsulates what we commonly refer to as “error.” Notably, in this instance, we possess knowledge about the population, allowing us to discern this difference.</p>
+<p>As observed, in <a href="#fig-40-sample-distribution-error">Figure&nbsp;2</a>, the mean value within this sample diverges from that of the broader population. Specifically, the mean for this sample stands at $137,320, contrasting with the population mean of $120,950. This difference amounts to $16,370, and it encapsulates what we commonly refer to as “error.” Notably, in this instance, we possess knowledge about the population, allowing us to discern this difference.</p>
 <p>For this reason, the terminology we use to describe the metrics summarizing the data characteristics varies depending on whether they are computed within the population or a sample. In the former case, they are referred to as <strong>parameters</strong>, whereas in the latter, they are known as <strong>statistics</strong>. In statistical notation, parameters are typically denoted by Greek letters, such as <span class="math inline">\(\sigma\)</span> for the standard deviation or <span class="math inline">\(\mu\)</span> for the mean, while statistics are denoted by Latin letters, such as <span class="math inline">\(m\)</span> for the mean and <span class="math inline">\(s\)</span> for the standard deviation.</p>
 </section>
-<section id="randomness-and-sampling-extracting-several-means-of-20-observations" class="level3">
-<h3 class="anchored" data-anchor-id="randomness-and-sampling-extracting-several-means-of-20-observations">Randomness and sampling: Extracting several means of 20 observations</h3>
-<p>Moreover, it’s crucial to note that this sample was derived through a process of random selection. In other words, we randomly picked 20 customers from our population, ensuring that each customer had an equal likelihood of being included. This randomness implies that if we were to generate another sample of 20 customers, it would be improbable for this new sample to mirror the exact composition of the previous one or yield the same mean.</p>
-<p><a href="#fig-anim-different-20-sample-distributions">Figure&nbsp;3</a> illustrates the annual income distribution of various samples, each consisting of 20 individuals randomly selected from our initial population (including the sample we previously examined). It becomes evident that the distribution undergoes fluctuations across these diverse samples. Consequently, this variability gives rise to a spectrum of computed means, ranging from as low as $118,125 to as high as $136,800.</p>
+<section id="randomness-and-sampling-extracting-several-means-of-40-observations" class="level3">
+<h3 class="anchored" data-anchor-id="randomness-and-sampling-extracting-several-means-of-40-observations">Randomness and sampling: Extracting several means of 40 observations</h3>
+<p>Moreover, it’s crucial to note that this sample was derived through a process of random selection. In other words, we randomly picked 40 customers from our population, ensuring that each customer had an equal likelihood of being included. This randomness implies that if we were to generate another sample of 40 customers, it would be improbable for this new sample to mirror the exact composition of the previous one or yield the same mean.</p>
+<p><a href="#fig-anim-different-40-sample-distributions">Figure&nbsp;3</a> illustrates the annual income distribution of various samples, each consisting of 40 cutomers randomly selected from our initial population (including the sample we previously examined). It becomes evident that the distribution undergoes fluctuations across these diverse samples. Consequently, this variability gives rise to a spectrum of computed means, ranging from as low as $106,600 to as high as $137,320.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-anim-different-20-sample-distributions" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-anim-different-40-sample-distributions" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/fig-anim-different-20-sample-distributions-1.gif" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Customer annual income distribution for different samples of 20 customers (thousands, $)</figcaption>
+<p><img src="index_files/figure-html/fig-anim-different-40-sample-distributions-1.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Customer annual income distribution for different samples of 40 customers (thousands, $)</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="digging-deeper-exploring-mean-customer-annual-income-with-10000-different-20-samples" class="level3">
-<h3 class="anchored" data-anchor-id="digging-deeper-exploring-mean-customer-annual-income-with-10000-different-20-samples">Digging deeper: Exploring mean customer annual income with 10,000 different 20 samples</h3>
-<p>To deepen our comprehension of the variance in computed means, we embark on a more extensive analysis by replicating the previous procedure but on a much larger scale: generating precisely 10,000 samples, each composed of 20 individuals. For every one of these 10,000 samples, we compute the mean annual income. The resulting distribution of these 10,000 means, each originating from distinct samples of 20 individuals randomly selected from our complete population, is visually represented in <a href="#fig-10000-20-samples-mean">Figure&nbsp;4</a> through a histogram.</p>
+<section id="digging-deeper-exploring-mean-customer-annual-income-with-10000-different-40-samples" class="level3">
+<h3 class="anchored" data-anchor-id="digging-deeper-exploring-mean-customer-annual-income-with-10000-different-40-samples">Digging deeper: Exploring mean customer annual income with 10,000 different 40 samples</h3>
+<p>To deepen our comprehension of the variance in computed means, we embark on a more extensive analysis by replicating the previous procedure but on a much larger scale: generating precisely 10,000 samples, each composed of 40 individuals. For every one of these 10,000 samples, we compute the mean annual income. The resulting distribution of these 10,000 means, each originating from distinct samples of 40 individuals randomly selected from our complete population, is visually represented in <a href="#fig-10000-40-samples-mean">Figure&nbsp;4</a> through a histogram.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-10000-20-samples-mean" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-10000-40-samples-mean" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/fig-10000-20-samples-mean-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4: Average income distribution of 10,000 samples of 20 customers (thousands, $)</figcaption>
+<p><img src="index_files/figure-html/fig-10000-40-samples-mean-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Average income distribution of 10,000 samples of 40 customers (thousands, $)</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p><br>
-<a href="#fig-10000-20-samples-mean">Figure&nbsp;4</a> reveals significant insights. Notably, there is a substantial variation in the computed average annual incomes across the various samples, spanning an extensive spectrum from $94,182 to $161,165. This disparity translates into an error range spanning from -$26,768 to $40,215 in contrast with the population’s mean.</p>
+<a href="#fig-10000-40-samples-mean">Figure&nbsp;4</a> reveals significant insights. Notably, there is a substantial variation in the computed average annual incomes across the various samples, spanning an extensive spectrum from $100,684 to $145,543. This disparity translates into an error range spanning from -$20,266 to $24,593 in contrast with the population’s mean.</p>
 <p>Nonetheless, an intriguing revelation emerges from this analysis. Despite the marked variability in sample means, the overall average of these mean annual incomes, drawn from distinct samples, precisely mirrors the population average. This observation means that the average incomes for the different samples consistently cluster around this point.</p>
 <p>Moreover, it is worth noting that the distribution of annual income means extracted from these various samples adheres to a bell-shaped pattern, commonly known as a normal distribution. This pattern signifies that as we move farther away from the population average, the number of observations gradually diminishes.</p>
-<p>Taken together, this implies that, in most instances, the mean annual income estimated from our sample tends to be closer rather than farther away from the population’s mean annual income. Nevertheless, it’s important to acknowledge that there are still situations where significant deviations from the sample mean can occur. The key concern here lies in the fact that if we lacked information about the population and solely possessed a sample with an annual income mean of $161,165, we might mistakenly conclude that, on average, our customers are wealthier than they actually are.</p>
+<p>Taken together, this implies that, in most instances, the mean annual income estimated from our sample tends to be closer rather than farther away from the population’s mean annual income. Nevertheless, it’s important to acknowledge that there are still situations where significant deviations from the sample mean can occur. The key concern here lies in the fact that if we lacked information about the population and solely possessed a sample with an annual income mean of $145,543, we might mistakenly conclude that, on average, our customers are wealthier than they actually are.</p>
 </section>
 <section id="increasing-sample-size-and-analyzing-mean-annual-income-distribution-of-10000-samples" class="level3">
 <h3 class="anchored" data-anchor-id="increasing-sample-size-and-analyzing-mean-annual-income-distribution-of-10000-samples">Increasing sample size and analyzing mean annual income distribution of 10,000 samples</h3>
-<p>As previously mentioned, small samples encounter challenges in capturing the subtleties present within the population. Consequently, the larger the sample size, the more effectively we can apprehend these nuances. To illustrate this, we investigate how the variance of computed means changes when we collect samples of 150 customers, as opposed to the previous samples of 20 customers.</p>
+<p>As previously mentioned, small samples encounter challenges in capturing the subtleties present within the population. Consequently, the larger the sample size, the more effectively we can apprehend these nuances. To illustrate this, we investigate how the variance of computed means changes when we collect samples of 150 customers, as opposed to the previous samples of 40 customers.</p>
 <p>Once again, we generate 10,000 samples, each containing 150 customers, and calculate the mean annual income for each of these samples. Subsequently, we visualize the distribution of these mean annual incomes for these larger samples by creating a histogram.</p>
-<p><a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a> provides a visual comparison between the distributions of means computed using 10,000 samples, each with 20 observations, and another set of samples, each comprising 150 observations.</p>
+<p><a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a> provides a visual comparison between the distributions of means computed using 10,000 samples, each with 40 observations, and another set of samples, each comprising 150 observations.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
 <div id="fig-10000-150-samples-mean" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-10000-150-samples-mean-1.gif" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Average income distribution of 10,000 samples of 20 customers vs 10,000 samples of 150 customers (thousands, $)</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5: Average income distribution of 10,000 samples of 40 customers vs 10,000 samples of 150 customers (thousands, $)</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a> provides insights akin to those observed with 20 observations: the distribution of means exhibits a bell-shaped pattern, with the average closely approximating the population mean. However, a significant distinction emerges: the range within which sample means deviate from the overall mean, equivalent to the population average, is notably narrower. In essence, the variability is considerably reduced, indicating that the margin for error when using samples of 150 observations is substantially smaller than that with samples of 20.</p>
+<p><a href="#fig-10000-150-samples-mean">Figure&nbsp;5</a> provides insights akin to those observed with 40 observations: the distribution of means exhibits a bell-shaped pattern, with the average closely approximating the population mean. However, a significant distinction emerges: the range within which sample means deviate from the overall mean, equivalent to the population average, is notably narrower. In essence, the variability is considerably reduced, indicating that the margin for error when using samples of 150 observations is substantially smaller than that with samples of 40.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Central Limit Theorem">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -345,12 +345,12 @@ Central Limit Theorem
 </div>
 </div>
 </div>
-<p>In this scenario, the distribution of means spans from $109,374 to $132,064, resulting in an error range of -$11,576 to $11,114 relative to the population mean. This range is significantly tighter compared to the error range obtained from samples of 20, where the deviation ranged from -$26,768 to $40,215.</p>
+<p>In this scenario, the distribution of means spans from $109,374 to $132,064, resulting in an error range of -$11,576 to $11,114 relative to the population mean. This range is significantly tighter compared to the error range obtained from samples of 40, where the deviation ranged from -$20,266 to $24,593.</p>
 </section>
 </section>
 <section id="measuring-the-sampling-error" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-the-sampling-error">Measuring the sampling error</h2>
-<p>Through the repetitive extraction of samples of consistent size from a given population, as demonstrated in our previous examples (with both 20 and 150-sized samples), we gain valuable insights into the potential magnitude of errors associated with samples of a particular size.</p>
+<p>Through the repetitive extraction of samples of consistent size from a given population, as demonstrated in our previous examples (with both 40 and 150-sized samples), we gain valuable insights into the potential magnitude of errors associated with samples of a particular size.</p>
 <p>As we’ve witnessed, the average of multiple means calculated from samples of identical size closely aligns with, or is essentially identical to, the true mean of the population. Consequently, the spread or dispersion of these computed means from this point provides a measure of the magnitude of the sampling error. Put simply, the variability in the mean derived from multiple samples of equal size offers a quantifiable measure of the magnitude of the sampling error for samples of that particular size. This measure is commonly known as the <strong>standard error of the mean</strong> (which we will abbreviate as SEM).</p>
 <p>Mathematically, we can express this as the standard error of the mean being equal to the standard deviation of the means of the different samples. Specifically, we prefer using the standard deviation rather than the variance because the former has the same units as the mean, while the latter has squared units. For instance, in the case of annual income, the units for variance would be in dollars squared (<span class="math inline">\(\$^2\)</span>), while for the standard error, it’s just in dollars ($). In other words:</p>
 <p><span class="math inline">\(\sqrt{Var(\bar{X})} = SEM\)</span></p>
@@ -384,8 +384,8 @@ Standard Error Derivation
 </div>
 </div>
 </div>
-<p>Applying these formulas, we can now calculate the Standard Error of the mean for sample sizes of 20 and 150. When we compute the standard deviation of the means obtained from multiple samples of 20 customers, we obtain a value of 8.39. Conversely, for samples of 150 customers, we obtained a value of 3.01, which is approximately three times smaller in terms of standard error.</p>
-<p>Alternatively, we can utilize the formula that links the standard error to the population’s standard deviation and the sample size, represented as $\frac{\sigma}{\sqrt{n}}$. Given our population’s standard deviation for annual income is 38.11, dividing this by <span class="math inline">\(\sqrt{20}\)</span> yields a value of 8.52 for a sample size of 20, while dividing it by <span class="math inline">\(\sqrt{150}\)</span> results in a value of 3.11 for a sample size of 150.</p>
+<p>Applying these formulas, we can now calculate the Standard Error of the mean for sample sizes of 40 and 150. When we compute the standard deviation of the means obtained from multiple samples of 40 customers, we obtain a value of 5.86. Conversely, for samples of 150 customers, we obtained a value of 3.01, which is approximately two times smaller in terms of standard error.</p>
+<p>Alternatively, we can utilize the formula that links the standard error to the population’s standard deviation and the sample size, represented as <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>. Given our population’s standard deviation for annual income is 38.11, dividing this by <span class="math inline">\(\sqrt{40}\)</span> yields a value of 6.03 for a sample size of 40, while dividing it by <span class="math inline">\(\sqrt{150}\)</span> results in a value of 3.11 for a sample size of 150.</p>
 <p>However, it’s important to note that there are disparities between the results obtained from these two approaches. This is because the first formula relies on a finite number of samples (10,000 in this case), and to obtain equivalent values, the number of samples would need to tend towards infinity, meaning a significantly larger amount of samples.</p>
 <section id="estimating-the-standard-error" class="level3">
 <h3 class="anchored" data-anchor-id="estimating-the-standard-error">Estimating the standard error</h3>
@@ -451,10 +451,10 @@ Standard Error Derivation
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>   <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> average_income <span class="sc">*</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="dv">13</span>, <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Mean: "</span>, <span class="fu">round</span>(average_income, <span class="dv">2</span>))) </span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Sampling 20 customers and calculating their annual income mean + visualizing their distribution</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Sampling 40 customers and calculating their annual income mean + visualizing their distribution</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">150</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>customer_data_sample <span class="ot">&lt;-</span> customer_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(customer_data), <span class="dv">20</span>), ]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>customer_data_sample <span class="ot">&lt;-</span> customer_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(customer_data), <span class="dv">40</span>), ]</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Compute the average and standard deviation of the income</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>average_income <span class="ot">&lt;-</span> <span class="fu">mean</span>(customer_data_sample<span class="sc">$</span>Income)</span>
@@ -474,7 +474,7 @@ Standard Error Derivation
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>   <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> average_income <span class="sc">*</span> <span class="fl">1.15</span>, <span class="at">y =</span> <span class="dv">13</span>, <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Mean: "</span>, <span class="fu">round</span>(average_income, <span class="dv">2</span>))) </span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a> <span class="do">## Extracting several 20 customers and calculating their annual income mean + visualizing their distribution</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a> <span class="do">## Extracting several 40 customers and calculating their annual income mean + visualizing their distribution</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a> customer_data_samples <span class="ot">&lt;-</span> customer_data_sample</span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>customer_data_samples<span class="sc">$</span>Average_Sample <span class="ot">&lt;-</span> <span class="st">"Sample 1"</span></span>
@@ -485,7 +485,7 @@ Standard Error Derivation
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(seed <span class="cf">in</span> seeds) {</span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set.seed</span>(seed)</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    customer_data_sample <span class="ot">&lt;-</span> customer_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(customer_data), <span class="dv">20</span>),]</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    customer_data_sample <span class="ot">&lt;-</span> customer_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(customer_data), <span class="dv">40</span>),]</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">row.names</span>(customer_data_sample) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    average_income <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(customer_data_sample<span class="sc">$</span>Income), <span class="dv">2</span>)</span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    customer_data_sample<span class="sc">$</span>Average_Sample <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Sample "</span>, i)</span>
@@ -526,22 +526,22 @@ Standard Error Derivation
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> <span class="fu">animate</span>(p, <span class="at">nframes =</span> <span class="dv">180</span>, <span class="at">duration =</span> <span class="dv">20</span>)</span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>anim</span>
 <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="do">## Extracting 10,000 samples of 20 observations and calculate their mean + visualize the distribution of the means</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="do">## Extracting 10,000 samples of 40 observations and calculate their mean + visualize the distribution of the means</span></span>
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty numeric vector of length 10000 named 'sample20_means'</span></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>sample20_means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">10000</span>)</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty numeric vector of length 10000 named 'sample40_means'</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>sample40_means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">10000</span>)</span>
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a for loop iterating 10000 times</span></span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="co"># For each iteration, the variable 'i' takes the value of the current iteration</span></span>
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>) {</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate a sample of 20 observations from the Income variable</span></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>  sample_population <span class="ot">&lt;-</span> <span class="fu">sample</span>(customer_data<span class="sc">$</span>Income, <span class="dv">20</span>)</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate a sample of 40 observations from the Income variable</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>  sample_population <span class="ot">&lt;-</span> <span class="fu">sample</span>(customer_data<span class="sc">$</span>Income, <span class="dv">40</span>)</span>
 <span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the mean of the sample and store it in the 'i' position of the 'sample_means' vector</span></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>  sample20_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(sample_population)</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>  sample40_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(sample_population)</span>
 <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>average_income <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample20_means), <span class="dv">2</span>)</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Income =</span> sample20_means)</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>average_income <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample40_means), <span class="dv">2</span>)</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Income =</span> sample40_means)</span>
 <span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sample_means, <span class="fu">aes</span>(<span class="at">x =</span> Income)) <span class="sc">+</span></span>
@@ -575,11 +575,11 @@ Standard Error Derivation
 <span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>average_income <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample_means), <span class="dv">2</span>)</span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>sample_means_20 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Income =</span> sample20_means)</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>sample_means_20<span class="sc">$</span>Observations <span class="ot">&lt;-</span> <span class="st">"Samples of 20 Observations"</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>sample_means_40 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Income =</span> sample40_means)</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>sample_means_40<span class="sc">$</span>Observations <span class="ot">&lt;-</span> <span class="st">"Samples of 40 Observations"</span></span>
 <span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>sample_means_150 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Income =</span> sample_means)</span>
 <span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>sample_means_150<span class="sc">$</span>Observations <span class="ot">&lt;-</span> <span class="st">"Samples of 150 Observations"</span></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sample_means_20, sample_means_150)</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sample_means_40, sample_means_150)</span>
 <span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>data_income_average <span class="ot">&lt;-</span> sample_means <span class="sc">%&gt;%</span></span>
