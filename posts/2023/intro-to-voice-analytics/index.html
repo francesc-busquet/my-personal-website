@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-01-07">
+
+<title>Francesc Busquet - Introductory Voice Analytics with R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/favicon/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+  
+  function getGiscusTheme() {
+  const quartoTheme = localStorage.getItem("quarto-color-scheme");
+  const giscusTheme = quartoTheme === "alternate" ? "dark" : "light";
+  return giscusTheme;
+}
+
+function setGiscusTheme() {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+  }
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(),
+    },
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const giscusAttributes = {
+    "src": "https://giscus.app/client.js",
+    "data-repo": "francesc-busquet/my-personal-website",
+    "data-repo-id": "R_kgDOKbDmgw",
+    "data-category": "General",
+    "data-category-id": "DIC_kwDOKbDmg84CZzPu",
+    "data-mapping": "title",
+    "data-strict": "1",
+    "data-reactions-enabled": "1",
+    "data-emit-metadata": "0",
+    "data-input-position": "top",
+    "data-theme": getGiscusTheme(),
+    "data-lang": "en",
+    "crossorigin": "anonymous",
+    "async": "",
+  };
+
+  // Dynamically create script tag
+  const giscusScript = document.createElement("script");
+  Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
+  document.body.appendChild(giscusScript);
+
+  // Update giscus theme when theme switcher is clicked
+  const toggle = document.querySelector('.quarto-color-scheme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', setGiscusTheme);
+  }
+});
+  
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introductory Voice Analytics with R</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Voice Analytics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 7, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#understanding-user-frustration" id="toc-understanding-user-frustration" class="nav-link active" data-scroll-target="#understanding-user-frustration"><strong>Understanding User Frustration</strong></a></li>
+  <li><a href="#data-acquisition-and-processing" id="toc-data-acquisition-and-processing" class="nav-link" data-scroll-target="#data-acquisition-and-processing">Data Acquisition and Processing</a>
+  <ul class="collapse">
+  <li><a href="#reading-sound-files" id="toc-reading-sound-files" class="nav-link" data-scroll-target="#reading-sound-files">Reading Sound Files</a></li>
+  <li><a href="#playing-sound-file" id="toc-playing-sound-file" class="nav-link" data-scroll-target="#playing-sound-file">Playing sound file</a></li>
+  <li><a href="#editing-sound-files" id="toc-editing-sound-files" class="nav-link" data-scroll-target="#editing-sound-files">Editing sound Files</a></li>
+  <li><a href="#writing-sound-files" id="toc-writing-sound-files" class="nav-link" data-scroll-target="#writing-sound-files">Writing sound files</a></li>
+  </ul></li>
+  <li><a href="#visualizing-sound" id="toc-visualizing-sound" class="nav-link" data-scroll-target="#visualizing-sound">Visualizing sound</a>
+  <ul class="collapse">
+  <li><a href="#visualizing-amplitude" id="toc-visualizing-amplitude" class="nav-link" data-scroll-target="#visualizing-amplitude">Visualizing Amplitude</a></li>
+  <li><a href="#visualizing-fundamental-frequency" id="toc-visualizing-fundamental-frequency" class="nav-link" data-scroll-target="#visualizing-fundamental-frequency">Visualizing Fundamental Frequency</a></li>
+  <li><a href="#spectrograms" id="toc-spectrograms" class="nav-link" data-scroll-target="#spectrograms">Spectrograms</a></li>
+  </ul></li>
+  <li><a href="#acoustic-feature-extraction" id="toc-acoustic-feature-extraction" class="nav-link" data-scroll-target="#acoustic-feature-extraction">Acoustic Feature Extraction</a>
+  <ul class="collapse">
+  <li><a href="#time-domain" id="toc-time-domain" class="nav-link" data-scroll-target="#time-domain">Time Domain</a></li>
+  <li><a href="#amplitude-domain" id="toc-amplitude-domain" class="nav-link" data-scroll-target="#amplitude-domain">Amplitude Domain</a></li>
+  <li><a href="#frequency-domain" id="toc-frequency-domain" class="nav-link" data-scroll-target="#frequency-domain">Frequency domain</a></li>
+  <li><a href="#spectral-domain" id="toc-spectral-domain" class="nav-link" data-scroll-target="#spectral-domain">Spectral domain</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="understanding-user-frustration" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-user-frustration"><strong>Understanding User Frustration</strong></h2>
+<p>In this tutorial, we will analyze a compelling video featuring a female Scottish user attempting, albeit humorously, to issue a command to Amazon Alexa to play a song on Spotify. This viral video, though amusing, highlights a common frustration many users encounter when trying to communicate effectively with voice-controlled interfaces.</p>
+<p><video src="assets/alexa_video.mp4" class="img-fluid" controls=""><a href="assets/alexa_video.mp4">Video</a></video></p>
+<p>For our comprehensive analysis, we began by extracting the audio file from the previous video and converting it into the Waveform audio format. Our investigation is centered on two pivotal aspects of this interaction:</p>
+<ol type="1">
+<li><p><strong>Speech Formation of the Wakeword “Alexa”</strong></p></li>
+<li><p><strong>Vocal Changes During the Issuance of a Command (“Alexa, play something is cooking in my kitchen on Spotify by Dana”)</strong></p></li>
+</ol>
+<p>To facilitate our analysis, we meticulously edited the voice recordings, retaining only the segments containing the three consecutive wakewords and the two subsequent user commands. It is noteworthy that the third utterance of “Alexa” was not associated with a command but rather followed by a barrage of profanity and abusive language. Consequently, our subsequent sections will delve into the examination of this specific case. You can download the files for this example <a href="https://www.dropbox.com/scl/fo/g689dlmuidyhvgycawkw2/h?rlkey=kfhtnwbq4zahu6mt5w5fmklr6&amp;dl=0">here</a>.</p>
+<p>Our analytical approach primarily leverages the renowned <code>seewave</code> package, which has emerged as the gold standard in R-sound analysis. This versatile package encompasses an impressive array of 130 functions designed for the analysis, manipulation, representation, editing, and synthesis of time-based audio waveforms. While seewave serves as our cornerstone, we also make reference to other valuable packages, such as <code>tuneR</code>, <code>soundgen</code>, and <code>phonTools</code>, for their specialized functionalities as needed.</p>
+</section>
+<section id="data-acquisition-and-processing" class="level2">
+<h2 class="anchored" data-anchor-id="data-acquisition-and-processing">Data Acquisition and Processing</h2>
+<section id="reading-sound-files" class="level3">
+<h3 class="anchored" data-anchor-id="reading-sound-files">Reading Sound Files</h3>
+<p>As previously mentioned, the primary focus of this tutorial centers around the utilization of the seewave package. While it is important to note that <code>seewave</code> lacks native capabilities for sound file reading, we adeptly overcome this limitation by harnessing functions from complementary packages. It is crucial to emphasize that different packages generate distinct classes of sound objects, each optimized for specific sound manipulation tasks. Consequently, when choosing an alternative package to load sound data, it becomes paramount to consider this inherent class compatibility.</p>
+<p>In the context of <code>seewave</code>, its core functionality is primarily tailored to work seamlessly with sound objects of the <code>Wave</code> class. These <code>Wave</code> class sound objects are conventionally created using the <code>tuneR</code> package. Hence, when working with <code>seewave</code>, it is strongly recommended to employ <code>tuneR</code> for sound data loading.</p>
+<p>The process of loading the two user commands from the interaction with Amazon Alexa and saving these sound files as new objects, <code>cmd1</code> and <code>cmd2</code>, is accomplished as follows:</p>
+<p>To begin, we employ the <code>readWave()</code> function from the <code>tuneR</code> package. This function efficiently loads or reads a sound file from a specified location. Here is the step-by-step procedure for loading and saving the user’s interaction commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tuneR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cmd1 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_cmd1.wav"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cmd2 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_cmd2.wav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Upon invoking these newly created objects, we obtain an informative output that reveals the underlying structure of the objects. This output not only underscores the seamless integration of the ‘wave’ class objects generated by the <code>tuneR</code> package but also provides key insights into their fundamental characteristics. These characteristics encompass:</p>
+<ol type="1">
+<li><p><strong>Number of Samples</strong>: This indicates the total count of discrete data points in the audio waveform.</p></li>
+<li><p><strong>Duration (in seconds)</strong>: The elapsed time in seconds, capturing the length of the audio.</p></li>
+<li><p><strong>Sampling Rate (in Hertz)</strong>: Denoting the rate at which individual samples are taken per second.</p></li>
+<li><p><strong>Number of Channels</strong>: It signifies whether the audio is mono (single channel) or stereo (two channels).</p></li>
+<li><p><strong>Bit Rate</strong>: Representing the number of bits processed per unit of time.</p></li>
+</ol>
+<p>Upon inspecting both objects, it becomes evident that they share identical sampling rates, channel numbers, and bit rates. However, a notable distinction emerges in their duration, with the second sound file being 820 milliseconds longer than the first. This divergence in duration warrants further investigation and could potentially yield valuable insights into the audio data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cmd1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      102051
+    Duration (seconds):     2.31
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cmd2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      137881
+    Duration (seconds):     3.13
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+</div>
+<p>Furthermore, the <code>readWave()</code> function offers additional parameters, notably <code>from</code> and <code>to</code>, which facilitate the selection of specific segments within the audio data for reading. By default, these parameters operate in samples units, defining the segment based on sample counts. However, the <code>readWave()</code> function also introduces the <code>units</code> argument, affording the flexibility to modify the units of <code>from</code> and <code>to</code> to seconds, minutes, or hours.</p>
+<p>To illustrate, suppose we wish to load only the initial 0.5 seconds and the segment from 0.5 seconds to 2 seconds from the audio file and store them in separate objects, denoted as <code>cmd1.s1</code> and <code>cmd1.s2</code>, respectively. Achieving this precision is straightforward, involving the configuration of the <code>from</code>, <code>to</code>, and <code>units</code> arguments as demonstrated below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(cmd1.s1 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_cmd1.wav"</span>,<span class="at">from=</span><span class="dv">0</span>,<span class="at">to=</span><span class="fl">0.5</span>,<span class="at">units=</span><span class="st">"seconds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      22050
+    Duration (seconds):     0.5
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(cmd1.s2 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_cmd1.wav"</span>,<span class="at">from=</span><span class="fl">0.5</span>,<span class="at">to=</span><span class="dv">2</span>,<span class="at">units=</span><span class="st">"seconds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      66150
+    Duration (seconds):     1.5
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+</div>
+</section>
+<section id="playing-sound-file" class="level3">
+<h3 class="anchored" data-anchor-id="playing-sound-file">Playing sound file</h3>
+<p>Sound analysis is an iterative process, requiring frequent listening to parts of a soundwave. Although, R itself cannot play sound files the <code>seewave</code>’s <code>listen( )</code> function allows us to call the default audio player of the user’s operating system.</p>
+<p>For this reason, we first load the <code>seewave</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seewave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'seewave' was built under R version 4.2.3</code></pre>
+</div>
+</div>
+<p>Thus, we could play the previously loaded cmd1 variable by using the <code>listen()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">listen</span>(cmd1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Much like the <code>readWave()</code> function, the <code>listen()</code> function offers analogous <code>from</code> and <code>to</code> arguments to precisely determine the sections of interest for auditory playback. Furthermore, it introduces an <code>f</code> argument, providing the capability to manipulate the sampling frequency rate. This adjustment allows for the alteration of the original sound’s pitch, facilitating the creation of both higher and lower-pitched auditory renditions. The code snippet below demonstrates this transformative process:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">listen</span>(cmd1, <span class="at">f=</span>cmd1<span class="sc">@</span>samp.rate<span class="sc">*</span><span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">listen</span>(cmd1, <span class="at">f=</span>cmd1<span class="sc">@</span>samp.rate<span class="sc">/</span><span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="editing-sound-files" class="level3">
+<h3 class="anchored" data-anchor-id="editing-sound-files">Editing sound Files</h3>
+<p>In certain applications, it becomes necessary to perform additional edits on voice files. These edits could include tasks such as (1) extracting specific segments of a soundwave for in-depth analysis, (2) eliminating a series of utterances from a soundwave, (3) trimming periods of silence at the beginning or end of a sound file, and (4) filtering out all unvoiced frames from a sound file.</p>
+<p>Both the <code>tuneR</code> and <code>seewave</code> packages offer a suite of functions designed to address these various editing procedures:</p>
+<ol type="1">
+<li><p><code>extractWave( )</code>: This function facilitates the extraction of desired segments from a soundwave. Users can specify the segments using the <code>from</code> and <code>to</code> arguments, which we discussed earlier. The <code>extractWave()</code> function defaults to samples as the unit, but this can be adjusted using the ‘xunit’ argument.</p></li>
+<li><p><code>deletew( )</code>: To remove specific portions from a soundwave, the <code>deletew()</code> function is employed. By default, it operates in units of time.</p></li>
+<li><p><code>noSilence( )</code>: This function is particularly useful for removing periods of silence from the beginning or end of a sound file. Users can fine-tune this process by specifying the desired silence level.</p></li>
+<li><p><code>zapsilw( )</code>: To eliminate all unvoiced frames from a sound file, the <code>zapsilw()</code> function comes into play. Users can tailor this operation by setting the ‘threshold’ argument, which measures the amplitude threshold in percent distinguishing silence from signal. Additionally, the <code>zapsilw()</code> function offers the default feature of generating oscillograms for both the original sound file and the modified version post unvoiced frame removal, providing visual insight into the process.</p></li>
+</ol>
+<p>These functions empower users to efficiently manipulate sound files, ensuring they are tailored to meet the specific requirements of their analyses. To illustrate their practical utility, let’s delve into some illustrative examples.</p>
+<p>As an instance, consider the application of the <code>extractWave()</code> function to pinpoint the initial 700 milliseconds of the soundwave residing in <code>cmd1</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract first 700ms</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cmd1.xtr <span class="ot">&lt;-</span> <span class="fu">extractWave</span>(cmd1, <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="fl">0.7</span>, <span class="at">xunit =</span> <span class="st">"time"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, the <code>from</code> and <code>to</code> arguments are employed to specify the time range of interest. In this case, we isolate the first 700 milliseconds, facilitating a focused analysis.</p>
+<p>Alternatively, instead of extracting this segment, we can achieve its removal using the <code>deletew()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Delete first 700ms</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cmd1.rem <span class="ot">&lt;-</span> <span class="fu">deletew</span>(cmd1, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="fl">0.7</span>, <span class="at">output=</span><span class="st">"Wave"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Continuing with our exploration of sound manipulation, we can also replicate the first 700 milliseconds threefold with the <code>repw()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat first 700ms three times</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cmd1.rep3 <span class="ot">&lt;-</span> <span class="fu">repw</span>(cmd1, <span class="at">f=</span>cmd1<span class="sc">@</span>samp.rate, <span class="at">times=</span><span class="dv">3</span>, <span class="at">output=</span><span class="st">"Wave"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To refine the audio data further, we may opt to remove solely the unvoiced segments at the beginning and end using the <code>noSilence()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove only unvoiced start and ending</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cmd1.cut <span class="ot">&lt;-</span> <span class="fu">noSilence</span>(cmd1)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cmd1.cut</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      102051
+    Duration (seconds):     2.31
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cmd1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      102051
+    Duration (seconds):     2.31
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+</div>
+<p>In this particular instance, a comparison between the original sound <code>cmd1</code> and the processed version <code>cmd1.cut</code>, where we have removed unvoiced segments from the beginning and end, reveals no discernible alteration. This lack of change stems from the fact that <code>cmd1</code> initially did not contain any unvoiced segments at either its outset or conclusion.</p>
+<p>Alternatively, we could use the <code>zapsilw()</code> function to cleanse all the unvoiced elements of <code>cmd1</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove all unvoiced frames of a soundwave</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cmd1.nosil <span class="ot">&lt;-</span> <span class="fu">zapsilw</span>(cmd1, <span class="at">threshold=</span><span class="dv">1</span>, <span class="at">output=</span><span class="st">"Wave"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>cmd1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      102051
+    Duration (seconds):     2.31
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cmd1.nosil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      62425
+    Duration (seconds):     1.42
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Mono
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-oscillogram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-oscillogram-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Oscillograms of First and Original Command (Upper Panel) and with voice breaks removed (Lower Panel)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In this case, a close examination of <a href="#fig-oscillogram">Figure&nbsp;1</a> reveals that the <code>zapsilw()</code> function has been remarkably successful in eliminating all the unvoiced areas within the soundwave. This process has resulted in a cleaner and more refined audio representation.</p>
+<p>Furthermore, when we compare <code>cmd1</code> to <code>cmd1.nosil</code>, it becomes evident that the duration of the latter is noticeably shorter, clocking in at almost 1 second less. This reduction in duration underscores the effective removal of unvoiced segments, affirming the utility of this process in streamlining the audio data while preserving its crucial vocal elements.</p>
+</section>
+<section id="writing-sound-files" class="level3">
+<h3 class="anchored" data-anchor-id="writing-sound-files">Writing sound files</h3>
+<p>Following sound file editing, it is often essential to preserve the revised version for future use. To accomplish this, the seewave package offers the convenient <code>savewav( )</code> function, designed explicitly for storing R sound objects as .wav files. The process involves specifying the following parameters:</p>
+<ol type="1">
+<li><p><strong>R Sound Object</strong>: As the first argument, designate the R sound object that you intend to save as a .wav file.</p></li>
+<li><p><strong>Sampling Frequency</strong> (<code>f</code>): Next, specify the sampling frequency to be associated with the saved .wav file.</p></li>
+<li><p><strong>Filename</strong> (<code>filename</code>): Finally, provide the desired filename under which the edited sound object will be stored.</p></li>
+</ol>
+<p>It’s worth noting that if the sampling frequency is not explicitly defined, the seewave package will automatically utilize the same sampling frequency as the edited R object, simplifying the saving process.</p>
+<p>As an illustrative step, let’s go ahead and save the modified version of <code>cmd1</code>, where all unvoiced segments have been successfully removed, as a .wav file within our system:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">savewav</span>(cmd1.nosil, <span class="at">filename =</span> <span class="st">"cmd1_noSilence.wav"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="visualizing-sound" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-sound">Visualizing sound</h2>
+<p>Having covered the processes of reading, editing, and saving sound objects, we now embark on the journey of visualizing the essential attributes of a sound wave. Visualization entails the transformation of a sound wave into a graphical or statistical representation. The primary means of depicting a sound wave typically involve showcasing its (1) amplitude, (2) frequency, and (3) a blend of amplitude and frequency variations over time. Two common visualizations employed for this purpose are oscillograms, which capture amplitude, and spectrograms, which provide insights into frequency and the interplay between frequency and amplitude over time.</p>
+<section id="visualizing-amplitude" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-amplitude">Visualizing Amplitude</h3>
+<p>Oscillograms offer a visual representation of the instantaneous amplitude of a soundwave plotted against time. They are often referred to as waveforms, as they graphically depict the variations within the sound wave itself. Oscillograms serve as valuable tools for discerning potential changes in loudness over time within a soundwave. In R, you can create oscillograms using the <code>oscillo()</code> function from the seewave package. This function requires just one argument, the sound object. Moreover, <code>oscillo()</code> provides the flexibility to customize various visual aspects, such as the title (using the <code>title</code> argument), label color (via the <code>collab</code> argument), and wave color (by setting the ‘colwave’ argument). Additionally, you can specify the ‘from’ and ‘to’ arguments, similar to what we did during data processing, to generate an oscillogram for a specific time interval in seconds.</p>
+<p>To gain insights from the oscillograms of the two Alexa commands, we aim to first visualize the entire soundwave and then zoom in to focus solely on the articulation of the wakeword.</p>
+<p>To plot all four graphs within a single plotting region, we partition the plot into four distinct sections using the standard <code>par</code> and <code>mfrow</code> arguments in R. Furthermore, to exclusively display the wakeword, we make use of the <code>from</code> and <code>to</code> arguments within the <code>oscillo()</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-oscillograms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-oscillograms-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Oscillograms of First and Second Command (Upper Panel) and Wakeword (Lower Panel)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Upon closer examination, as depicted in <a href="#fig-oscillograms">Figure&nbsp;2</a>, a few notable observations come to light at first glance:</p>
+<ol type="1">
+<li><p><strong>Difference in Duration</strong>: It becomes apparent that the second command is slightly longer than the first. Remarkably, both commands share identical content, both stating “Alexa, play by Dana.” A deeper dive into the oscillograms reveals the underlying reason: in the second command, there are longer vocal breaks, representing the time gaps between each spoken word.</p></li>
+<li><p><strong>Emphasis on Individual Words</strong>: Notably, there are striking variations in the emphasis placed on individual words when issuing the two commands. For instance, in the lower panel of <a href="#fig-oscillograms">Figure&nbsp;2</a>, we can discern the pronounced differences in overall amplitudes. Particularly, the word “Alexa” in the second command exhibits significantly greater amplitude compared to its counterpart in the first command. This observation suggests that, without needing to listen to the voice files or comprehend the spoken content, we can already deduce that the second command tends to be louder overall than the first. Such a distinction may hint at potential heightened emotions such as anger, stress, or irritability on the part of the speaker.</p></li>
+</ol>
+<p>These initial insights gleaned from the oscillograms provide valuable cues for further analysis and interpretation of the audio data.</p>
+</section>
+<section id="visualizing-fundamental-frequency" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-fundamental-frequency">Visualizing Fundamental Frequency</h3>
+<p>The graphical representation of the fundamental frequency over time, often referred to as an f0 contour or pitch track, holds significant value in acoustic analysis. This visualization unveils essential aspects, including the speaker’s fundamental frequency range, pitch variations throughout speech, distinctions between voiceless and voiced segments, as well as patterns of regular and irregular phonation.</p>
+<p>In the context of the <code>seewave</code> package, the <code>fund()</code> function takes center stage. It skillfully estimates the fundamental frequency of an R object, employing a short-term cepstral transform, and automatically generates a visual plot of the fundamental frequency.</p>
+<p>To demonstrate the practical application and insights derived from this analysis, we narrow our focus to the wakewords uttered by the speaker during their interaction with Amazon Alexa. It’s worth noting that although the user issued only two complete commands, the interaction involved three distinct wakewords. The third wakeword, notably, did not lead to the issuance of a command but instead featured the use of offensive language directed at Alexa.</p>
+<p>To proceed with this exploration, we initiate the process by reading these distinct wakewords using the <code>readWave()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(w1 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_wakeword_1.wav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      30902
+    Duration (seconds):     0.7
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(w2 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_wakeword_2.wav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      32804
+    Duration (seconds):     0.74
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(w3 <span class="ot">&lt;-</span> <span class="fu">readWave</span>(<span class="st">"alexa_wakeword_3.wav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      46116
+    Duration (seconds):     1.05
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+</div>
+<p>Upon inspecting the output generated after calling each sound object, we readily observe differences in the durations of these wakewords. Specifically, they span 0.7 seconds, 0.74 seconds, and 1.05 seconds, respectively, highlighting the temporal distinctions among them.</p>
+<p>With the three wakewords now successfully imported into R, we proceed to concatenate them into a single soundwave using seewave’s <code>bind()</code> function. We undertake this concatenation to facilitate a comprehensive visual evaluation of how the fundamental frequency evolves from one command to another.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(wake_all <span class="ot">&lt;-</span> <span class="fu">bind</span>(w1,w2,w3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wave Object
+    Number of Samples:      109822
+    Duration (seconds):     2.49
+    Samplingrate (Hertz):   44100
+    Channels (Mono/Stereo): Stereo
+    PCM (integer format):   TRUE
+    Bit (8/16/24/32/64):    16 </code></pre>
+</div>
+</div>
+<p>This amalgamation sets the stage for the application of the <code>fund()</code> function to the concatenated sound object. Additionally, we leverage the ‘threshold’ argument within the <code>fund()</code> function, allowing us to eliminate smaller amplitude variations during signal detection, specified as a percentage. The results generated by the <code>fund()</code> function, represented as a matrix with two columns (<code>x</code> denoting time and <code>y</code> representing fundamental frequency), are stored in a new variable <code>ff</code>. Subsequently, to illustrate the evolution of the speaker’s fundamental frequency over time, we employ the <code>time</code> and <code>frequency</code> parameters in a linear model. This modeling unveils an upward trend, as portrayed in <a href="#fig-pitch">Figure&nbsp;3</a>, showcasing the progression from the first to the second and ultimately the third utterance of the wakeword “Alexa.”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ff <span class="ot">&lt;-</span> <span class="fu">fund</span>(wake_all,<span class="at">threshold=</span><span class="dv">1</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(ff[,<span class="dv">2</span>]<span class="sc">~</span>ff[,<span class="dv">1</span>])</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(mod,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-pitch" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-pitch-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Increasing Fundamental Over Time from First, Second, to Third Wakeword</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>To enhance our analysis further, we employ the <code>formanttrack()</code> function from the <code>phonTools</code> package. This function serves as a practical tool to track the distribution of acoustic energy across various frequency bands, typically in 1000Hz intervals. It’s worth noting that the phonTools package exclusively supports mono audio. Therefore, when working with stereo files, as in this scenario, only one of its channels must be specified as an argument. The channel of a wave object can be accessed using the <code>@</code> operator along with the name of the desired channel (<code>left</code> or <code>right</code>). Additionally, since <code>phonTools</code> is not specifically designed to handle wave objects, the sampling frequency of the sound file must be manually set using the <code>fs</code> argument.</p>
+<p><a href="#fig-formanttrack">Figure&nbsp;4</a> illustrates the first three frequency bands for each wakeword, respectively. These displays complement our earlier observations, illustrating the frequency escalation from the first to the third wakeword, along with an overall increase in variability over time. Given the strong correlation between heightened frequency levels and experiences of stress, anger, or frustration, these visualizations further underscore the extended duration during which the user encountered difficulties in their interaction with Amazon Alexa.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phonTools)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w1<span class="sc">@</span>left, <span class="at">fs=</span>w1<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w2<span class="sc">@</span>left, <span class="at">fs=</span>w2<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w3<span class="sc">@</span>left, <span class="at">fs=</span>w3<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-formanttrack" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-formanttrack-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Visualizing the First (Black), Second (Red), and Third (Green) Formants Across Wakewords</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="spectrograms" class="level3">
+<h3 class="anchored" data-anchor-id="spectrograms">Spectrograms</h3>
+<p>Spectrograms provide a rich, multi-dimensional portrayal of a soundwave, offering insights into its composition. In this representation, time unfolds along the x-axis, frequency extends along the y-axis, and a third dimension portrays amplitude levels (loudness) through varying color codes. The <code>seewave</code> package equips us with the <code>spectro()</code> function, which constructs a spectrographic visualization of a time wave. This versatile function demands only a time wave object, such as a sound object, as its input.Furthermore, the <code>spectro()</code> function offers several customization options to tailor the appearance of the spectrogram. For instance, the <code>flim</code> argument permits us to specify the minimum and maximum frequencies displayed. Additionally, <code>osc</code> introduces an oscillogram at the bottom of the spectrogram plot, while <code>dBref</code> allows us to define a reference value for the dB range of amplitude.</p>
+<p><a href="#fig-spectrograms">Figure&nbsp;5</a> provides a more nuanced understanding, summarizing the significant distinctions between the initial two commands and the subsequent three consecutive wakewords spoken by the user. Across all spectrograms, three noteworthy points emerge:</p>
+<ol type="1">
+<li><p><strong>Increase in Loudness</strong>: There is a noticeable escalation in power or loudness, depicted by the deepening reddish color gradients.</p></li>
+<li><p><strong>Prolonged Voice Breaks</strong>: A trend of longer voice breaks becomes evident from the first command to the second.</p></li>
+<li><p><strong>Frequency Stability</strong>: The first command exhibits relatively stable frequency, whereas the second command displays a moderate upward trend.</p></li>
+</ol>
+<p>Collectively, these observations suggest that the heightened frequency, amplified loudness, and extended voice breaks likely mirror the speaker’s experiences of tension, anger, stress, and frustration during their interaction with Amazon Alexa.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spectro</span>(cmd1, <span class="at">osc=</span><span class="cn">TRUE</span>, <span class="at">flim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">6</span>), <span class="at">dB =</span> <span class="st">"max0"</span>, <span class="at">dBref =</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">10e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spectro</span>(cmd2, <span class="at">osc=</span><span class="cn">TRUE</span>, <span class="at">flim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">6</span>), <span class="at">dB =</span> <span class="st">"max0"</span>, <span class="at">dBref =</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">10e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spectro</span>(wake_all, <span class="at">osc=</span><span class="cn">TRUE</span>, <span class="at">flim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">6</span>), <span class="at">dB =</span> <span class="st">"max0"</span>, <span class="at">dBref =</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">10e-5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-warnings="false">
+<div class="cell-output-display">
+<div id="fig-spectrograms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-spectrograms-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Spectrogram of the User’s Commands and First Three Wakewords</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="acoustic-feature-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="acoustic-feature-extraction">Acoustic Feature Extraction</h2>
+<p>In addition to the tasks we’ve explored thus far, the extraction of acoustic characteristics from sound files holds paramount importance in their analysis. These extracted features serve a variety of purposes, whether utilized as predictors or outcomes in statistical models. In this section, we shed light on crucial functions spread across different packages for extracting these vocal attributes, categorizing them into distinct domains: time, amplitude, frequency, and spectral.</p>
+<section id="time-domain" class="level3">
+<h3 class="anchored" data-anchor-id="time-domain">Time Domain</h3>
+<p>The most fundamental measure in the time domain is the duration, typically expressed in seconds or milliseconds, which quantifies the temporal extent of a soundwave. The <code>duration( )</code> within the <code>seewave</code> package offers a straightforward means of extracting this duration, providing the duration of the sound object in seconds. When we apply this function to the two commands, we ascertain that the first command has a duration of 2.31 seconds, while the second command spans 3.13 seconds.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">duration</span>(cmd1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.314082</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">duration</span>(cmd2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.126553</code></pre>
+</div>
+</div>
+<p>Similarly, when we apply the same procedure to the wakewords, we discover that they have durations of 0.7 seconds, 0.74 seconds and 1.05 seconds, respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">duration</span>(w1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7007256</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">duration</span>(w2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7438549</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">duration</span>(w3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.045714</code></pre>
+</div>
+</div>
+<p>The <code>soundgen</code> package includes the <strong><code>analyze()</code></strong> function, which provides the ability to extract several features across the time, amplitude, frequency, and spectral domain respectively. For example, using this function we can directly extract the number of voiced and unvoiced frames of a sound object. To do so, the results from the soundgen function should be stored in an R object. This object results in a list of two data.frames: a detailed data.frame (you can retrieve it by using <strong><code>$detailed</code></strong>) in which each row represents a Short-Time Fourier Transform frame and each column represents a vocal feature and a summarized <code>data.frame</code> (you can retrieve it by using <strong><code>$summary</code></strong>).</p>
+<p>Thus, we can proceed to use the <code>analyze()</code> function to extract several vocal features from the first and second commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(soundgen)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>feat_cmd1 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(<span class="st">"alexa_cmd1.wav"</span>, <span class="at">plot =</span> F)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>feat_cmd2 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(<span class="st">"alexa_cmd2.wav"</span>, <span class="at">plot =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since the summary object represents a data.frame, we can access its columns using the <code>$</code> operator followed by the column name. Hence, in order to check which proportion of frames are voiced, we can directly call the <code>voiced</code> column from the output extracted by the <code>analyze()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Returns the proportion of voiced samples</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4395604</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3145161</code></pre>
+</div>
+</div>
+<p>Revealing a a greater percentage of vocal breaks in the second (43.96%) compared to the first (31.45%) command.</p>
+</section>
+<section id="amplitude-domain" class="level3">
+<h3 class="anchored" data-anchor-id="amplitude-domain">Amplitude Domain</h3>
+<p>The amplitude of a soundwave dictates its power or loudness, with smaller amplitudes indicating softer sounds and larger amplitudes indicating louder ones. It essentially measures how far air particles deviate from their equilibrium position. To calculate the amplitude at various points in time, we can utilize the <code>oscillo</code> function from the <code>seewave</code> package, as demonstrated earlier, with its <code>plot</code> argument set to <code>FALSE</code>. This provides us with various statistics, such as the maximum and minimum amplitudes. In the code snippet below, we observe that the first command generally had a higher volume compared to the second, evident in the smaller minimum and larger maximum values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">oscillo</span>(cmd1, <span class="at">plot =</span> F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -28068</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">oscillo</span>(cmd1, <span class="at">plot =</span> F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">oscillo</span>(cmd2, <span class="at">plot =</span> F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -29746</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">oscillo</span>(cmd2, <span class="at">plot =</span> F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20029</code></pre>
+</div>
+</div>
+<p>Another method to estimate soundwave amplitude involves computing the root-mean-squared (RMS) of the amplitude envelope. This can be accomplished by combining the <code>rms()</code> function to calculate the RMS and the <code>env()</code> function to calculate the envelope. This approach provides us with insight into the sound file’s average loudness, revealing that, on average (after removing silent portions), the first command was louder than the second.</p>
+<p>The Root Mean Square (RMS) is calculated as follows:</p>
+<p><span class="math display">\[RMS = \sqrt{\frac{1}{N}\sum_{n=1}^{N} x_i^2}\]</span> Here, <span class="math inline">\(x_i\)</span> represents each amplitude envelope point and <span class="math inline">\(N\)</span> represents the total number of points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rms</span>(<span class="fu">env</span>(<span class="fu">zapsilw</span>(cmd1, <span class="at">plot =</span> F),<span class="at">f=</span>cmd1<span class="sc">@</span>samp.rate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8771.827</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rms</span>(<span class="fu">env</span>(<span class="fu">zapsilw</span>(cmd2, <span class="at">plot =</span> F),<span class="at">f=</span>cmd1<span class="sc">@</span>samp.rate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9386.833</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-envelope" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-envelope-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Amplitude envelope of Command 1 (right) and Command 2 (left)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Moreover, the <code>analyze()</code> function from the <code>soundgen</code> package yields a subjective unit of loudness measured in sone. This measure is stored in the ‘loudness’ column within the data.frame produced by <code>analyze()</code>. Using the <code>mean()</code> function in R on the <code>loudness</code> column computes the average loudness in sone, reaffirming our earlier observations that the second command was generally louder than the first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>loudness_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.72149</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>loudness_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.66282</code></pre>
+</div>
+</div>
+<p>Additionally, <code>soundgen</code> provides the <code>getLoudness()</code> function, offering a visual representation of loudness spectrum for soundwaves. It presents a grayscale visualization of the spectrum, with darker areas indicating higher sound pressure levels, and thus, higher loudness.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>loudness1 <span class="ot">&lt;-</span> <span class="fu">getLoudness</span>(<span class="st">"alexa_cmd1.wav"</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>loudness2 <span class="ot">&lt;-</span> <span class="fu">getLoudness</span>(<span class="st">"alexa_cmd2.wav"</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="frequency-domain" class="level3">
+<h3 class="anchored" data-anchor-id="frequency-domain">Frequency domain</h3>
+<p>In this section we focus on the extraction of two main features in the frequency domain: (1) pitch of soundwave and (2) the extent of variability in frequency of the sound-wave. Both of them can be directly extracted from the <code>summary</code> of the results extracted from <code>soundgen</code>’s <code>analyze( )</code> function: (1) <code>pitch_mean</code> and (2) <code>pitch_sd</code>. Consistent with our expectation, we find a strong increase from 220.38Hz to 247.23Hz in the average pitch. Thus, the extracted features confirm the “shrill” and aroused sound of the user’s voice after the repeated failure from the first to the second voice command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 220.3752</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 247.2293</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61.99661</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32.97635</code></pre>
+</div>
+</div>
+<p>To get into a higher level of granularity, we can apply those same analysis only to the wakeword “Alexa”. In that way, we can see how these key differences are even more prominent: 174.18Hz on the first wakeword, 278.79Hz on the second and 299.33Hz on the third.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>feat_w1 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(<span class="st">"alexa_wakeword_1.wav"</span>, <span class="at">plot =</span> F)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>feat_w2 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(<span class="st">"alexa_wakeword_2.wav"</span>, <span class="at">plot =</span> F)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>feat_w3 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(<span class="st">"alexa_wakeword_3.wav"</span>, <span class="at">plot =</span> F)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 174.1786</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 278.7902</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>feat_w3<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 299.3255</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.46018</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 103.5946</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>feat_w3<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 124.2244</code></pre>
+</div>
+</div>
+</section>
+<section id="spectral-domain" class="level3">
+<h3 class="anchored" data-anchor-id="spectral-domain">Spectral domain</h3>
+<p>Spectral features of a soundwave reflect perturbances of a soundwave. Measures of spectral qualities of a soundave generally assess the amount of perturbance or periodicity of sound. Two such measure of perturbances can be directly extracted using the Harmonics-to-Noise ratio (HNR) and level of entropy of the soundwave from the <code>analyze( )</code> function of the <code>soundgen</code> package. Comparing the level of entropy and periodicity between the two commands confirms the moderately larger level of entropy and greater perturbances in the second compared to the first command respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>entropy_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1250395</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>entropy_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1437937</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.90924</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.422622</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="giscus">
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</div></body></html>
