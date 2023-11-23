@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <h1 class="title">My first R package: voiceR</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">R</div>
-                <div class="quarto-category">Voice analytics</div>
+                <div class="quarto-category">voice analytics</div>
               </div>
                   </div>
   </div>
@@ -217,17 +217,17 @@ document.addEventListener('DOMContentLoaded', function () {
    
   <ul>
   <li><a href="#what-is-voicer" id="toc-what-is-voicer" class="nav-link active" data-scroll-target="#what-is-voicer">What is voiceR?</a></li>
-  <li><a href="#voicer-prerequisites" id="toc-voicer-prerequisites" class="nav-link" data-scroll-target="#voicer-prerequisites">voiceR Prerequisites</a>
+  <li><a href="#voicer-prerequisites" id="toc-voicer-prerequisites" class="nav-link" data-scroll-target="#voicer-prerequisites">voiceR prerequisites</a>
   <ul class="collapse">
   <li><a href="#installing-voicer" id="toc-installing-voicer" class="nav-link" data-scroll-target="#installing-voicer">Installing voiceR</a></li>
-  <li><a href="#required-file-name-structure" id="toc-required-file-name-structure" class="nav-link" data-scroll-target="#required-file-name-structure">Required File Name Structure</a></li>
+  <li><a href="#required-file-name-structure" id="toc-required-file-name-structure" class="nav-link" data-scroll-target="#required-file-name-structure">Required file name structure</a></li>
   </ul></li>
-  <li><a href="#comprehensive-functionality" id="toc-comprehensive-functionality" class="nav-link" data-scroll-target="#comprehensive-functionality">Comprehensive Functionality</a>
+  <li><a href="#comprehensive-functionality" id="toc-comprehensive-functionality" class="nav-link" data-scroll-target="#comprehensive-functionality">Comprehensive functionality</a>
   <ul class="collapse">
-  <li><a href="#reading-multiple-audio-files" id="toc-reading-multiple-audio-files" class="nav-link" data-scroll-target="#reading-multiple-audio-files">Reading Multiple Audio Files</a></li>
-  <li><a href="#preprocessing-multiple-audio-files" id="toc-preprocessing-multiple-audio-files" class="nav-link" data-scroll-target="#preprocessing-multiple-audio-files">Preprocessing Multiple Audio Files</a></li>
-  <li><a href="#automatic-feature-extraction-for-multiple-audio-files" id="toc-automatic-feature-extraction-for-multiple-audio-files" class="nav-link" data-scroll-target="#automatic-feature-extraction-for-multiple-audio-files">Automatic Feature Extraction for Multiple Audio Files</a></li>
-  <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results">Visualizing Results</a></li>
+  <li><a href="#reading-multiple-audio-files" id="toc-reading-multiple-audio-files" class="nav-link" data-scroll-target="#reading-multiple-audio-files">Reading multiple audio files</a></li>
+  <li><a href="#preprocessing-multiple-audio-files" id="toc-preprocessing-multiple-audio-files" class="nav-link" data-scroll-target="#preprocessing-multiple-audio-files">Preprocessing multiple audio files</a></li>
+  <li><a href="#automatic-feature-extraction-for-multiple-audio-files" id="toc-automatic-feature-extraction-for-multiple-audio-files" class="nav-link" data-scroll-target="#automatic-feature-extraction-for-multiple-audio-files">Automatic feature extraction for multiple audio files</a></li>
+  <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results">Visualizing results</a></li>
   <li><a href="#automatic-report-generation" id="toc-automatic-report-generation" class="nav-link" data-scroll-target="#automatic-report-generation">Automatic Report Generation</a></li>
   </ul></li>
   <li><a href="#explore-the-voicer-shiny-app" id="toc-explore-the-voicer-shiny-app" class="nav-link" data-scroll-target="#explore-the-voicer-shiny-app">Explore the voiceR Shiny App</a></li>
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 </section>
 <section id="voicer-prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="voicer-prerequisites">voiceR Prerequisites</h2>
+<h2 class="anchored" data-anchor-id="voicer-prerequisites">voiceR prerequisites</h2>
 <section id="installing-voicer" class="level3">
 <h3 class="anchored" data-anchor-id="installing-voicer">Installing voiceR</h3>
 <p>Getting started with voiceR is a straightforward process. Begin by installing the package from CRAN using the following command:</p>
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p>Once you’ve successfully installed the package, you’re ready to embark on your voice analytics journey using voiceR.</p>
 </section>
 <section id="required-file-name-structure" class="level3">
-<h3 class="anchored" data-anchor-id="required-file-name-structure">Required File Name Structure</h3>
+<h3 class="anchored" data-anchor-id="required-file-name-structure">Required file name structure</h3>
 <p>voiceR relies on a specific file naming convention to ensure seamless processing of audio files. This convention is comprised of up to three components of metadata about the file, two of which are optional:</p>
 <ul>
 <li><p><strong>ID:</strong> A unique identifier for the speaker or recording.</p></li>
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <li><p><code>CovidPositive_Patient1.wav</code> (Condition_ID)</p></li>
 </ul>
 <section id="using-the-null-placeholder" class="level4">
-<h4 class="anchored" data-anchor-id="using-the-null-placeholder">Using the Null Placeholder</h4>
+<h4 class="anchored" data-anchor-id="using-the-null-placeholder">Using the Null placeholder</h4>
 <p>If there are parts of the file name that are not any of the required components, you can use the <code>Null</code> placeholder to avoid them. For example, if you have additional information in the file name that does not belong to any of the categories that voiceR processes, you can use the <code>Null</code> placeholder to ignore that information.</p>
 <p>For example, imagine you have a file named <code>Audio_Participant345_Happy.wav</code>. The <code>Audio</code> component of the file name is not required, so you could define the following pattern: <code>Null_ID_Condition</code>. This file name would still be valid, and voiceR would ignore the first component given that we used the <code>Null</code> placeholder.</p>
 <p><a href="#fig-file-naming">Figure&nbsp;2</a> demonstrates how the voiceR package uses the name pattern structure to identify the different components.</p>
@@ -300,38 +300,38 @@ document.addEventListener('DOMContentLoaded', function () {
 </section>
 </section>
 <section id="comprehensive-functionality" class="level2">
-<h2 class="anchored" data-anchor-id="comprehensive-functionality">Comprehensive Functionality</h2>
+<h2 class="anchored" data-anchor-id="comprehensive-functionality">Comprehensive functionality</h2>
 <p>voiceR offers a suite of functions designed to simplify the voice analytics process. These functions cover reading and preprocessing audio files, automatic feature extraction, visualization of results, and even automatic report generation.</p>
 <p><img src="assets/overview of voiceR functions.PNG" id="fig-voiceR-function-overview" class="invertImage img-fluid"></p>
 <section id="reading-multiple-audio-files" class="level3">
-<h3 class="anchored" data-anchor-id="reading-multiple-audio-files">Reading Multiple Audio Files</h3>
-<p>The initial step in the audio analytics process involves reading designated audio files. The <strong><code>readAudio()</code></strong> function in the voiceR package achieves this seamlessly, systematically processing all audio files in a specified directory and its subdirectories if specified. Users can customize this function by providing a file path (path) and an optional character vector to filter for specific patterns (filter). Upon execution, this function efficiently imports audio files into R, generating a comprehensive list of Wave objects, each representing an imported audio file.</p>
+<h3 class="anchored" data-anchor-id="reading-multiple-audio-files">Reading multiple audio files</h3>
+<p>The initial step in the audio analytics process involves reading designated audio files. The <code>readAudio()</code> function in the voiceR package achieves this seamlessly, systematically processing all audio files in a specified directory and its subdirectories if specified. Users can customize this function by providing a file path (path) and an optional character vector to filter for specific patterns (filter). Upon execution, this function efficiently imports audio files into R, generating a comprehensive list of Wave objects, each representing an imported audio file.</p>
 </section>
 <section id="preprocessing-multiple-audio-files" class="level3">
-<h3 class="anchored" data-anchor-id="preprocessing-multiple-audio-files">Preprocessing Multiple Audio Files</h3>
-<p>Following successful import, preprocessing becomes imperative. The <strong><code>preprocess()</code></strong> function in voiceR automates this process by normalizing amplitude and eliminating background noise from a list of Wave objects (<code>audioList</code>). Two optional logical parameters, <strong><code>normalizeAmplitude</code></strong> and <strong><code>removeNoise</code></strong>, allow users to tailor the preprocessing scope. Default settings include both amplitude normalization and noise removal. While suitable for most scenarios, advanced users can integrate functions from other packages, such as tuneR’s <strong><code>extractWave()</code></strong>, for more intricate preprocessing. The output is a preprocessed list of Wave objects, which can be stored locally using the <strong><code>saveAudio()</code></strong> function.</p>
+<h3 class="anchored" data-anchor-id="preprocessing-multiple-audio-files">Preprocessing multiple audio files</h3>
+<p>Following successful import, preprocessing becomes imperative. The <code>preprocess()</code> function in voiceR automates this process by normalizing amplitude and eliminating background noise from a list of Wave objects (<code>audioList</code>). Two optional logical parameters, <code>normalizeAmplitude</code> and <code>removeNoise</code>, allow users to tailor the preprocessing scope. Default settings include both amplitude normalization and noise removal. While suitable for most scenarios, advanced users can integrate functions from other packages, such as tuneR’s <code>extractWave()</code>, for more intricate preprocessing. The output is a preprocessed list of Wave objects, which can be stored locally using the <code>saveAudio()</code> function.</p>
 </section>
 <section id="automatic-feature-extraction-for-multiple-audio-files" class="level3">
-<h3 class="anchored" data-anchor-id="automatic-feature-extraction-for-multiple-audio-files">Automatic Feature Extraction for Multiple Audio Files</h3>
-<p>The pivotal <strong><code>autoExtract()</code></strong> function facilitates the extraction of vocal features from raw or preprocessed audio files. Operating in two modes, it can either automatically read and analyze audio files based on a specified path and optional patterns or analyze a pre-existing list of audio files in the R environment. The function produces a table containing key audio features for each analyzed file, such as duration, voice breaks percentage, amplitude envelope root mean square, average loudness, average pitch, pitch standard deviation, average entropy, and average Harmonics to Noise Ratio.</p>
+<h3 class="anchored" data-anchor-id="automatic-feature-extraction-for-multiple-audio-files">Automatic feature extraction for multiple audio files</h3>
+<p>The pivotal <code>autoExtract()</code> function facilitates the extraction of vocal features from raw or preprocessed audio files. Operating in two modes, it can either automatically read and analyze audio files based on a specified path and optional patterns or analyze a pre-existing list of audio files in the R environment. The function produces a table containing key audio features for each analyzed file, such as duration, voice breaks percentage, amplitude envelope root mean square, average loudness, average pitch, pitch standard deviation, average entropy, and average Harmonics to Noise Ratio.</p>
 </section>
 <section id="visualizing-results" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-results">Visualizing Results</h3>
-<p>Given the wealth of information produced by <strong><code>autoExtract()</code></strong>, effective visualization is paramount. The voiceR package offers two specialized functions for this purpose:</p>
+<h3 class="anchored" data-anchor-id="visualizing-results">Visualizing results</h3>
+<p>Given the wealth of information produced by <code>autoExtract()</code>, effective visualization is paramount. The voiceR package offers two specialized functions for this purpose:</p>
 <ul>
-<li><p><strong><code>normalityPlots()</code></strong>: Generates density plots for each audio feature, facilitating normality assessment through the Shapiro-Wilk test.</p></li>
-<li><p><strong><code>comparisonPlots()</code></strong>: Produces box plots, aiding in the comparison of audio features across different conditions or dimensions. These plots include relevant statistical tests based on data normality.</p></li>
+<li><p><code>normalityPlots()</code>: Generates density plots for each audio feature, facilitating normality assessment through the Shapiro-Wilk test.</p></li>
+<li><p><code>comparisonPlots()</code>: Produces box plots, aiding in the comparison of audio features across different conditions or dimensions. These plots include relevant statistical tests based on data normality.</p></li>
 </ul>
 <p>These visualization functions, seamlessly integrated into the voiceR package, enhance the interpretability of audio data, enriching the depth and breadth of analysis.</p>
 </section>
 <section id="automatic-report-generation" class="level3">
 <h3 class="anchored" data-anchor-id="automatic-report-generation">Automatic Report Generation</h3>
-<p>Despite the automation provided by voiceR functions, thorough documentation of primary findings remains essential. The <strong><code>autoReport()</code></strong> function addresses this need by utilizing <strong><code>autoExtract()</code></strong> output to generate an HTML report. This report encapsulates key vocal features of the analyzed audio files, including density plots, box plots, and automatically generated APA-formatted text and tables, highlighting differences between conditions or dimensions.</p>
+<p>Despite the automation provided by voiceR functions, thorough documentation of primary findings remains essential. The <code>autoReport()</code> function addresses this need by utilizing <code>autoExtract()</code> output to generate an HTML report. This report encapsulates key vocal features of the analyzed audio files, including density plots, box plots, and automatically generated APA-formatted text and tables, highlighting differences between conditions or dimensions.</p>
 </section>
 </section>
 <section id="explore-the-voicer-shiny-app" class="level2">
 <h2 class="anchored" data-anchor-id="explore-the-voicer-shiny-app">Explore the voiceR Shiny App</h2>
-<p>For the ultimate user-friendly experience, voiceR offers the <strong><code>voiceRApp()</code></strong> function. By invoking this function, you can launch the voiceR Shiny app, simplifying the selection and subsequent analysis of multiple audio files. It provides a dynamic view of results and the ability to download a comprehensive report summarizing key findings. <a href="#fig-voiceR-app">Figure&nbsp;3</a> provides a snapshot of the voiceR app’s initial screen.</p>
+<p>For the ultimate user-friendly experience, voiceR offers the <code>voiceRApp()</code> function. By invoking this function, you can launch the voiceR Shiny app, simplifying the selection and subsequent analysis of multiple audio files. It provides a dynamic view of results and the ability to download a comprehensive report summarizing key findings. <a href="#fig-voiceR-app">Figure&nbsp;3</a> provides a snapshot of the voiceR app’s initial screen.</p>
 <div id="fig-voiceR-app" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="assets/voiceR-App.jpeg" class="roundedEdgeImage img-fluid figure-img"></p>
