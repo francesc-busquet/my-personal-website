@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,13 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -98,7 +92,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -163,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -173,18 +166,18 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html"> 
-<span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../posts/index.html"> 
-<span class="menu-text">Posts</span></a>
+    <a class="nav-link" href="../../../posts.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
+          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -258,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
 <p>Interpersonal communication transcends mere words, incorporating nuanced nonverbal signals where the voice plays a pivotal role. We dynamically adjust our voice to convey emotions, such as happiness or sadness, and intentions, including subtle nuances like sarcasm. We even form impressions from the way someone speaks. Therefore, analyzing not just the content but also the delivery—the voice—is essential for a more comprehensive understanding of communication.</p>
 <section id="voice-analytics-decoding-the-vocal-spectrum" class="level2">
 <h2 class="anchored" data-anchor-id="voice-analytics-decoding-the-vocal-spectrum">Voice analytics: Decoding the vocal spectrum</h2>
@@ -268,16 +260,12 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 class="anchored" data-anchor-id="the-analytical-process-from-acquisition-to-statistical-analysis">The analytical process: From acquisition to statistical analysis</h2>
 <p>However, before delving into the extraction of vocal features, a series of pivotal steps forms an integral part of the analytical process. The initial phase entails the acquisition of voice recordings, achievable through direct recording or retrieval from publicly accessible sources. Once the files are obtained, meticulous processing becomes indispensable, involving the arrangement of metadata and validation of collected files to ensure precision and organizational coherence.</p>
 <p>Following this preparatory phase, the subsequent step involves reading and preprocessing the voice files. This encompasses data preprocessing and transformation by primarily eliminating extraneous elements, such as irrelevant utterances and background noise. These preprocessing steps are crucial for ensuring the quality of the data.</p>
-<p>After preprocessing the audio files, we can extract the vocal features of interest, such as amplitude and fundamental frequency. These features can subsequently be explored through visualization and the computation of summary statistics to gain a deeper understanding. This exploration may reveal further anomalies, or matters requiring additional processing may be detected. Consequently, we may proceed to further preprocess the audio files. Once the data attains sufficient quality, the process culminates in statistical analysis. In this phase, the extracted vocal features may be compared through statistical tests or used to train prediction models. This whole process is depicted in <a href="#fig-voice-analytics-pipeline" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<p>After preprocessing the audio files, we can extract the vocal features of interest, such as amplitude and fundamental frequency. These features can subsequently be explored through visualization and the computation of summary statistics to gain a deeper understanding. This exploration may reveal further anomalies, or matters requiring additional processing may be detected. Consequently, we may proceed to further preprocess the audio files. Once the data attains sufficient quality, the process culminates in statistical analysis. In this phase, the extracted vocal features may be compared through statistical tests or used to train prediction models. This whole process is depicted in <a href="#fig-voice-analytics-pipeline">Figure&nbsp;1</a>.</p>
 <p>It is imperative to recognize that the process just described here is a simplified abstraction of the voice analytics process. Practical voice analytics is characterized by flexibility and adaptability rather than a rigidly linear progression. This iterative nature accommodates refinements and adjustments, ultimately enhancing the robustness and accuracy of the analytical outcomes.</p>
-<div id="fig-voice-analytics-pipeline" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-voice-analytics-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/voice-analytics-pipeline.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voice-analytics-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Streamlined view of the voice analytics pipeline
-</figcaption>
+<div id="fig-voice-analytics-pipeline" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/voice-analytics-pipeline.png" class="invertImage img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Streamlined view of the voice analytics pipeline</figcaption>
 </figure>
 </div>
 <p>To illustrate how voice analytics operates in a real-world context, we offer a simple, practical tutorial using R. This tutorial walks you through the fundamental steps of the voice analytics pipeline, from reading audio files to extracting vocal features and drawing basic inferences.</p>
@@ -527,19 +515,15 @@ Wave Object
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove all unvoiced frames of a soundwave</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cmd1.nosil <span class="ot">&lt;-</span> <span class="fu">zapsilw</span>(cmd1, <span class="at">output=</span><span class="st">"Wave"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillogram-before-after-silence-removal" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-oscillogram-before-after-silence-removal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillogram-before-after-silence-removal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Oscillogram comparison: original (top) vs.&nbsp;processed first command recording with unvoiced frames removed using default zapsilw() parameters (bottom)
-</figcaption>
+<div id="fig-oscillogram-before-after-silence-removal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Oscillogram comparison: original (top) vs.&nbsp;processed first command recording with unvoiced frames removed using default zapsilw() parameters (bottom)</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>By default, the <code>zapsilw()</code> function generates an oscillogram that compares the original sound recording with its processed counterpart, exemplified in <a href="#fig-oscillogram-before-after-silence-removal" class="quarto-xref">Figure&nbsp;2</a>. By comparing both oscillograms we can see how unvoiced frames have been removed, characterized by minimal or absent amplitude. Furthermore, for a comprehensive analysis, the characteristics of both audio files can be compared by calling <code>cmd1</code> and <code>cmd1.nosil</code>:</p>
+<p>By default, the <code>zapsilw()</code> function generates an oscillogram that compares the original sound recording with its processed counterpart, exemplified in <a href="#fig-oscillogram-before-after-silence-removal">Figure&nbsp;2</a>. By comparing both oscillograms we can see how unvoiced frames have been removed, characterized by minimal or absent amplitude. Furthermore, for a comprehensive analysis, the characteristics of both audio files can be compared by calling <code>cmd1</code> and <code>cmd1.nosil</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cmd1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -576,14 +560,10 @@ Wave Object
 <div class="cell invertImage">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cmd1.nosil2 <span class="ot">&lt;-</span> <span class="fu">zapsilw</span>(cmd1, <span class="at">threshold=</span><span class="fl">0.3</span>, <span class="at">output=</span><span class="st">"Wave"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillogram-before-after-silence-removal-threshold-03" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-oscillogram-before-after-silence-removal-threshold-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-threshold-03-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillogram-before-after-silence-removal-threshold-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Oscillogram comparison: original (top) vs.&nbsp;processed first command recording with unvoiced frames removed using threshold parameter equal to 0.3 (bottom)
-</figcaption>
+<div id="fig-oscillogram-before-after-silence-removal-threshold-03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-threshold-03-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Oscillogram comparison: original (top) vs.&nbsp;processed first command recording with unvoiced frames removed using threshold parameter equal to 0.3 (bottom)</figcaption>
 </figure>
 </div>
 </div>
@@ -695,7 +675,7 @@ Defining function arguments
 <li><p><strong>Oscillograms:</strong> These representations focus on capturing amplitude variations, providing a visual insight into the intensity or strength of the sound wave at different points in time.</p></li>
 <li><p><strong>Spectrograms:</strong> This type of visualization offers a comprehensive view of both frequency and the dynamic relationship between frequency and amplitude over time.</p></li>
 </ul>
-<p>It is important to highlight that, in this context, our progression directly shifts to visualization without the intermediary step of feature extraction, as depicted in <a href="#fig-voice-analytics-pipeline" class="quarto-xref">Figure&nbsp;1</a>. This decision is motivated, in part, by the inherent capability of the visualization functions to directly extract the pertinent features prior to their visualization.</p>
+<p>It is important to highlight that, in this context, our progression directly shifts to visualization without the intermediary step of feature extraction, as depicted in <a href="#fig-voice-analytics-pipeline">Figure&nbsp;1</a>. This decision is motivated, in part, by the inherent capability of the visualization functions to directly extract the pertinent features prior to their visualization.</p>
 <section id="visualizing-amplitude" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-amplitude">Visualizing amplitude</h3>
 <div class="callout callout-style-default callout-tip callout-titled" title="Amplitude">
@@ -732,44 +712,32 @@ Amplitude
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oscillo</span>(cmd2.filtered, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span>.<span class="dv">7</span>, <span class="at">colwave=</span><span class="st">"blue"</span>, <span class="at">collab=</span><span class="st">"red"</span>, </span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">"Second Command - wake word Only"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillograms" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-oscillograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-oscillograms-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Oscillograms for the first and second command, including the wake word (upper panel, colored in black) and isolated wake words (lower panel, colored in blue)
-</figcaption>
+<div id="fig-oscillograms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-oscillograms-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Oscillograms for the first and second command, including the wake word (upper panel, colored in black) and isolated wake words (lower panel, colored in blue)</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div id="fig-detailed-oscillogram-cmd1" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-detailed-oscillogram-cmd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/Oscillogram_command1_detailed.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-detailed-oscillogram-cmd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Detailed view of the oscillogram for the first command, including the wake word
-</figcaption>
+<div id="fig-detailed-oscillogram-cmd1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/Oscillogram_command1_detailed.png" class="invertImage img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Detailed view of the oscillogram for the first command, including the wake word</figcaption>
 </figure>
 </div>
-<div id="fig-detailed-oscillogram-cmd2" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-detailed-oscillogram-cmd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/Oscillogram_command2_detailed.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-detailed-oscillogram-cmd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Detailed view of the oscillogram for the second command, including the wake word
-</figcaption>
+<div id="fig-detailed-oscillogram-cmd2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/Oscillogram_command2_detailed.png" class="invertImage img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Detailed view of the oscillogram for the second command, including the wake word</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p>In addition to the oscillograms we just created, which are presented in <a href="#fig-oscillograms" class="quarto-xref">Figure&nbsp;4</a>. We have included two additional and separate oscillograms, presenting a detailed view for the initial and second commands, including the wake word. Notably, we adjusted the oscillogram of the initial command to align with the temporal segment of the second command. This adjustment facilitates a direct comparison between the two. Moreover, we have accompanied these two additional oscillograns by textual transcriptions for each utterance. The visual representations of these detailed oscillograms are illustrated in <a href="#fig-detailed-oscillogram-cmd1" class="quarto-xref">Figure&nbsp;5</a> and <a href="#fig-detailed-oscillogram-cmd2" class="quarto-xref">Figure&nbsp;6</a>, respectively, and can be viewed by clicking the “Detailed view of commands 1 and 2” tab.</p>
+<p>In addition to the oscillograms we just created, which are presented in <a href="#fig-oscillograms">Figure&nbsp;4</a>. We have included two additional and separate oscillograms, presenting a detailed view for the initial and second commands, including the wake word. Notably, we adjusted the oscillogram of the initial command to align with the temporal segment of the second command. This adjustment facilitates a direct comparison between the two. Moreover, we have accompanied these two additional oscillograns by textual transcriptions for each utterance. The visual representations of these detailed oscillograms are illustrated in <a href="#fig-detailed-oscillogram-cmd1">Figure&nbsp;5</a> and <a href="#fig-detailed-oscillogram-cmd2">Figure&nbsp;6</a>, respectively, and can be viewed by clicking the “Detailed view of commands 1 and 2” tab.</p>
 <p>Upon closer examination of these oscillograms, a few notable observations come to light at first glance:</p>
 <ol type="1">
 <li><p><strong>Difference in voice breaks</strong>: The first command exhibits a broader voice break between the wake word “<em>Alexa</em>” and the subsequent portion compared to the second command. Following this, the majority of voice breaks are relatively brief. However, in the second command, there is another extended voice break between “<em>by Dana</em>” and “<em>on my Spotify</em>”.</p></li>
@@ -826,21 +794,17 @@ Wave Object
 <audio controls="">
 <source src="assets/alexa_recording/wake_all.wav" type="audio/ogg">
 </audio>
-<p>After combining the two wake words, we utilize the <code>autoc()</code> function of the <code>seewave</code> package on the concatenated sound object, <code>wake_all</code>. This function produces a plot that visualizes the fundamental frequency of the audio object across different time points. Additionally, we specify the <code>ylim</code> parameter to limit the y-axis between 0 and 600 Hz (0.6 KHz). Finally, we add a vertical line using the <code>abline()</code> function, separating the wake words from the first and second commands. The resulting plot from this process is depicted in <a href="#fig-pitch" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<p>After combining the two wake words, we utilize the <code>autoc()</code> function of the <code>seewave</code> package on the concatenated sound object, <code>wake_all</code>. This function produces a plot that visualizes the fundamental frequency of the audio object across different time points. Additionally, we specify the <code>ylim</code> parameter to limit the y-axis between 0 and 600 Hz (0.6 KHz). Finally, we add a vertical line using the <code>abline()</code> function, separating the wake words from the first and second commands. The resulting plot from this process is depicted in <a href="#fig-pitch">Figure&nbsp;7</a>.</p>
 <div class="cell invertImage">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Note: ylim units need to be in KHz</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>F0 <span class="ot">&lt;-</span> <span class="fu">autoc</span>(wake_all, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>)) </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#We add a separation line, between the wake word 1 and wake word 2</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.635</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-pitch" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pitch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-pitch-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pitch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Pitch track for the two wake words
-</figcaption>
+<div id="fig-pitch" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-pitch-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Pitch track for the two wake words</figcaption>
 </figure>
 </div>
 </div>
@@ -856,19 +820,15 @@ Figure&nbsp;7: Pitch track for the two wake words
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w1<span class="sc">@</span>left, <span class="at">fs=</span>w1<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w2<span class="sc">@</span>left, <span class="at">fs=</span>w2<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-formanttrack" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-formanttrack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-formanttrack-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-formanttrack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: <span style="color:#000000; font-weight:600">First</span>, <span style="color:#df536b; font-weight:600">second</span> ,and <span style="color:#61d04f; font-weight:600">third</span> formant tracks for the two wake words associated with the first (left panel) and second (right panel) commands
-</figcaption>
+<div id="fig-formanttrack" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-formanttrack-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: <span style="color:#000000; font-weight:600">First</span>, <span style="color:#df536b; font-weight:600">second</span> ,and <span style="color:#61d04f; font-weight:600">third</span> formant tracks for the two wake words associated with the first (left panel) and second (right panel) commands</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>In <a href="#fig-formanttrack" class="quarto-xref">Figure&nbsp;8</a>, we can see the first three formants for each wake word represented by different colors. By scrutinizing the formant tracks of the wake words in both commands, discernible distinctions emerge, offering insights into the speaker’s tone and emotional disposition.</p>
+<p>In <a href="#fig-formanttrack">Figure&nbsp;8</a>, we can see the first three formants for each wake word represented by different colors. By scrutinizing the formant tracks of the wake words in both commands, discernible distinctions emerge, offering insights into the speaker’s tone and emotional disposition.</p>
 <p>In dissecting the first command’s wake word, we observe a more tightly spaced and evenly distributed set of formant frequencies compared to the second command’s wake word. This discrepancy implies a composed and relaxed speech pattern for the first command’s wake word than for the second, which exhibits greater variability, hinting at heightened tension and force in the speaker’s voice—reflecting the speaker frustration.</p>
 <p>Digging deeper into the analysis, the higher first formant frequency (F1) in the second command’s wake word suggests a wider mouth opening or an elevated tongue position, contributing to a more resonant and forceful vocal delivery. Similarly, the elevated second formant frequency (F2) in the second command’s formant track points to lip rounding or vocal tract narrowing, characteristics associated with increased vocal strength.</p>
 <p>Of particular note is the less pronounced third formant frequency (F3) in the second command’s wake word, indicating a degree of vocal tract constriction. While this intensifies the voice, it may also impart a muffled or harsh quality.</p>
@@ -884,19 +844,15 @@ Figure&nbsp;8: <span style="color:#000000; font-weight:600">First</span>, <span 
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spectro</span>(wake_all, <span class="at">osc=</span><span class="cn">TRUE</span>, <span class="at">flim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.5</span>))</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.62</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-spectrograms" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-spectrograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-spectrograms-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spectrograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Spectrogram for the wake words associated with the first and second commands
-</figcaption>
+<div id="fig-spectrograms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-spectrograms-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Spectrogram for the wake words associated with the first and second commands</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>By checking <a href="#fig-spectrograms" class="quarto-xref">Figure&nbsp;9</a>, we can observe how the second command’s wake word, shows a wider range of frequencies, especially at the beginning of the word “<em>Alexa</em>”. Moreover, the lower frequencies in this wake word are louder than any other part of both wake words. Importantly, the second wake word also seems to have higher variability in terms of intensity.</p>
+<p>By checking <a href="#fig-spectrograms">Figure&nbsp;9</a>, we can observe how the second command’s wake word, shows a wider range of frequencies, especially at the beginning of the word “<em>Alexa</em>”. Moreover, the lower frequencies in this wake word are louder than any other part of both wake words. Importantly, the second wake word also seems to have higher variability in terms of intensity.</p>
 </section>
 </section>
 <section id="acoustic-feature-extraction" class="level2">
@@ -923,24 +879,24 @@ Figure&nbsp;9: Spectrogram for the wake words associated with the first and seco
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>feat_cmd1 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(cmd1.filtered, <span class="at">plot =</span> F)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>feat_cmd2 <span class="ot">&lt;-</span> <span class="fu">analyze</span>(cmd2.filtered, <span class="at">plot =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now that we possess two objects containing information on distinct vocal characteristics from the two commands, our next step is to complement and quantify some of the key insights derived from our previous visualizations. In <a href="#fig-oscillograms" class="quarto-xref">Figure&nbsp;4</a>, we observed differences in voice breaks between both commands. Specifically, the first command exhibited a longer voice break between the wake word and the rest of the command, whereas the second command had an extended voice break between “<em>by Dana</em>” and “<em>on my Spotify</em>”.</p>
+<p>Now that we possess two objects containing information on distinct vocal characteristics from the two commands, our next step is to complement and quantify some of the key insights derived from our previous visualizations. In <a href="#fig-oscillograms">Figure&nbsp;4</a>, we observed differences in voice breaks between both commands. Specifically, the first command exhibited a longer voice break between the wake word and the rest of the command, whereas the second command had an extended voice break between “<em>by Dana</em>” and “<em>on my Spotify</em>”.</p>
 <p>Despite these observations, visually determining which command has a lower proportion of voice breaks was challenging. To address this, we can observe the <strong>percentage of voiced frames</strong> extracted by the <code>analyze()</code> function. This can be achieved by extracting the <code>voiced</code> column from the <code>summary</code> data.frame for both <code>feat_cmd1</code> and <code>feat_cmd2</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Returns the proportion of voiced samples</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5217391</code></pre>
+<pre><code>[1] 0.5</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5588235</code></pre>
 </div>
 </div>
-<p>Revealing a greater percentage of voiced frames in the second (55.88%) compared to the first command (52.17%). In other words, the second command has a lower percentage of unvoiced frames (voice breaks) than the first command. This information can be easily translated into total seconds of voice breaks by subtracting the <code>voiced</code> value from 1 and multiplying the result by the duration of each command:</p>
+<p>Revealing a greater percentage of voiced frames in the second (55.88%) compared to the first command (50%). In other words, the second command has a lower percentage of unvoiced frames (voice breaks) than the first command. This information can be easily translated into total seconds of voice breaks by subtracting the <code>voiced</code> value from 1 and multiplying the result by the duration of each command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">-</span> feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>voiced) <span class="sc">*</span> <span class="fu">duration</span>(cmd1.filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.31566</code></pre>
+<pre><code>[1] 3.466372</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">-</span> feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>voiced) <span class="sc">*</span> <span class="fu">duration</span>(cmd2.filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -948,7 +904,7 @@ Figure&nbsp;9: Spectrogram for the wake words associated with the first and seco
 </div>
 </div>
 <p>When examining the duration of voice breaks in seconds, we can still see that the first command has longer duration voice breaks. However, this difference is more pronounced in relative terms, considering that the length of the first command is shorter than that of the second.</p>
-<p>In addition, as we previously saw in <a href="#fig-oscillograms" class="quarto-xref">Figure&nbsp;4</a> is that the first command displays a lengthier voice break between the wake word and the subsequent part of the command compared to the second command. Thus, we may think that excluding that part, the second command has a greater amount of voice breaks, i.e.&nbsp;that the duration of the voice breaks in the rest of the command is lengthier.</p>
+<p>In addition, as we previously saw in <a href="#fig-oscillograms">Figure&nbsp;4</a> is that the first command displays a lengthier voice break between the wake word and the subsequent part of the command compared to the second command. Thus, we may think that excluding that part, the second command has a greater amount of voice breaks, i.e.&nbsp;that the duration of the voice breaks in the rest of the command is lengthier.</p>
 <p>Therefore, it’s interesting to examine the percentage of voice breaks solely within the rest of the command, excluding the wake word and the break between it and the remainder of the command. To achieve this, we use the <code>deletew()</code> function to remove the portion of each command containing the wake word. Subsequently, we ensure the elimination of all unvoiced frames preceding the remaining command section using the <code>noSilence()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>cmd1.without.wakeword <span class="ot">&lt;-</span> <span class="fu">deletew</span>(cmd1.filtered, <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">output =</span> <span class="st">"Wave"</span>)</span>
@@ -963,14 +919,14 @@ Figure&nbsp;9: Spectrogram for the wake words associated with the first and seco
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1_no_wakeword<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7043011</code></pre>
+<pre><code>[1] 0.6505376</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2_no_wakeword<span class="sc">$</span>summary<span class="sc">$</span>voiced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6300813</code></pre>
+<pre><code>[1] 0.6178862</code></pre>
 </div>
 </div>
-<p>These values reveal that after removing the wake word and the voice break between it and the subsequent part of the command, the first command exhibits a higher proportion of voiced frames (70.43%) compared to the second command (63.01%). Consequently, when excluding the wake word, the voice breaks in the second command are longer than those in the first command.</p>
+<p>These values reveal that after removing the wake word and the voice break between it and the subsequent part of the command, the first command exhibits a higher proportion of voiced frames (65.05%) compared to the second command (61.79%). Consequently, when excluding the wake word, the voice breaks in the second command are longer than those in the first command.</p>
 <p>Therefore, the first command has an overall greater proportion of voice breaks than the second command. However, this increased proportion of voice breaks is largely attributed to the extended break following the wake word. Once we eliminate the wake word and the subsequent break from both commands, it becomes evident that the second command actually has a higher proportion of voice breaks.</p>
 </section>
 <section id="intensity-associated-characteristics" class="level3">
@@ -1052,120 +1008,120 @@ Figure&nbsp;9: Spectrogram for the wake words associated with the first and seco
 <div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 229.3688</code></pre>
+<pre><code>[1] 229.5446</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 234.4607</code></pre>
+<pre><code>[1] 234.6111</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 40.54858</code></pre>
+<pre><code>[1] 41.23648</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 28.99324</code></pre>
+<pre><code>[1] 29.05691</code></pre>
 </div>
 </div>
-<p>Observing how the second command has a slightly higher average fundamental frequency (M = 234.46 Hz) than the first command (M = 229.37 Hz), while also having a higher standard deviation of the fundamental frequency (SD command 1 = 40.55 Hz; SD command 2 = 28.99 Hz).</p>
+<p>Observing how the second command has a slightly higher average fundamental frequency (M = 234.61 Hz) than the first command (M = 229.54 Hz), while also having a higher standard deviation of the fundamental frequency (SD command 1 = 41.24 Hz; SD command 2 = 29.06 Hz).</p>
 <p>To get into a higher level of granularity, we can apply the same analysis only to the wake word “<em>Alexa</em>”, by extracting the average and standard deviation of the fundamental frequency for the two wake words by accessing the previously created <code>feat_w1</code> and <code>feat_w2</code> objects:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 171.4803</code></pre>
+<pre><code>[1] 171.5443</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>pitch_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 238.2434</code></pre>
+<pre><code>[1] 238.5803</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13.13345</code></pre>
+<pre><code>[1] 13.17404</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>pitch_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.01586</code></pre>
+<pre><code>[1] 53.32302</code></pre>
 </div>
 </div>
-<p>In this case, the previously observed differences become even more pronounced—the second wake word has a much higher average fundamental frequency (M = 238.24 Hz) and standard deviation (SD = 53.02 Hz) than the first (M = 171.48 Hz; SD = 13.13 Hz).</p>
-<p>In addition to extracting details about the fundamental frequency, we can delve into information about the formants. In <a href="#fig-formanttrack" class="quarto-xref">Figure&nbsp;8</a>, we already saw that the track of the formants presented slight differences between the two wakewords. Consequently, our next step involves further characterising these differences, by extracting both the average and standard deviation of the frequency for the <strong>first formant</strong> (F1) across various commands and wake words. This information is accessible through the <code>f1_freq_mean</code> and <code>f1_freq_sd</code> columns in the <code>detailed</code> data.frame:</p>
+<p>In this case, the previously observed differences become even more pronounced—the second wake word has a much higher average fundamental frequency (M = 238.58 Hz) and standard deviation (SD = 53.32 Hz) than the first (M = 171.54 Hz; SD = 13.17 Hz).</p>
+<p>In addition to extracting details about the fundamental frequency, we can delve into information about the formants. In <a href="#fig-formanttrack">Figure&nbsp;8</a>, we already saw that the track of the formants presented slight differences between the two wakewords. Consequently, our next step involves further characterising these differences, by extracting both the average and standard deviation of the frequency for the <strong>first formant</strong> (F1) across various commands and wake words. This information is accessible through the <code>f1_freq_mean</code> and <code>f1_freq_sd</code> columns in the <code>detailed</code> data.frame:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 346.1914</code></pre>
+<pre><code>[1] 341.1467</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 392.5255</code></pre>
+<pre><code>[1] 396.2854</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 117.9901</code></pre>
+<pre><code>[1] 124.3712</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 242.5611</code></pre>
+<pre><code>[1] 269.8563</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 377.39</code></pre>
+<pre><code>[1] 377.3985</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 427.1445</code></pre>
+<pre><code>[1] 427.464</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 65.50526</code></pre>
+<pre><code>[1] 65.50178</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>f1_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 92.08512</code></pre>
+<pre><code>[1] 92.18673</code></pre>
 </div>
 </div>
-<p>As we can observe, the second command exhibits a slightly higher average frequency for the first formant (M = 392.53Hz) compared to the first command (M = 346.19 Hz). However, it’s noteworthy that the standard deviation of the first formant is greater for the second command (SD = 242.56 Hz) than for the first command (SD = 117.99 Hz).</p>
-<p>Upon closer examination of the wake words, this relationship undergoes partial modification. The wake word associated with the second command displays both a higher average and standard deviation for the frequency of the first formant (M = 427.14 Hz; SD = 92.09 Hz) in comparison to the wake word linked to the first command (M = 377.39 Hz; SD = 92.09 Hz).</p>
+<p>As we can observe, the second command exhibits a slightly higher average frequency for the first formant (M = 396.29Hz) compared to the first command (M = 341.15 Hz). However, it’s noteworthy that the standard deviation of the first formant is greater for the second command (SD = 269.86 Hz) than for the first command (SD = 124.37 Hz).</p>
+<p>Upon closer examination of the wake words, this relationship undergoes partial modification. The wake word associated with the second command displays both a higher average and standard deviation for the frequency of the first formant (M = 427.46 Hz; SD = 92.19 Hz) in comparison to the wake word linked to the first command (M = 377.4 Hz; SD = 92.19 Hz).</p>
 <p>Similarly, we can extract that information for the <strong>second formant</strong> (F2), by accessing the <code>f2_freq_mean</code> and <code>f2_freq_sd columns</code> in the <code>detailed</code> data data.frame:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_mean </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 785.8252</code></pre>
+<pre><code>[1] 777.9931</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_mean </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 879.1609</code></pre>
+<pre><code>[1] 861.1772</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_sd </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 433.0889</code></pre>
+<pre><code>[1] 434.6778</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 492.0018</code></pre>
+<pre><code>[1] 478.9126</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_mean </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 728.2679</code></pre>
+<pre><code>[1] 728.2684</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_mean </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 849.607</code></pre>
+<pre><code>[1] 850.462</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_sd </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 253.4525</code></pre>
+<pre><code>[1] 253.4491</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>f2_freq_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 130.4056</code></pre>
+<pre><code>[1] 129.9195</code></pre>
 </div>
 </div>
-<p>Examining these values, we observe that the first command has a higher average and standard deviation for the frequency of the second formant (M = 785.83 Hz; SD = 433.09 Hz) compared to the second command (M = 879.16 Hz, SD = 492 Hz).</p>
-<p>Zooming in on the wake words, we note that the average frequency for the wake word associated with the second command (M = 849.61 Hz) is higher than that for the wake word associated with the first command (M = 728.27 Hz). However, it’s interesting to point out that the wake word linked to the first command exhibits a higher standard deviation of the frequency of the second formant (SD = 130.41 Hz) compared to the wake word associated with the second command (SD = 130.41 Hz).</p>
+<p>Examining these values, we observe that the first command has a higher average and standard deviation for the frequency of the second formant (M = 777.99 Hz; SD = 434.68 Hz) compared to the second command (M = 861.18 Hz, SD = 478.91 Hz).</p>
+<p>Zooming in on the wake words, we note that the average frequency for the wake word associated with the second command (M = 850.46 Hz) is higher than that for the wake word associated with the first command (M = 728.27 Hz). However, it’s interesting to point out that the wake word linked to the first command exhibits a higher standard deviation of the frequency of the second formant (SD = 129.92 Hz) compared to the wake word associated with the second command (SD = 129.92 Hz).</p>
 </section>
 <section id="spectral-associated-characteristics" class="level3">
 <h3 class="anchored" data-anchor-id="spectral-associated-characteristics">Spectral associated characteristics</h3>
@@ -1199,15 +1155,15 @@ When the spectrum is flat, indicating a balanced energy distribution, the Wiener
 <div class="cell">
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 15.92719</code></pre>
+<pre><code>[1] 11.85501</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 16.74486</code></pre>
+<pre><code>[1] 12.62945</code></pre>
 </div>
 </div>
 <p>Upon examining the average entropy for the two commands, it becomes evident that their values are quite comparable. It’s noteworthy, however, that these values are relatively close to 0, indicating a resemblance more akin to a pure tone than to white noise.</p>
-<p>In terms of the average HNR, both commands also possess similar values, having the second command with a slightly higher value (M = 16.74 dB) than the first (M = 15.93 dB). The high HNR value for both commands indicates a substantial dominance of harmonics to noise within the audio signals.</p>
+<p>In terms of the average HNR, both commands also possess similar values, having the second command with a slightly higher value (M = 12.63 dB) than the first (M = 11.86 dB). The high HNR value for both commands indicates a substantial dominance of harmonics to noise within the audio signals.</p>
 <p>In addition to comparing the means of the entropy and HNR, we will also observe their standard deviation as in the previous cases:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>entropy_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1222,11 +1178,11 @@ When the spectrum is flat, indicating a balanced energy distribution, the Wiener
 <div class="cell">
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>feat_cmd1<span class="sc">$</span>summary<span class="sc">$</span>HNR_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6.61309</code></pre>
+<pre><code>[1] 3.619345</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>feat_cmd2<span class="sc">$</span>summary<span class="sc">$</span>HNR_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6.178095</code></pre>
+<pre><code>[1] 3.262399</code></pre>
 </div>
 </div>
 <p>Seeing how for both commands, the standard deviation of the entropy and the HNR is fairly similar between the two commands.</p>
@@ -1242,11 +1198,11 @@ When the spectrum is flat, indicating a balanced energy distribution, the Wiener
 </div>
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13.37802</code></pre>
+<pre><code>[1] 8.93526</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>feat_w1<span class="sc">$</span>summary<span class="sc">$</span>HNR_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.217952</code></pre>
+<pre><code>[1] 2.849043</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>entropy_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1258,26 +1214,22 @@ When the spectrum is flat, indicating a balanced energy distribution, the Wiener
 </div>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>HNR_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.21771</code></pre>
+<pre><code>[1] 9.080507</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>feat_w2<span class="sc">$</span>summary<span class="sc">$</span>HNR_sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.512729</code></pre>
+<pre><code>[1] 3.297316</code></pre>
 </div>
 </div>
 <p>As in the case of the commands, we can see how the different values between the two wake words are quite similar. However, the values for the HNR are lower than for the command, implying that there’s a lower proportion of harmonics in relation to noise. Thus, the speaker when saying the command has slightly hoarser voice compared to the rest of the command. This hoarseness could be linked to a direct increase in vocal intensity when initiating speech.</p>
 </section>
 <section id="vocal-features-summary" class="level3">
 <h3 class="anchored" data-anchor-id="vocal-features-summary">Vocal features summary</h3>
-<p>After extracting the various vocal features from the two commands, we present a well-organized table, <a href="#tbl-vocal-features" class="quarto-xref">Table&nbsp;1</a>, which encapsulates these characteristics for each command. Furthermore, we also include the vocal characteristics for the isolated wake words associated with both commands.</p>
+<p>After extracting the various vocal features from the two commands, we present a well-organized table, <a href="#tbl-vocal-features">Table&nbsp;1</a>, which encapsulates these characteristics for each command. Furthermore, we also include the vocal characteristics for the isolated wake words associated with both commands.</p>
 <div class="table-wrapper">
-<div id="tbl-vocal-features" class="quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vocal-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Vocal features for the two commands and isolated wake words
-</figcaption>
-<div aria-describedby="tbl-vocal-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-vocal-features" class="anchored">
 <table class="table">
+<caption>Table&nbsp;1: Vocal features for the two commands and isolated wake words</caption>
 <colgroup>
 <col style="width: 24%">
 <col style="width: 20%">
@@ -1311,15 +1263,15 @@ Table&nbsp;1: Vocal features for the two commands and isolated wake words
 </tr>
 <tr class="odd">
 <td>Percentage of voiced frames</td>
-<td style="text-align: center;">52.17 %</td>
+<td style="text-align: center;">50 %</td>
 <td style="text-align: center;">55.88 %</td>
 <td style="text-align: center;">58.33 %</td>
 <td style="text-align: center;">62.5 %</td>
 </tr>
 <tr class="even">
 <td>Percentage of voiced frames, excluding wake word and subsequent break</td>
-<td style="text-align: center;">70.43 %</td>
-<td style="text-align: center;">63.01 %</td>
+<td style="text-align: center;">65.05 %</td>
+<td style="text-align: center;">61.79 %</td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;">—</td>
 </tr>
@@ -1367,45 +1319,45 @@ Table&nbsp;1: Vocal features for the two commands and isolated wake words
 </tr>
 <tr class="odd">
 <td>Average fundamental frequency</td>
-<td style="text-align: center;">229.37 Hz</td>
-<td style="text-align: center;">234.46 Hz</td>
-<td style="text-align: center;">171.48 Hz</td>
-<td style="text-align: center;">238.24 Hz</td>
+<td style="text-align: center;">229.54 Hz</td>
+<td style="text-align: center;">234.61 Hz</td>
+<td style="text-align: center;">171.54 Hz</td>
+<td style="text-align: center;">238.58 Hz</td>
 </tr>
 <tr class="even">
 <td>Standard deviation of the fundamental frequency</td>
-<td style="text-align: center;">40.55 Hz</td>
-<td style="text-align: center;">28.99 Hz</td>
-<td style="text-align: center;">13.13 Hz</td>
-<td style="text-align: center;">53.02 Hz</td>
+<td style="text-align: center;">41.24 Hz</td>
+<td style="text-align: center;">29.06 Hz</td>
+<td style="text-align: center;">13.17 Hz</td>
+<td style="text-align: center;">53.32 Hz</td>
 </tr>
 <tr class="odd">
 <td>Average first formant (F1) frequency</td>
-<td style="text-align: center;">346.19 Hz</td>
-<td style="text-align: center;">392.53 Hz</td>
-<td style="text-align: center;">377.39 Hz</td>
-<td style="text-align: center;">427.14 Hz</td>
+<td style="text-align: center;">341.15 Hz</td>
+<td style="text-align: center;">396.29 Hz</td>
+<td style="text-align: center;">377.4 Hz</td>
+<td style="text-align: center;">427.46 Hz</td>
 </tr>
 <tr class="even">
 <td>Standard deviation of the first formant (F1) frequency</td>
-<td style="text-align: center;">117.99 Hz</td>
-<td style="text-align: center;">242.56 Hz</td>
-<td style="text-align: center;">65.51 Hz</td>
-<td style="text-align: center;">92.09 Hz</td>
+<td style="text-align: center;">124.37 Hz</td>
+<td style="text-align: center;">269.86 Hz</td>
+<td style="text-align: center;">65.5 Hz</td>
+<td style="text-align: center;">92.19 Hz</td>
 </tr>
 <tr class="odd">
 <td>Average second formant (F2) frequency</td>
-<td style="text-align: center;">785.83 Hz</td>
-<td style="text-align: center;">879.16 Hz</td>
+<td style="text-align: center;">777.99 Hz</td>
+<td style="text-align: center;">861.18 Hz</td>
 <td style="text-align: center;">728.27 Hz</td>
-<td style="text-align: center;">849.61 Hz</td>
+<td style="text-align: center;">850.46 Hz</td>
 </tr>
 <tr class="even">
 <td>Standard deviation of the second formant (F2) frequency</td>
-<td style="text-align: center;">433.09 Hz</td>
-<td style="text-align: center;">492 Hz</td>
+<td style="text-align: center;">434.68 Hz</td>
+<td style="text-align: center;">478.91 Hz</td>
 <td style="text-align: center;">253.45 Hz</td>
-<td style="text-align: center;">130.41 Hz</td>
+<td style="text-align: center;">129.92 Hz</td>
 </tr>
 <tr class="odd">
 <td><strong>Spectral domain</strong></td>
@@ -1430,31 +1382,29 @@ Table&nbsp;1: Vocal features for the two commands and isolated wake words
 </tr>
 <tr class="even">
 <td>Average Harmonics-to-Noise Ratio</td>
-<td style="text-align: center;">15.93 dB</td>
-<td style="text-align: center;">16.74 dB</td>
-<td style="text-align: center;">13.38 dB</td>
-<td style="text-align: center;">11.22 dB</td>
+<td style="text-align: center;">11.86 dB</td>
+<td style="text-align: center;">12.63 dB</td>
+<td style="text-align: center;">8.94 dB</td>
+<td style="text-align: center;">9.08 dB</td>
 </tr>
 <tr class="odd">
 <td>Standard deviation of the Harmonics-to-Noise Ratio</td>
-<td style="text-align: center;">6.61 dB</td>
-<td style="text-align: center;">6.18 dB</td>
-<td style="text-align: center;">4.22 dB</td>
-<td style="text-align: center;">3.51 dB</td>
+<td style="text-align: center;">3.62 dB</td>
+<td style="text-align: center;">3.26 dB</td>
+<td style="text-align: center;">2.85 dB</td>
+<td style="text-align: center;">3.3 dB</td>
 </tr>
 </tbody>
 </table>
 </div>
-</figure>
-</div>
 </div>
 <section id="wakeword" class="level4">
 <h4 class="anchored" data-anchor-id="wakeword">Wakeword</h4>
-<p>Looking at <a href="#tbl-vocal-features" class="quarto-xref">Table&nbsp;1</a> we can easily notice that the second command’s wake word is spoken more loudly, especially in the initial part of the word, as we previously observed in <a href="#fig-spectrograms" class="quarto-xref">Figure&nbsp;9</a>. This illustrates how, in the second command’s wake word, the speaker raises their voice to say “<em>Ale</em>.” Additionally, the second command has a higher percentage of voiced frames, mainly because the speaker prolongs the letter “<em>e</em>”, as seen in <a href="#fig-spectrograms" class="quarto-xref">Figure&nbsp;9</a>. Furthermore, we observe that the second command’s wake word has a higher average and standard deviation of the fundamental frequency. Specifically, this frequency rises during the first part of the command, corresponding to “<em>Ale</em>”, and then decreases again, as shown in <a href="#fig-pitch" class="quarto-xref">Figure&nbsp;7</a>. This indicates that in the initial part of the word “<em>Alexa</em>”, the voice is higher, suggesting the speaker is raising their voice. Moreover, in the second command’s wake word, the average frequencies for the first two formants are also higher, indicating a more forceful delivery.</p>
+<p>Looking at <a href="#tbl-vocal-features">Table&nbsp;1</a> we can easily notice that the second command’s wake word is spoken more loudly, especially in the initial part of the word, as we previously observed in <a href="#fig-spectrograms">Figure&nbsp;9</a>. This illustrates how, in the second command’s wake word, the speaker raises their voice to say “<em>Ale</em>.” Additionally, the second command has a higher percentage of voiced frames, mainly because the speaker prolongs the letter “<em>e</em>”, as seen in <a href="#fig-spectrograms">Figure&nbsp;9</a>. Furthermore, we observe that the second command’s wake word has a higher average and standard deviation of the fundamental frequency. Specifically, this frequency rises during the first part of the command, corresponding to “<em>Ale</em>”, and then decreases again, as shown in <a href="#fig-pitch">Figure&nbsp;7</a>. This indicates that in the initial part of the word “<em>Alexa</em>”, the voice is higher, suggesting the speaker is raising their voice. Moreover, in the second command’s wake word, the average frequencies for the first two formants are also higher, indicating a more forceful delivery.</p>
 </section>
 <section id="full-command" class="level4">
 <h4 class="anchored" data-anchor-id="full-command">Full command</h4>
-<p>The second command is lengthier than the first, this is primarily because when excluding the wake word and the voice break between the wake word and the rest of the command, there’s a higher percentage of unvoiced frames, i.e.&nbsp;lengthier voice breaks. By listening to the audio and also looking at <a href="#fig-oscillograms" class="quarto-xref">Figure&nbsp;4</a>, we can observe how the speaker is emphasizing the individual words, hoping that in this way the device will understand the command, unlike in the first command. As, in the case of the wake words, we can also observe an average higher fundamental frequency for the second command’s wake word, indicating a higher voice. In addition, the frequencies for the first and second formant are also higher, indicating a more forceful delivery.</p>
+<p>The second command is lengthier than the first, this is primarily because when excluding the wake word and the voice break between the wake word and the rest of the command, there’s a higher percentage of unvoiced frames, i.e.&nbsp;lengthier voice breaks. By listening to the audio and also looking at <a href="#fig-oscillograms">Figure&nbsp;4</a>, we can observe how the speaker is emphasizing the individual words, hoping that in this way the device will understand the command, unlike in the first command. As, in the case of the wake words, we can also observe an average higher fundamental frequency for the second command’s wake word, indicating a higher voice. In addition, the frequencies for the first and second formant are also higher, indicating a more forceful delivery.</p>
 <p>Thus, we could hear how the speaker was expressing higher frustration on the second command and by decomposing the command into several audio characteristics that we have visualized and quantified, we have gained a deeper understanding of what’s driving our perception of the user’s frustration while interacting with Alexa.</p>
 </section>
 </section>
@@ -1512,33 +1462,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1607,15 +1530,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1694,9 +1615,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1706,17 +1628,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1729,125 +1642,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1891,7 +1685,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1917,32 +1710,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2003,7 +1770,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
 
 
 
