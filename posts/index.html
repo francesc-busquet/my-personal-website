@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2021-05-19">
 
-<title>Francesc Busquet - Why potential inflation could lead to a financial crisis?</title>
+<title>Francesc Busquet - Posts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,25 +23,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<link href="../../../assets/favicon/favicon.ico" rel="icon">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon/favicon.ico" rel="icon">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,65 +72,71 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <script>
-  
-  function getGiscusTheme() {
-  const quartoTheme = localStorage.getItem("quarto-color-scheme");
-  const giscusTheme = quartoTheme === "alternate" ? "dark" : "light";
-  return giscusTheme;
-}
 
-function setGiscusTheme() {
-  function sendMessage(message) {
-    const iframe = document.querySelector('iframe.giscus-frame');
-    if (!iframe) return;
-    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-  }
-  sendMessage({
-    setConfig: {
-      theme: getGiscusTheme(),
-    },
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
   });
-}
 
-document.addEventListener('DOMContentLoaded', function () {
-  const giscusAttributes = {
-    "src": "https://giscus.app/client.js",
-    "data-repo": "francesc-busquet/my-personal-website",
-    "data-repo-id": "R_kgDOKbDmgw",
-    "data-category": "General",
-    "data-category-id": "DIC_kwDOKbDmg84CZzPu",
-    "data-mapping": "title",
-    "data-strict": "1",
-    "data-reactions-enabled": "1",
-    "data-emit-metadata": "0",
-    "data-input-position": "top",
-    "data-theme": getGiscusTheme(),
-    "data-lang": "en",
-    "crossorigin": "anonymous",
-    "async": "",
-  };
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 
-  // Dynamically create script tag
-  const giscusScript = document.createElement("script");
-  Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
-  document.body.appendChild(giscusScript);
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-  // Update giscus theme when theme switcher is clicked
-  const toggle = document.querySelector('.quarto-color-scheme-toggle');
-  if (toggle) {
-    toggle.addEventListener('click', setGiscusTheme);
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
   }
-});
-  
+}
+window.Quarto = {
+  typesetMath
+};
 </script>
-
 
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
@@ -139,11 +146,11 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../posts/index.html"> 
+    <a class="nav-link active" href="../posts/index.html" aria-current="page"> 
 <span class="menu-text">Posts</span></a>
   </li>  
 </ul>
@@ -155,177 +162,113 @@ document.addEventListener('DOMContentLoaded', function () {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Why potential inflation could lead to a financial crisis?</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">economics</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">May 19, 2021</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#a-bit-of-history" id="toc-a-bit-of-history" class="nav-link active" data-scroll-target="#a-bit-of-history">A bit of history</a></li>
-  <li><a href="#a-time-of-low-interest-rates" id="toc-a-time-of-low-interest-rates" class="nav-link" data-scroll-target="#a-time-of-low-interest-rates">A time of low interest rates</a></li>
-  <li><a href="#stocks-as-the-only-attractive-investment-vehicle" id="toc-stocks-as-the-only-attractive-investment-vehicle" class="nav-link" data-scroll-target="#stocks-as-the-only-attractive-investment-vehicle">Stocks as the only attractive investment vehicle</a></li>
-  <li><a href="#an-unexpected-event-a-global-pandemic" id="toc-an-unexpected-event-a-global-pandemic" class="nav-link" data-scroll-target="#an-unexpected-event-a-global-pandemic">An unexpected event: A global pandemic</a></li>
-  <li><a href="#a-double-edged-sword" id="toc-a-double-edged-sword" class="nav-link" data-scroll-target="#a-double-edged-sword">A double-edged sword</a></li>
-  <li><a href="#the-market-can-not-be-timed" id="toc-the-market-can-not-be-timed" class="nav-link" data-scroll-target="#the-market-can-not-be-timed">The market can not be timed</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  </ul>
-</nav>
-    </div>
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(2)</span></div><div class="category" data-category="economics">economics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="voice analytics">voice analytics <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Posts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 
 
 
-<section id="a-bit-of-history" class="level2">
-<h2 class="anchored" data-anchor-id="a-bit-of-history">A bit of history</h2>
-<p>The decade of the 2000s may have been a pretty good decade in many aspects, movies such as the lord of the rings or harry potter were released; music albums such as The Strokes’ “Is this It” or Bob Dylan’s “Modern Times” were released. Nevertheless, this decade was not a good one in economic terms. This decade started with the dotcom crash, which was triggered by the rise and fall of technology stocks. And, this was not the only remarkable economic event of this decade, when the economy seemed to have recovered from this crisis, another crisis broke out, the financial crisis of 2007-2008, triggered by the collapse of the housing market in the U.S. All these economic turbulences can be clearly seen in the evolution of the S&amp;P500 between 2000 and 2010 as shown in <a href="#fig-s-and-p" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="fig-s-and-p" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-s-and-p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/6g7jwgdjnuy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-s-and-p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: S&amp;P500 (2000 - 2010)
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="a-time-of-low-interest-rates" class="level2">
-<h2 class="anchored" data-anchor-id="a-time-of-low-interest-rates">A time of low interest rates</h2>
-<p>Moreover, these economic disturbances led governments to act severely. Keynesian policies for the activation of the economy began to play a fundamental role. To encourage consumption, interest rates were lowered to near historic lows. <a href="#fig-us-10-year-note" class="quarto-xref">Figure&nbsp;2</a> displays the US 10 year note bond yield between 1920 and 2020. In this figure, we can see how the dotcom crash pushed down this yield. However, after that it started recovering until July 2007, when the financial crisis started, after that, that yield continued a downward trend.</p>
-<div id="fig-us-10-year-note" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-us-10-year-note-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/p7mnvg3gduy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-us-10-year-note-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: US 10 year note bond yield
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="stocks-as-the-only-attractive-investment-vehicle" class="level2">
-<h2 class="anchored" data-anchor-id="stocks-as-the-only-attractive-investment-vehicle">Stocks as the only attractive investment vehicle</h2>
-<p>Such a long period of low interest rates inflated stock prices. <a href="#fig-cyclically-adj-s-and-p" class="quarto-xref">Figure&nbsp;3</a>, shows how cyclically adjusted S&amp;P 500 price-to-earnings ratio has been rising during the last decade, being quite high in comparison to other periods of time (specially before the dot-com bubble). Stock prices started trading at a premium, because there were no attractive alternative investments, this channelled much of the liquidity into equities (bonds with almost no interest or even negative interests were not an attractive investment anymore). Moreover, this low interest rate setting has prompted greater investor leverage, due to its low cost. Hence, low interest rates justify high stock prices, since stocks are highly attractive relative to bonds and debt is stimulated due to its reduced cost.</p>
-<div id="fig-cyclically-adj-s-and-p" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cyclically-adj-s-and-p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/9al89cizwuy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cyclically-adj-s-and-p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Cyclically adjusted S&amp;P 500 price-to-earnings rations
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="an-unexpected-event-a-global-pandemic" class="level2">
-<h2 class="anchored" data-anchor-id="an-unexpected-event-a-global-pandemic">An unexpected event: A global pandemic</h2>
-<p>2020 was not a good year, this year will always be remembered as the year of the COVID. COVID brought many changes in our lives, which undoubtedly had an impact on the economy. As a result, governments continued to pursue stimulative policies and interest rates remained at very low levels.</p>
-<p>One of the best illustrations of those stimulative policies is the amount of dollars printed in 2020: 21% of the United States dollar was printed in 2020, as shown in <a href="#fig-us-dollar-stock-2020" class="quarto-xref">Figure&nbsp;4</a>. This large injection was used for both direct and indirect assistance in the COVID situation. This, at the same time, indirectly channelled part of this aid to the financial markets, increasing their value.</p>
-<div id="fig-us-dollar-stock-2020" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-us-dollar-stock-2020-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/l0c36b3gzuy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-us-dollar-stock-2020-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Annual money stock growth (trillions of USD)
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="a-double-edged-sword" class="level2">
-<h2 class="anchored" data-anchor-id="a-double-edged-sword">A double-edged sword</h2>
-<p>Injecting money to the economy is always something controversial. Through the law of supply and demand it is easy to infer that a considerable increase in supply (without a similar increase in demand) will reduce the price of a good. In money, when this happens, we say that the money loses value, i.e.&nbsp;one monetary unit can acquire fewer products. In other words, this is what we call inflation. Even Warren Buffet has shown concern for inflation in the past month:</p>
-<blockquote class="blockquote">
-<p>“<strong>We are seeing very substantial inflation […] We are raising prices. People are raising prices to us and it’s being accepted.”</strong></p>
-</blockquote>
-<p>This raise on prices can be already tracked on several indices such as Bloomberg’s agriculture index, shown in <a href="#fig-crop-prices" class="quarto-xref">Figure&nbsp;5</a> and also in the annual single-family home price, as shown in <a href="#fig-single-family-home-prices" class="quarto-xref">Figure&nbsp;6</a>.</p>
-<div id="fig-crop-prices" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-crop-prices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/ad6oocg86vy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crop-prices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Bloomberg agriculture index
-</figcaption>
-</figure>
-</div>
-<div id="fig-single-family-home-prices" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-single-family-home-prices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/5oc8mgum6vy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-single-family-home-prices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Annual single-family home price
-</figcaption>
-</figure>
-</div>
-<p>The appearance of inflation means that interest rates should rise. Something that was already pointed by Janet Yellen at the start of this month:</p>
-<blockquote class="blockquote">
-<p><strong>“It may be that interest rates will have to rise somewhat to make sure that our economy doesn’t overheat”</strong></p>
-</blockquote>
-<p>But what would happen if inflation persists and interest rates have to be risen? Remember that I previously said that stocks are trading at a premium due to the lack of attractive alternative investments. This would no longer be true and this premium would no longer be a thing. In addition, an increase in interest rates would reduce the attractiveness of leverage, thereby encouraging investor’s deleverage. And, thus, we should expect a decrease in the stock price.</p>
-</section>
-<section id="the-market-can-not-be-timed" class="level2">
-<h2 class="anchored" data-anchor-id="the-market-can-not-be-timed">The market can not be timed</h2>
-<p>Even with all these indicators, it is difficult to say whether this will happen in the short to medium term. There are many factors which could deter inflation away and interest rates low. As an example, Berkshire Hathaway has been stacking cash during the last years, as shown in <a href="#fig-berkshire-cash-holding" class="quarto-xref">Figure&nbsp;7</a>, playing a slightly more defensive position. This may be due the fact that they already saw that low interest rates during the last decade were driving the stock market at high prices. However, interest rates are still low and during that time the stock market has continued rising.</p>
-<div id="fig-berkshire-cash-holding" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-berkshire-cash-holding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/3ag5lqt6cvy61.png" class="invertImage img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-berkshire-cash-holding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Berkshire’s cash holdings
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<ul>
-<li>The first decade of the 2000s was characterized by two economic crisis, which defined an economy with very low interest rates</li>
-<li>Low interest rates increased stock market prices, since there were no attractive alternative investments and leverage was cheap. Thus, stock markets traded at a premium.</li>
-<li>The Covid crisis led to a massive injection of money into the economy.</li>
-<li>This money injection is a double-edged sword which may have brought an exuberance illusion awakening a ghost that has been dormant in recent years, inflation.</li>
-<li>The emergence of inflation would imply an increase in interest rates.</li>
-<li>An increase in interest rates would mean that the premium paid for stocks would be lost.</li>
-<li>Despite all these facts, timing the market is no easy task. And thus, other factors could keep inflation away and interest rates away, prolonging this situation.</li>
-</ul>
 
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
-<div class="giscus">
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Date
+</th>
+<th>
+Title
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="economics" data-listing-date-sort="1698238092000" data-listing-file-modified-sort="1708889919473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4190" data-listing-title-sort="Money and the ascent of Bitcoin" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Oct 25, 2023</span>
+</td>
+<td>
+<a href="../posts/2023/money-and-the-ascent-of-bitcoin/index.html" class="title listing-title">Money and the ascent of Bitcoin</a>
+</td>
+</tr>
+<tr data-index="1" data-categories="R,voice analytics" data-listing-date-sort="1694552299000" data-listing-file-modified-sort="1708889919523" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1204" data-listing-title-sort="My first R package: voiceR" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Sep 12, 2023</span>
+</td>
+<td>
+<a href="../posts/2023/voiceR-R-package/index.html" class="title listing-title">My first R package: voiceR</a>
+</td>
+</tr>
+<tr data-index="2" data-categories="R,voice analytics" data-listing-date-sort="1673084584000" data-listing-file-modified-sort="1708889919473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="63" data-listing-word-count-sort="12580" data-listing-title-sort="Introductory voice analytics with R" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Jan 7, 2023</span>
+</td>
+<td>
+<a href="../posts/2023/intro-to-voice-analytics/index.html" class="title listing-title">Introductory voice analytics with R</a>
+</td>
+</tr>
+<tr data-index="3" data-categories="statistics" data-listing-date-sort="1649352064000" data-listing-file-modified-sort="1708889919423" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="55" data-listing-word-count-sort="10942" data-listing-title-sort="Statistics Foundations: Confidence intervals" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Apr 7, 2022</span>
+</td>
+<td>
+<a href="../posts/2022/statistics-foundations-confidence-intervals/index.html" class="title listing-title">Statistics Foundations: Confidence intervals</a>
+</td>
+</tr>
+<tr data-index="4" data-categories="statistics" data-listing-date-sort="1640682537000" data-listing-file-modified-sort="1708889919419" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26" data-listing-word-count-sort="5200" data-listing-title-sort="Statistics Foundations: Sampling error" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Dec 28, 2021</span>
+</td>
+<td>
+<a href="../posts/2021/statistics-foundations-sample-error/index.html" class="title listing-title">Statistics Foundations: Sampling error</a>
+</td>
+</tr>
+<tr data-index="5" data-categories="statistics" data-listing-date-sort="1632570011000" data-listing-file-modified-sort="1708889919419" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3017" data-listing-title-sort="Statistics Foundations: Populations and samples" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">Sep 25, 2021</span>
+</td>
+<td>
+<a href="../posts/2021/statistics-foundations-population-and-sample/index.html" class="title listing-title">Statistics Foundations: Populations and samples</a>
+</td>
+</tr>
+<tr data-index="6" data-categories="economics" data-listing-date-sort="1621432820000" data-listing-file-modified-sort="1708889919423" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1009" data-listing-title-sort="Why potential inflation could lead to a financial crisis?" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-date">May 19, 2021</span>
+</td>
+<td>
+<a href="../posts/2021/why-potential-inflation-could-lead-to-a-financial-crisis/index.html" class="title listing-title">Why potential inflation could lead to a financial crisis?</a>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -862,4 +805,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</div></body></html>
+</body></html>
