@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -235,10 +238,9 @@ document.addEventListener('DOMContentLoaded', function () {
   <li><a href="#preprocessing-multiple-audio-files" id="toc-preprocessing-multiple-audio-files" class="nav-link" data-scroll-target="#preprocessing-multiple-audio-files">Preprocessing multiple audio files</a></li>
   <li><a href="#automatic-feature-extraction-for-multiple-audio-files" id="toc-automatic-feature-extraction-for-multiple-audio-files" class="nav-link" data-scroll-target="#automatic-feature-extraction-for-multiple-audio-files">Automatic feature extraction for multiple audio files</a></li>
   <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results">Visualizing results</a></li>
-  <li><a href="#automatic-report-generation" id="toc-automatic-report-generation" class="nav-link" data-scroll-target="#automatic-report-generation">Automatic Report Generation</a></li>
+  <li><a href="#automatic-report-generation" id="toc-automatic-report-generation" class="nav-link" data-scroll-target="#automatic-report-generation">Automatic report generation</a></li>
   </ul></li>
-  <li><a href="#explore-the-voicer-shiny-app" id="toc-explore-the-voicer-shiny-app" class="nav-link" data-scroll-target="#explore-the-voicer-shiny-app">Explore the voiceR Shiny App</a></li>
-  <li><a href="#dive-deeper-into-voicer" id="toc-dive-deeper-into-voicer" class="nav-link" data-scroll-target="#dive-deeper-into-voicer">Dive Deeper into voiceR</a></li>
+  <li><a href="#the-no-code-approach-the-voicer-shiny-app" id="toc-the-no-code-approach-the-voicer-shiny-app" class="nav-link" data-scroll-target="#the-no-code-approach-the-voicer-shiny-app">The no code approach: the voiceR shiny app</a></li>
   </ul>
 </nav>
     </div>
@@ -301,7 +303,7 @@ Figure&nbsp;1: Overview of the main voiceR features
 <h4 class="anchored" data-anchor-id="using-the-null-placeholder">Using the Null placeholder</h4>
 <p>If there are parts of the file name that are not any of the required components, you can use the <code>Null</code> placeholder to avoid them. For example, if you have additional information in the file name that does not belong to any of the categories that voiceR processes, you can use the <code>Null</code> placeholder to ignore that information.</p>
 <p>For example, imagine you have a file named <code>Audio_Participant345_Happy.wav</code>. The <code>Audio</code> component of the file name is not required, so you could define the following pattern: <code>Null_ID_Condition</code>. This file name would still be valid, and voiceR would ignore the first component given that we used the <code>Null</code> placeholder.</p>
-<p><a href="#fig-file-naming" class="quarto-xref">Figure&nbsp;2</a> demonstrates how the voiceR package uses the name pattern structure to identify the different components.</p>
+<p><a href="#fig-file-naming" class="quarto-xref">Figure&nbsp;2</a> showcases how the voiceR package uses the name pattern structure to identify the different components.</p>
 <div id="fig-file-naming" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-file-naming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -318,6 +320,17 @@ Figure&nbsp;2: Examples of File Name Patterns
 <section id="comprehensive-functionality" class="level2">
 <h2 class="anchored" data-anchor-id="comprehensive-functionality">Comprehensive functionality</h2>
 <p>voiceR offers a suite of functions designed to simplify the voice analytics process. These functions cover reading and preprocessing audio files, automatic feature extraction, visualization of results, and even automatic report generation.</p>
+<p><a href="#fig-voiceR-function-overview" class="quarto-xref">Figure&nbsp;3</a> offers a simple overview of the key voiceR functions, highlighting their scope within the voice analytics pipeline.</p>
+<div id="fig-voiceR-function-overview" class="invertImage lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-voiceR-function-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/overview of voiceR functions.PNG" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="assets/overview of voiceR functions.PNG" class="invertImage img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voiceR-function-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Overview of the main voiceR functions
+</figcaption>
+</figure>
+</div>
 <section id="reading-multiple-audio-files" class="level3">
 <h3 class="anchored" data-anchor-id="reading-multiple-audio-files">Reading multiple audio files</h3>
 <p>The initial step in the audio analytics process involves reading designated audio files. The <code>readAudio()</code> function in the voiceR package achieves this seamlessly, systematically processing all audio files in a specified directory and its subdirectories if specified. Users can customize this function by providing a file path (path) and an optional character vector to filter for specific patterns (filter). Upon execution, this function efficiently imports audio files into R, generating a comprehensive list of Wave objects, each representing an imported audio file.</p>
@@ -340,29 +353,28 @@ Figure&nbsp;2: Examples of File Name Patterns
 <p>These visualization functions, seamlessly integrated into the voiceR package, enhance the interpretability of audio data, enriching the depth and breadth of analysis.</p>
 </section>
 <section id="automatic-report-generation" class="level3">
-<h3 class="anchored" data-anchor-id="automatic-report-generation">Automatic Report Generation</h3>
+<h3 class="anchored" data-anchor-id="automatic-report-generation">Automatic report generation</h3>
 <p>Despite the automation provided by voiceR functions, thorough documentation of primary findings remains essential. The <code>autoReport()</code> function addresses this need by utilizing <code>autoExtract()</code> output to generate an HTML report. This report encapsulates key vocal features of the analyzed audio files, including density plots, box plots, and automatically generated APA-formatted text and tables, highlighting differences between conditions or dimensions.</p>
 </section>
 </section>
-<section id="explore-the-voicer-shiny-app" class="level2">
-<h2 class="anchored" data-anchor-id="explore-the-voicer-shiny-app">Explore the voiceR Shiny App</h2>
-<p>For the ultimate user-friendly experience, voiceR offers the <code>voiceRApp()</code> function. By invoking this function, you can launch the voiceR Shiny app, simplifying the selection and subsequent analysis of multiple audio files. It provides a dynamic view of results and the ability to download a comprehensive report summarizing key findings. <a href="#fig-voiceR-app" class="quarto-xref">Figure&nbsp;3</a> provides a snapshot of the voiceR app’s initial screen.</p>
+<section id="the-no-code-approach-the-voicer-shiny-app" class="level2">
+<h2 class="anchored" data-anchor-id="the-no-code-approach-the-voicer-shiny-app">The no code approach: the voiceR shiny app</h2>
+<p>For users who prefer not to code, voiceR offers the <code>voiceRApp()</code> function. By invoking this function, you can launch the voiceR Shiny app, simplifying the selection and subsequent analysis of multiple audio files. It provides a dynamic view of results and the ability to download a comprehensive report summarizing the key findings. <a href="#fig-voiceR-app" class="quarto-xref">Figure&nbsp;4</a> provides a snapshot of the voiceR app’s initial screen.</p>
 <div id="fig-voiceR-app" class="roundedEdgeImage quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-voiceR-app-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/voiceR-App.jpeg" class="roundedEdgeImage img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voiceR-app-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: voiceR shiny app
+Figure&nbsp;4: voiceR shiny app
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="dive-deeper-into-voicer" class="level2">
-<h2 class="anchored" data-anchor-id="dive-deeper-into-voicer">Dive Deeper into voiceR</h2>
-<p>For a detailed understanding of voiceR’s capabilities and functionalities, consult the package documentation <a href="https://chat.openai.com/c/link">here</a>.</p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;3: Overview of the main voiceR functions</span>
+</div>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -899,6 +911,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
