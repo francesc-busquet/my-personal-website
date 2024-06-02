@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <div id="fig-application-overview" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-application-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="assets/Application_overview.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="assets/Application_overview.png" class="img-fluid figure-img"></a>
+<a href="assets/Application_overview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="assets/Application_overview.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-application-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Application overview
@@ -287,7 +287,7 @@ Figure&nbsp;1: Application overview
 <div id="fig-post-focus" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-post-focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="assets/Post_Focus.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="assets/Post_Focus.png" class="img-fluid figure-img"></a>
+<a href="assets/Post_Focus.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="assets/Post_Focus.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Building the Home page: Favorite website registration and confirmation flow
@@ -301,11 +301,11 @@ Figure&nbsp;2: Building the Home page: Favorite website registration and confirm
 <section id="loading-initial-libraries-and-initializing-a-flask-instance" class="level3">
 <h3 class="anchored" data-anchor-id="loading-initial-libraries-and-initializing-a-flask-instance">Loading initial libraries and initializing a Flask instance</h3>
 <p>To begin building our web application, we first import the essential components from the <code>flask</code> library. These include the <code>Flask</code> object, which is the core of our web app, the <code>requests</code> module for handling HTTP requests, and the <code>render_template</code> function, which allows us to render HTML files (or Flask templates).</p>
-<div id="9930fbed" class="cell" data-execution_count="1">
+<div id="e997d994" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After importing the requirements, we will create an instance of the Flask application:</p>
-<div id="12afd5c2" class="cell" data-execution_count="2">
+<div id="a2ee10f8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s break down what’s happening here:</p>
@@ -400,7 +400,7 @@ Figure&nbsp;4: Rendered HTML code
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
@@ -470,7 +470,7 @@ Figure&nbsp;5: Rendered HTML code with added CSS styling
 <p>To accomplish this, we’ll create a function that automatically executes when a user accesses the root path of the application, denoted as “APPLICATION URL/”. We achieve this by utilizing the <code>route()</code> decorator with the argument “/” and defining a function to be executed. In this scenario, our function will render the HTML file, <em>index.html</em>, using <code>render_template()</code>.</p>
 <p>Additionally, we’ll utilize the <code>methods</code> parameter within the route decorator to enable the <code>home()</code> function to accommodate both GET and POST requests. GET requests are typically utilized to fetch data from the server, such as when a user initially accesses a webpage. Conversely, POST requests are commonly employed when users submit data to the server, as is the case when they provide their favorite website URL in our case.</p>
 <p>Thus, the combined process can be translated into code as follows:</p>
-<div id="20709926" class="cell" data-execution_count="3">
+<div id="87c9861e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -483,7 +483,7 @@ Figure&nbsp;5: Rendered HTML code with added CSS styling
 <p>When a button within a form is clicked, it initiates a “request,” specifically in our case a POST request, sending the form’s values to our backend. Utilizing the previously imported <code>request</code> object, we can access these values and manipulate them within our backend.</p>
 <p>The <code>request</code> object provides various attributes, including <code>form</code>, which facilitates the extraction of parameters submitted by a form. By using this attribute jointly with the <code>get</code> method, we can extract the desired data from the request. In this instance, we aim to retrieve the content entered by the user into the text field identified by the name <code>urlInput</code>.</p>
 <p>Therefore, we could write the following code to extract the value sent from that field and store it in an a variable called <code>url</code>:</p>
-<div id="1ca787b6" class="cell" data-execution_count="4">
+<div id="15b088e5" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="sec-using-templates" class="level4">
@@ -521,7 +521,7 @@ Jinja 2
 <p>To make sure our template can access the <code>url</code> value, we need to transfer it from the backend to the frontend. In other words, we must make this variable available within the template. We can accomplish this by adjusting our <em>app.py</em> file, specifically by modifying the <code>render_template()</code> function.</p>
 <p>The <code>render_template()</code> function facilitates the passing of variables to the template we are rendering. To pass the <code>url</code> value to the <em>index.html</em> page and make it accessible with the same name (<code>url</code>), we employ the following code: <code>render_template('index.html', url=url)</code>. This ensures that the <code>url</code> variable is transmitted to the <em>index.html</em> page, where it can be utilized under the same name.</p>
 <p>However, we only intend to transfer the <code>url</code> value to the frontend if the user submits a URL via a POST request. In such instances, we render our HTML file while transmitting the provided URL value to it. Conversely, if the user does not submit a URL, we render the HTML file without transmitting any variables to it. To implement this logic, we need to adjust the <code>home()</code> function in <em>app.py</em>, as we show below:</p>
-<div id="5c5b40d5" class="cell" data-execution_count="5">
+<div id="b597790a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -540,7 +540,7 @@ Jinja 2
 <h4 class="anchored" data-anchor-id="backend">Backend</h4>
 <section id="flask-application-app.py" class="level5">
 <h5 class="anchored" data-anchor-id="flask-application-app.py">Flask application: app.py</h5>
-<div id="bc74109f" class="cell" data-execution_count="6">
+<div id="597b1b7d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -605,7 +605,7 @@ Jinja 2
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
 <span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
@@ -684,7 +684,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 </ol>
 <p>To do this, we need to import two additional functions from the Flask library: <code>redirect</code> and <code>url_for</code>. What these functions do is quite obvious from their names. The <code>redirect</code> function redirects us to a URL we specify, while the <code>url_for</code> function allows us to dynamically create URLs within our application. If you recall, we previously utilized the <code>url_for</code> function to dynamically link the <em>index.html</em> file to our stylesheet.</p>
 <p>By using these functions, we can adjust our code so that when we get a POST request from a user registering a URL, instead of simply refreshing our template, we redirect them to a new URL, like <em>app_url/display_url/url</em>, where <em>url</em> refers to the URL provided by the user. This redirection is made possible with the line of code: <code>redirect(url_for('display_url', url=url))</code>. Here, <code>url_for</code> generates a URL pointing to the <em>display_url</em> view within the Flask application and passes the value of the url variable as a route parameter, yielding the desired URL. Thus, the Python code for our application appears as follows:</p>
-<div id="385aec23" class="cell" data-execution_count="7">
+<div id="fcbac1d0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -700,7 +700,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <p>Converters are defined using angle brackets <code>&lt; &gt;</code>, which serve as placeholders for dynamic content. We can define a dynamic route for this page using converters, such as <code>/display_url/&lt;url&gt;</code>, where <code>url</code> is the name of our converter that takes whatever value is placed in its position. Converters also allow us to capture these variable parts of the URL into Python variables. For example, <code>url</code> in the route <code>/display_url/&lt;url&gt;</code> captures whatever value is provided in place of <code>&lt;url&gt;</code> and allows us to access its value within Python by referring to the <code>url</code> variable.</p>
 <p>Moreover, we can specify the type we want to allow for these converter values by specifying the type followed by a colon (<code>:</code>) and then the name we want to assign to this converter. By default, they are set to strings (without slashes). However, since we want to accommodate URLs, which may contain slashes, we should specify the type as <code>path</code>, like <code>&lt;path:url&gt;</code>.</p>
 <p>Therefore, we can now proceed to define the route in our Flask application to which users will be redirected after inputting a URL, i.e., <code>/display_url/&lt;path:url&gt;</code>:</p>
-<div id="7b8f2feb" class="cell" data-execution_count="8">
+<div id="f2661bec" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we need to specify the behavior for this route. In other words, we need to write the function that will execute each time the user is redirected to this URL. Specifically, we want to render our home page, <code>index.html</code>, showing a confirmation message that the inputted URL has been registered correctly.</p>
@@ -708,7 +708,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <p>Therefore, in this page we can do the following. First, we can check if the <code>url</code> variable contains a value. If <code>url</code> is not <code>None</code> (meaning a URL segment has been provided), we proceed to render the <code>index.html</code> template by using the <code>render_template</code> function and passing the <code>url</code> variable to the template. In this way, the confirmation message will be displayed to the user.</p>
 <p>However, if the <code>url</code> variable is <code>None</code>, indicating that no URL segment was provided, we redirect the user to the home page of the application. This is done using the <code>redirect</code> function in combination with <code>url_for</code>, generating a redirect response to the URL defined by <code>url_for('home')</code>. This redirection is specified to handle cases where the user manually sets the URL to <em>app_url/display_url/</em>.</p>
 <p>Taking all this into account, the code for this route would look like the following:</p>
-<div id="f5d44ed7" class="cell" data-execution_count="9">
+<div id="312f1cc0" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -718,7 +718,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 </div>
 <p>Notice that in this case, we are solely transmitting information. However, envision a scenario where the user might continue registering new URLs, indicating a flow where we receive input from the user. This aspect is not presently accounted for in our code.</p>
 <p>To address this gap in functionality, we need to expand our code to capture the URLs that users intend to register when they visit a page with the route <code>/display_url/&lt;path:url&gt;</code>. We can accomplish this by adapting the code we’ve already used for the main route, <code>/</code>. Specifically, we’ll detect if the user is submitting a POST request. If so, we’ll retrieve the submitted URL and redirect to the confirmation page. Below, you’ll find the expanded code for the route <code>/display_url/&lt;path:url&gt;</code>:</p>
-<div id="5311a34f" class="cell" data-execution_count="10">
+<div id="e6660c4a" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -731,7 +731,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Therefore, our updated Python code will look as follows:</p>
-<div id="1d1a2ac0" class="cell" data-execution_count="11">
+<div id="9d6fbcca" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -815,7 +815,7 @@ Figure&nbsp;10: Unintended confirmation container visibility
 <p>Here’s the finalized code implementation incorporating all the necessary adjustments.</p>
 <section id="python---app.py" class="level3">
 <h3 class="anchored" data-anchor-id="python---app.py">Python - app.py</h3>
-<div id="5d5704cf" class="cell" data-execution_count="12">
+<div id="9a9d0945" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -856,7 +856,7 @@ A small change
 </div>
 <div class="callout-body-container callout-body">
 <p>Notice that in this block of code, we have added two additional lines that we hadn’t mentioned before:</p>
-<div id="5611bbce" class="cell" data-execution_count="13">
+<div id="97e18743" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -912,7 +912,7 @@ A small change
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text within the container */</span></span>
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
 <span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field /</span></span>
 <span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co">padding: 10px; / Adds padding around the input field /</span></span>
 <span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co">font-size: 16px; / Sets the font size of the input field /</span></span>
@@ -1520,7 +1520,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
