@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-02-08">
+
+<title>Francesc Busquet - Data-driven web applications basics: Getting Started with Flask</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/favicon/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+  
+  function getGiscusTheme() {
+  const quartoTheme = localStorage.getItem("quarto-color-scheme");
+  const giscusTheme = quartoTheme === "alternate" ? "dark" : "light";
+  return giscusTheme;
+}
+
+function setGiscusTheme() {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+  }
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(),
+    },
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const giscusAttributes = {
+    "src": "https://giscus.app/client.js",
+    "data-repo": "francesc-busquet/my-personal-website",
+    "data-repo-id": "R_kgDOKbDmgw",
+    "data-category": "General",
+    "data-category-id": "DIC_kwDOKbDmg84CZzPu",
+    "data-mapping": "title",
+    "data-strict": "1",
+    "data-reactions-enabled": "1",
+    "data-emit-metadata": "0",
+    "data-input-position": "top",
+    "data-theme": getGiscusTheme(),
+    "data-lang": "en",
+    "crossorigin": "anonymous",
+    "async": "",
+  };
+
+  // Dynamically create script tag
+  const giscusScript = document.createElement("script");
+  Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
+  document.body.appendChild(giscusScript);
+
+  // Update giscus theme when theme switcher is clicked
+  const toggle = document.querySelector('.quarto-color-scheme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', setGiscusTheme);
+  }
+});
+  
+</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/index.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data-driven web applications basics: Getting Started with Flask</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Flask</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 8, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#building-the-home-page-with-flask" id="toc-building-the-home-page-with-flask" class="nav-link active" data-scroll-target="#building-the-home-page-with-flask">Building the Home page with Flask</a>
+  <ul class="collapse">
+  <li><a href="#loading-initial-libraries-and-initializing-a-flask-instance" id="toc-loading-initial-libraries-and-initializing-a-flask-instance" class="nav-link" data-scroll-target="#loading-initial-libraries-and-initializing-a-flask-instance">Loading initial libraries and initializing a Flask instance</a></li>
+  <li><a href="#creating-the-main-page" id="toc-creating-the-main-page" class="nav-link" data-scroll-target="#creating-the-main-page">Creating the Main Page</a></li>
+  <li><a href="#structuring-our-directory" id="toc-structuring-our-directory" class="nav-link" data-scroll-target="#structuring-our-directory">Structuring our directory</a></li>
+  <li><a href="#adding-functionalities" id="toc-adding-functionalities" class="nav-link" data-scroll-target="#adding-functionalities">Adding functionalities</a></li>
+  <li><a href="#reviewing-what-we-have" id="toc-reviewing-what-we-have" class="nav-link" data-scroll-target="#reviewing-what-we-have">Reviewing what we have</a></li>
+  <li><a href="#running-our-application" id="toc-running-our-application" class="nav-link" data-scroll-target="#running-our-application">Running our application</a></li>
+  <li><a href="#a-first-issue-when-refreshing-the-page-our-request-is-sent-again" id="toc-a-first-issue-when-refreshing-the-page-our-request-is-sent-again" class="nav-link" data-scroll-target="#a-first-issue-when-refreshing-the-page-our-request-is-sent-again">A first issue: When refreshing the page, our request is sent again</a></li>
+  <li><a href="#adding-style-to-our-results-container" id="toc-adding-style-to-our-results-container" class="nav-link" data-scroll-target="#adding-style-to-our-results-container">Adding style to our results container</a></li>
+  </ul></li>
+  <li><a href="#final-code" id="toc-final-code" class="nav-link" data-scroll-target="#final-code">Final code</a>
+  <ul class="collapse">
+  <li><a href="#python---app.py" id="toc-python---app.py" class="nav-link" data-scroll-target="#python---app.py">Python - app.py</a></li>
+  <li><a href="#html---index.html" id="toc-html---index.html" class="nav-link" data-scroll-target="#html---index.html">HTML - index.html</a></li>
+  <li><a href="#css---home.css" id="toc-css---home.css" class="nav-link" data-scroll-target="#css---home.css">CSS - home.css</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>In this series of posts, we will explore some of the fundamental concepts of building data-driven web applications. To do so, we will create a simple web application that lets users share their favorite websites and view the most popular ones based on user input.</p>
+<p>This application will consist of only two pages: (1) a home page where users can register their favorite websites, and (2) a page of popular sites where users can see a table displaying the top favorite websites. The envisioned design for these pages is illustrated in <a href="#fig-application-overview" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="fig-application-overview" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-application-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/Application_overview.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="assets/Application_overview.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-application-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Application overview
+</figcaption>
+</figure>
+</div>
+<p>To build this web application, we will follow a structured approach, breaking down the process across four comprehensive posts:</p>
+<ol type="1">
+<li><p><strong>Post 1: Building the Home Page with Flask.</strong> We will start by creating the home page for our application using Flask, along with basic HTML and CSS. This page will allow users to submit a URL to our backend and receive a confirmation response. In this post, we will only show the confirmation without storing the URL; the storage functionality will be implemented in the next post.</p></li>
+<li><p><strong>Post 2: Completing the Interface and Connecting to SQL.</strong> We will complete the interface, adding a “Popular” page where users can view top favorite websites. We will connect our application to a SQL server to store user data, ensuring we can save and retrieve the registered websites.</p></li>
+<li><p><strong>Post 3: Containerizing the Application with Docker.</strong> To facilitate easy deployment and collaborative development, we’ll containerize our application using Docker. This will allow us to create a consistent environment for running our application, simplifying both development and deployment processes.</p></li>
+<li><p><strong>Post 4: Enhancing Performance with Redis.</strong> Finally, we will enhance our application’s performance by integrating Redis. Redis will serve as a queue to manage high volumes of simultaneous user registrations, preventing our SQL server from being overwhelmed. Additionally, Redis will act as a cache for the “Popular” page, speeding up user interactions.</p></li>
+</ol>
+<p>By following this series, you will learn how to:</p>
+<ul>
+<li><p>Set up and design a web application interface with Flask.</p></li>
+<li><p>Connect the application to a SQL server for data storage.</p></li>
+<li><p>Use Docker to containerize the application for easy deployment.</p></li>
+<li><p>Implement Redis for caching and queuing to enhance performance and scalability.</p></li>
+</ul>
+<p>Each part will provide detailed, step-by-step instructions, making it easy to follow along and build a simple, but functional and efficient web application.</p>
+<section id="building-the-home-page-with-flask" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-home-page-with-flask">Building the Home page with Flask</h2>
+<p>In this first post, we will lay the foundation for our web application by starting the user interface. Here, we will focus solely on developing the Home page. Users will be able to input and submit their favorite websites through this page. Our backend will handle these submissions and provide a confirmation response to the user. <a href="#fig-post-focus" class="quarto-xref">Figure&nbsp;2</a> provides a visual representation of the Home page design, showcasing the intended user experience when submitting a website—confirming successful registration of the website inputted by the user.</p>
+<div id="fig-post-focus" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-post-focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/Post_Focus.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="assets/Post_Focus.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Building the Home page: Favorite website registration and confirmation flow
+</figcaption>
+</figure>
+</div>
+<p>To achieve this, we will utilize Flask—a micro-framework for web development in Python. Flask provides a versatile and lightweight way to build web applications, making it easy to get started with web development projects.</p>
+<p>Flask will handle the backend behavior of our application, including routing, handling requests, and managing the server-side logic. For the frontend, we will use HTML and CSS to create and style the visual components of our application.</p>
+<p>At this stage, we will not permanently save the website data inputted by the user; the backend will only acknowledge receipt of the submissions. In the subsequent post, we will expand our application to include the “Popular Websites” page and begin implementing data persistence.</p>
+<p>Now that we’ve precisely defined the behavior of our home page, it’s time to get our hands dirty and start coding.</p>
+<section id="loading-initial-libraries-and-initializing-a-flask-instance" class="level3">
+<h3 class="anchored" data-anchor-id="loading-initial-libraries-and-initializing-a-flask-instance">Loading initial libraries and initializing a Flask instance</h3>
+<p>To begin building our web application, we first import the essential components from the <code>flask</code> library. These include the <code>Flask</code> object, which is the core of our web app, the <code>requests</code> module for handling HTTP requests, and the <code>render_template</code> function, which allows us to render HTML files (or Flask templates).</p>
+<div id="1cd551c3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After importing the requirements, we will create an instance of the Flask application:</p>
+<div id="7acf8cc3" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s break down what’s happening here:</p>
+<ul>
+<li><p><strong><code>Flask</code></strong>: This object from the Flask framework helps us create an instance of a Flask web application.</p></li>
+<li><p><strong><code>__name__</code></strong>: A special variable in Python representing the name of the current module. It’s passed as an argument to locate resources like HTML templates and static files.</p></li>
+</ul>
+<p>Therefore, what we are doing is creating an instance of the Flask application, passing <code>__name__</code> as an argument so that Flask can locate necessary resources, such as HTML templates and static files (CSS, JavaScript, images). Finally, we assign this instance to an object called <code>app</code>, which we will later use to define the behavior of our web application.</p>
+</section>
+<section id="creating-the-main-page" class="level3">
+<h3 class="anchored" data-anchor-id="creating-the-main-page">Creating the Main Page</h3>
+<p>Now that we have initialized our application, let’s turn our attention to the front-end, i.e., the part users will see and interact with.</p>
+<p>We want a simple page with a text field where users can enter a URL and a button to register it as shown in <a href="#fig-home-page-design" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div id="fig-home-page-design" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-home-page-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/Home_page_design.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-home-page-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Envisioned design for the Home page
+</figcaption>
+</figure>
+</div>
+<p>To begin creating this webpage, we will first establish its structure using HTML.</p>
+<section id="html-for-the-home-page" class="level4">
+<h4 class="anchored" data-anchor-id="html-for-the-home-page">HTML for the Home Page</h4>
+<p>As seen in <a href="#fig-home-page-design" class="quarto-xref">Figure&nbsp;3</a>, our website has two key elements: (1) a title and (2) a user input form. The form allows users to enter a website URL via a text input field and submit it using a submit button.</p>
+<p>To set the page title, we will use a top-level heading element, i.e., <code>&lt;h1&gt;</code>, containing the text “What is your favorite website?”. Therefore, the HTML code for the title will be as follows: <code>&lt;h1&gt;What is your favorite website?&lt;/h1&gt;</code></p>
+<p>Moving on to the form section, we’ll create a form with the <code>&lt;form&gt;</code> element setting its <code>method</code> attribute to <code>POST</code>, i.e., <code>&lt;form method="post"&gt;</code>. This ensures that the data submitted through the form is included within the body of the HTTP request, as opposed to being appended to the URL (like with the <code>GET</code> method). The form itself will consist of two key elements:</p>
+<ol type="1">
+<li><p><strong>Text input field for entering a URL:</strong> To create a text input field for entering a URL, we’ll use an <code>&lt;input&gt;</code> element. This element lets users input information into a form. Inputs can have different types, like checkboxes or text fields. Since we want a text input for URLs, we’ll specify the <code>type</code> attribute as <code>"text"</code>. We’ll also add a placeholder using the <code>placeholder</code> attribute with the text <code>"Enter URL"</code> to give users a hint about what to input. The placeholder disappears once users start typing.<br>
+To make sure users fill out this field before submitting the form, we’ll mark it as required using the <code>required</code> attribute. Additionally, we’ll assign a class to this input field called <code>"form-text-input"</code>. This allows us to style this element and any others with the same class. Lastly, we’ll give the input field a <code>name</code> attribute, set to <code>'urlInput'</code>, so we can easily identify the text entered and retrieve it from the backend after form submission.<br>
+Therefore, we would have the following HTML code for the text input:<br>
+<code>&lt;input type="text" placeholder="Enter URL" class="form-text-input" name="urlInput" required&gt;</code></p></li>
+<li><p><strong>Button to submit the entered URL:</strong> Finally, to complete the form, we’ll add a submit button with the text “Register URL”. When users click this button, the form will be submitted, and the URL they entered will be registered. We’ll achieve this using a <code>&lt;button&gt;</code> element. Like input elements, buttons can come in different types, such as reset buttons, which reset the form-data to its initial values, or submit buttons, which submit form-data. Since we require a submit button, we’ll specify the <code>type</code> attribute as <code>"submit"</code>. Furthermore, for consistent styling among related elements, we’ll assign to this element a <code>class</code> named <code>"submit-btn"</code>.<br>
+Thus, the HTML code for the submit button would be:<br>
+<code>&lt;button type="submit" class="submit-btn"&gt;Register URL&lt;/button&gt;</code></p></li>
+</ol>
+<p>To enhance the structure of our page, we will also incorporate some additional elements like <code>&lt;div&gt;</code>. Using <code>&lt;div&gt;</code> elements helps organize and group content, making it easier to style and manage different sections of the webpage. Here’s the HTML code reflecting these additions:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"content"</span><span class="dt">&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>What is your favorite website?<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">"post"</span><span class="dt">&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">"text"</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">"Enter URL"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"form-text-input"</span><span class="ot"> name</span><span class="op">=</span><span class="st">"urlInput"</span><span class="ot"> required</span><span class="dt">&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">"submit"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"submit-btn"</span><span class="dt">&gt;</span>Register URL<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next, let’s save this HTML code into a file named <em>index.html</em>. Afterward, you can simply open it using a web browser to view the rendered HTML, seeing what is shown in <a href="#fig-application-no-css" class="quarto-xref">Figure&nbsp;4</a>.</p>
+<div id="fig-application-no-css" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-application-no-css-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/Initial_app_view.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-application-no-css-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Rendered HTML code
+</figcaption>
+</figure>
+</div>
+<p>As we can see, the current appearance of our interface leaves much to be desired. It’s clear that our interface needs a makeover. But don’t worry! We’ve strategically assigned classes to elements within our HTML markup. This serves as the foundation for applying CSS styles, which will significantly enhance the visual appeal and user experience of our application. So, let’s start creating some CSS to improve the style of our application!</p>
+</section>
+<section id="css-for-the-home-page" class="level4">
+<h4 class="anchored" data-anchor-id="css-for-the-home-page">CSS for the Home Page</h4>
+<p>To achieve the theme we envisioned for the homepage design, as described in <a href="#fig-home-page-design" class="quarto-xref">Figure&nbsp;3</a>, we will utilize CSS. This theme predominantly employs gray for most elements and accentuates prominent features with green.</p>
+<p>First, we will set the body background color to gray. This choice provides a neutral and clean canvas that is easy on the eyes and allows the more prominent elements to stand out. The green color will be applied specifically to the submit button, making it a focal point due to its contrasting hue. This not only enhances the button’s visibility but also emphasizes its importance and functionality within the form.</p>
+<p>To enhance the minimalist aesthetic and ensure the form attracts the user’s attention, we will center the form on the screen. Centering the form not only creates a balanced and harmonious layout but also directs the user’s focus to this essential part of the page.</p>
+<p>Additionally, we will add other tweaks such as margins and padding to make the layout more appealing and visually pleasing. Below you can see the complete CSS code:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span> <span class="co">/* Sets the text font for the entire document body */</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Removes the default margin */</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Removes the default padding */</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">vh</span><span class="op">;</span> <span class="co">/* Sets the body height to 100% of the viewport */</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span> <span class="co">/* Uses the flexible box model for content */</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">justify-content</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Horizontally centers the content */</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Vertically centers the content */</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Sets the content height to 100% of the viewport */</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span> <span class="co">/* Sets the background color of the content */</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span> <span class="co">/* Arranges child elements in columns */</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the form from the result */</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As you can see, we have predominantly used class selectors to apply specific styles to various elements. For instance, the <code>url-input</code> class styles the URL input field, while the <code>submit-btn</code> class styles the form’s submit button. This approach allows for consistent styling across different pages, as these classes can be reused for similar elements, ensuring a uniform look and feel throughout the application.</p>
+<p>Now we can link this CSS file to our HTML file by adding the following code right after the opening <code>&lt;html&gt;</code> tag:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"home.css"</span><span class="dt">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this, our initial page no longer looks like in <a href="#fig-application-no-css" class="quarto-xref">Figure&nbsp;4</a>, but as shown in <a href="#fig-application-css" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<div id="fig-application-css" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-application-css-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/Initial_app_view_with_CSS.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-application-css-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Rendered HTML code with added CSS styling
+</figcaption>
+</figure>
+</div>
+<p>Great, our application is starting to look nice!</p>
+</section>
+</section>
+<section id="structuring-our-directory" class="level3">
+<h3 class="anchored" data-anchor-id="structuring-our-directory">Structuring our directory</h3>
+<p>When setting up a Flask application, it’s advisable to organize your files in a structured manner. Typically, you’ll start with a main folder that encompasses all the files related to your application. Within this main folder, you’ll find the Python file containing the Flask code. By convention, this file is often named <code>app.py</code>. Alongside <code>app.py</code>, you’ll also have two additional folders: <strong>templates</strong> and <strong>static</strong>.</p>
+<p>The <strong>templates</strong> folder is where you’ll store your HTML files. These files contain the structure and layout of your web pages. Meanwhile, the <strong>static</strong> folder is reserved for files like CSS, JavaScript, images, and other resources that remain static and are not altered by your application’s code.</p>
+<p>Therefore, this would be the structure for our application:</p>
+<pre><code>- my_flask_app/            (Main folder of the application)
+    |
+    |- app.py              (Main file for the Flask application)
+    |
+    |- templates/          (Folder to store HTML templates)
+    |    |
+    |    |- index.html     (HTML template for the main page)
+    |
+    |- static/             (Folder to store static files such as CSS, JavaScript, images, etc.)
+         |
+         |- styles         (Folder to store style sheets, such as CSS files)
+            |
+            |- home.css    (CSS file to style the main page)</code></pre>
+<p><strong>Note:</strong> Following the modification of the file structure, it’s important to update the link to the CSS file in our HTML file.</p>
+<p>After having set up the HTML file and structured our Flask application, the next step is to integrate the HTML file with our backend. This means that our Python application will utilize the HTML file as the main page.</p>
+<p>To accomplish this, we’ll create a function that automatically executes when a user accesses the root path of the application, denoted as “APPLICATION URL/”. We achieve this by utilizing the <code>route()</code> decorator with the argument “/” and defining a function to be executed. In this scenario, our function will render the HTML file, <em>index.html</em>, using <code>render_template()</code>.</p>
+<p>Additionally, we’ll utilize the <code>methods</code> parameter within the route decorator to enable the <code>home()</code> function to accommodate both GET and POST requests. GET requests are typically utilized to fetch data from the server, such as when a user initially accesses a webpage. Conversely, POST requests are commonly employed when users submit data to the server, as is the case when they provide their favorite website URL in our case.</p>
+<p>Thus, the combined process can be translated into code as follows:</p>
+<div id="6280ccaa" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Note</strong>: We define the name of the function as <code>home()</code>, but we could choose any other name.</p>
+</section>
+<section id="adding-functionalities" class="level3">
+<h3 class="anchored" data-anchor-id="adding-functionalities">Adding functionalities</h3>
+<p>Right now, our application doesn’t do much, it merely renders the HTML file we’ve created. However, it lacks any interactive functionality. If we add text to the input field and click the “Register URL” button, nothing will occur. What we need is for our backend—our Python code—to capture the URL entered in the text field upon button click.</p>
+<p>When a button within a form is clicked, it initiates a “request,” specifically in our case a POST request, sending the form’s values to our backend. Utilizing the previously imported <code>request</code> object, we can access these values and manipulate them within our backend.</p>
+<p>The <code>request</code> object provides various attributes, including <code>form</code>, which facilitates the extraction of parameters submitted by a form. By using this attribute jointly with the <code>get</code> method, we can extract the desired data from the request. In this instance, we aim to retrieve the content entered by the user into the text field identified by the name <code>urlInput</code>.</p>
+<p>Therefore, we could write the following code to extract the value sent from that field and store it in an a variable called <code>url</code>:</p>
+<div id="c64f6bdc" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="sec-using-templates" class="level4">
+<h4 class="anchored" data-anchor-id="sec-using-templates">Using templates</h4>
+<p>Keep in mind that up to the point we’ve utilized the <code>render_template()</code> function to display a static HTML file, specifically for rendering our <em>index.html</em> page. However, this function is named <code>render_template</code> rather than <code>render_html</code> for a reason.</p>
+<p>Templates in Flask serve as dynamic canvases, enabling the incorporation of placeholders that the application dynamically populates. These placeholders, known as template variables, are encapsulated within double opening and closing brackets, like so: <code>{ template_variable }</code>. This lets us include variables right into the HTML, and our backend can then change them on the fly.</p>
+<p>Additionally, in Flask templates, we can utilize control structures to manage the flow of content. These include conditionals like if-else statements, for-loops, as well as advanced features such as macros and blocks. These control structures are enclosed within <code>{% %}</code> brackets, denoted as <code>{% control_structure %}</code>, and are concluded with <code>{% end_control_structure %}</code>. For example, these control structures allow us to show or hide different parts of the template based on certain conditions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Jinja 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The template engine used by Flask is Jinja2. You can find more information about template creation on its website: <a href="https://jinja.palletsprojects.com/" class="uri">https://jinja.palletsprojects.com/</a></p>
+</div>
+</div>
+<p>One of the most basic applications of templates is to dynamically manage the locations of static files, such as CSS files. Hardcoding these paths can create issues if the file locations change over time. Instead, it’s preferable to use Flask’s URL generation function, <code>url_for()</code>. This function automatically generates URLs for specified routes or resources, which is particularly useful when project URLs undergo changes during deployment.</p>
+<p>For example, during development, URLs may follow a certain structure. However, upon deployment, it might be necessary to prefix all URLs with a specific identifier. With Flask’s <code>url_for()</code> function, this transition is handled without manual intervention. The function automatically adjusts the generated URLs to include the designated prefix without the need for manual code alterations.</p>
+<p>Consequently, we can enhance our HTML file to incorporate the link to the CSS file using <code>url_for()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"{{ url_for('static', filename='/styles/home.css')}}"</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, templates offer more than just dynamically setting the CSS path; they enable us to add engaging features. For example, we can leverage templates to define the behavior of the confirmation message indicating that the entered URL has been successfully registered.</p>
+<p>To implement this, let’s first update our HTML file by introducing a new <code>&lt;div&gt;</code> element to contain the confirmation message. This message should only appear if the user has entered a URL, meaning the <code>url</code> variable holds a value. If the variable exists, we’ll display its value. Here’s how we can accomplish this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"resultContainer"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  {% if url %}</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You have registered the following URL: {{ url }}<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Display URL registration confirmation --&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  {% endif %}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this code snippet, we’re utilizing an if control structure to conditionally display content based on whether the <code>url</code> variable holds a value. The content we want to display is enclosed within <code>{% if url %}</code> and <code>{% endif %}</code> tags. Inside the <code>{% if url %}</code> block, we include a message confirming the URL registration. To dynamically insert the value of the <code>url</code> variable into the message, we use double curly braces <code>{ url }</code> within a paragraph (<code>&lt;p&gt;</code>) element.</p>
+<section id="passing-variables-to-templates" class="level5">
+<h5 class="anchored" data-anchor-id="passing-variables-to-templates">Passing variables to templates</h5>
+<p>To make sure our template can access the <code>url</code> value, we need to transfer it from the backend to the frontend. In other words, we must make this variable available within the template. We can accomplish this by adjusting our <em>app.py</em> file, specifically by modifying the <code>render_template()</code> function.</p>
+<p>The <code>render_template()</code> function facilitates the passing of variables to the template we are rendering. To pass the <code>url</code> value to the <em>index.html</em> page and make it accessible with the same name (<code>url</code>), we employ the following code: <code>render_template('index.html', url=url)</code>. This ensures that the <code>url</code> variable is transmitted to the <em>index.html</em> page, where it can be utilized under the same name.</p>
+<p>However, we only intend to transfer the <code>url</code> value to the frontend if the user submits a URL via a POST request. In such instances, we render our HTML file while transmitting the provided URL value to it. Conversely, if the user does not submit a URL, we render the HTML file without transmitting any variables to it. To implement this logic, we need to adjust the <code>home()</code> function in <em>app.py</em>, as we show below:</p>
+<div id="49cc8da9" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)  <span class="co"># Pass the value of 'urlInput' to the template</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="reviewing-what-we-have" class="level3">
+<h3 class="anchored" data-anchor-id="reviewing-what-we-have">Reviewing what we have</h3>
+<p>So, now we have three fairly complete files. Let’s directly list the code we have so far.</p>
+<section id="backend" class="level4">
+<h4 class="anchored" data-anchor-id="backend">Backend</h4>
+<section id="flask-application-app.py" class="level5">
+<h5 class="anchored" data-anchor-id="flask-application-app.py">Flask application: app.py</h5>
+<div id="3d5d9769" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)  <span class="co"># Pass the value of 'urlInput' to the template</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="front-end" class="level4">
+<h4 class="anchored" data-anchor-id="front-end">Front-end</h4>
+<section id="html-file-index.html" class="level5">
+<h5 class="anchored" data-anchor-id="html-file-index.html">HTML file: index.html</h5>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"{{ url_for('static', filename='/styles/home.css')}}"</span><span class="dt">&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"content"</span><span class="dt">&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>What is your favorite website?<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">"post"</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Specify method="post" for form submission --&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">"text"</span><span class="ot"> name</span><span class="op">=</span><span class="st">"urlInput"</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">"Enter URL"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"form-text-input"</span><span class="ot"> required</span><span class="dt">&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">"submit"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"submit-btn"</span><span class="dt">&gt;</span>Register URL<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"resultContainer"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                {% if url %}</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You have registered the following URL: {{ url }}<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Display URL registration confirmation --&gt;</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                {% endif %}</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="css-file-home.css" class="level5">
+<h5 class="anchored" data-anchor-id="css-file-home.css">CSS file: home.css</h5>
+<div class="sourceCode" id="cb14"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span> <span class="co">/* Sets the text font for the entire document body */</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Removes the default margin */</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Removes the default padding */</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">vh</span><span class="op">;</span> <span class="co">/* Sets the body height to 100% of the viewport */</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span> <span class="co">/* Uses the flexible box model for content */</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">justify-content</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Horizontally centers the content */</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Vertically centers the content */</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Sets the content height to 100% of the viewport */</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span> <span class="co">/* Sets the background color of the content */</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span> <span class="co">/* Arranges child elements in columns */</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the form from the result */</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="running-our-application" class="level3">
+<h3 class="anchored" data-anchor-id="running-our-application">Running our application</h3>
+<p>With the initial parts of the code in place, we’re ready to run our application. To do so, we can open a terminal, navigate to the folder where our <em>app.py</em> file is located, and then execute the command <code>flask run</code>. After running this command, we will see an output with a local IP address (by default, <a href="127.0.0.1:5000">127.0.0.1:5000</a>), as you can see in the <a href="#fig-flask-run-command" class="quarto-xref">Figure&nbsp;6</a>. This is the IP address where our application is running.</p>
+<div id="fig-flask-run-command" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flask-run-command-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/output_flask_run.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flask-run-command-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Executing the <code>flask run</code> command
+</figcaption>
+</figure>
+</div>
+<p>Now we can navigate to this address in our web browser to access our application. Once there, we can input a URL (for instance: <em>www.google.com</em>) into the text field, click the submit button, and we’ll then observe a confirmation message generated by the previously established template, as you can see in <a href="#fig-confirmation-result" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<div id="fig-confirmation-result" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confirmation-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/template_result.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confirmation-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Registering <em>www.google.com</em> in our application
+</figcaption>
+</figure>
+</div>
+<p>This message confirms that our action of registering a URL has been successful. Essentially, it signifies that the user’s POST request has been correctly captured by the backend, transmitted to the front-end, and then integrated into the template.</p>
+</section>
+<section id="a-first-issue-when-refreshing-the-page-our-request-is-sent-again" class="level3">
+<h3 class="anchored" data-anchor-id="a-first-issue-when-refreshing-the-page-our-request-is-sent-again">A first issue: When refreshing the page, our request is sent again</h3>
+<p>If we refresh the page, for instance, by pressing F5, we’ll notice that the request we initially entered, such as <em>www.google.com</em>, is automatically resent, as you can see in <a href="#fig-resending-request-automatically" class="quarto-xref">Figure&nbsp;8</a>.</p>
+<div id="fig-resending-request-automatically" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resending-request-automatically-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/resending_request_automatically.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resending-request-automatically-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: The request is automatically resent upon page refresh
+</figcaption>
+</figure>
+</div>
+<p>This behavior is typical when a page has been loaded through a POST request, often encountered when working with forms.</p>
+<p>To tackle this issue, there are various strategies we could employ. One of the most prevalent is the <strong>Post/Redirect/Get</strong> (PRG) strategy (you can find more information <a href="https://en.wikipedia.org/wiki/Post/Redirect/Get">here</a>). Essentially, after making a POST request, we redirect to a new page, which then retrieves (GETs) the confirmation of our current state.</p>
+<p>Implementing this strategy in our application is relatively straightforward. We need to make two key adjustments:</p>
+<ol type="1">
+<li><p>Instead of rendering our template with the URL submitted by the user upon detecting a POST request, we redirect to a new page.</p></li>
+<li><p>To take this redirection into effect, we incorporate additional code using the <code>@app.route</code> decorator, specifying the behavior of the route to which we redirect.</p></li>
+</ol>
+<p>To do this, we need to import two additional functions from the Flask library: <code>redirect</code> and <code>url_for</code>. What these functions do is quite obvious from their names. The <code>redirect</code> function redirects us to a URL we specify, while the <code>url_for</code> function allows us to dynamically create URLs within our application. If you recall, we previously utilized the <code>url_for</code> function to dynamically link the <em>index.html</em> file to our stylesheet.</p>
+<p>By using these functions, we can adjust our code so that when we get a POST request from a user registering a URL, instead of simply refreshing our template, we redirect them to a new URL, like <em>app_url/display_url/url</em>, where <em>url</em> refers to the URL provided by the user. This redirection is made possible with the line of code: <code>redirect(url_for('display_url', url=url))</code>. Here, <code>url_for</code> generates a URL pointing to the <em>display_url</em> view within the Flask application and passes the value of the url variable as a route parameter, yielding the desired URL. Thus, the Python code for our application appears as follows:</p>
+<div id="fecb5fa2" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Redireccion</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url))  <span class="co"># Redirect to a different endpoint</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="dynamic-url-handling-with-flask-converters" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-url-handling-with-flask-converters">Dynamic URL handling with Flask converters</h4>
+<p>The code we’ve just implemented redirects users when they input a URL to <em>app_url/display_url/url</em>, where <em>url</em> refers to the URL inputted by the user. However, this specific URL hasn’t been defined within our application yet. We need to clarify what actions should occur when this URL is accessed. However, looking at the structure of the URL, we can see it has two main parts: one that remains constant (<em>app_url/url</em>) and another that varies (<em>url</em>) based on user input. Does this mean we need to define a route for every possible URL a user might input? Thankfully, no. We don’t need to define a route for every potential URL variation. Instead, we can use Flask converters to define a dynamic route that captures any URL input by the user. This allows us to handle any URL entered by the user without needing to predefine each one individually.</p>
+<p>Converters are defined using angle brackets <code>&lt; &gt;</code>, which serve as placeholders for dynamic content. We can define a dynamic route for this page using converters, such as <code>/display_url/&lt;url&gt;</code>, where <code>url</code> is the name of our converter that takes whatever value is placed in its position. Converters also allow us to capture these variable parts of the URL into Python variables. For example, <code>url</code> in the route <code>/display_url/&lt;url&gt;</code> captures whatever value is provided in place of <code>&lt;url&gt;</code> and allows us to access its value within Python by referring to the <code>url</code> variable.</p>
+<p>Moreover, we can specify the type we want to allow for these converter values by specifying the type followed by a colon (<code>:</code>) and then the name we want to assign to this converter. By default, they are set to strings (without slashes). However, since we want to accommodate URLs, which may contain slashes, we should specify the type as <code>path</code>, like <code>&lt;path:url&gt;</code>.</p>
+<p>Therefore, we can now proceed to define the route in our Flask application to which users will be redirected after inputting a URL, i.e., <code>/display_url/&lt;path:url&gt;</code>:</p>
+<div id="2bbca2d4" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we need to specify the behavior for this route. In other words, we need to write the function that will execute each time the user is redirected to this URL. Specifically, we want to render our home page, <code>index.html</code>, showing a confirmation message that the inputted URL has been registered correctly.</p>
+<p>As previously mentioned, converters such as <code>&lt;path:url&gt;</code> allow us to capture dynamic parts of the URL and use them as Python variables. This means we can access the value of the URL parameter directly within the view function defined by the <code>@app.route</code> decorator.</p>
+<p>Therefore, in this page we can do the following. First, we can check if the <code>url</code> variable contains a value. If <code>url</code> is not <code>None</code> (meaning a URL segment has been provided), we proceed to render the <code>index.html</code> template by using the <code>render_template</code> function and passing the <code>url</code> variable to the template. In this way, the confirmation message will be displayed to the user.</p>
+<p>However, if the <code>url</code> variable is <code>None</code>, indicating that no URL segment was provided, we redirect the user to the home page of the application. This is done using the <code>redirect</code> function in combination with <code>url_for</code>, generating a redirect response to the URL defined by <code>url_for('home')</code>. This redirection is specified to handle cases where the user manually sets the URL to <em>app_url/display_url/</em>.</p>
+<p>Taking all this into account, the code for this route would look like the following:</p>
+<div id="c2c78347" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice that in this case, we are solely transmitting information. However, envision a scenario where the user might continue registering new URLs, indicating a flow where we receive input from the user. This aspect is not presently accounted for in our code.</p>
+<p>To address this gap in functionality, we need to expand our code to capture the URLs that users intend to register when they visit a page with the route <code>/display_url/&lt;path:url&gt;</code>. We can accomplish this by adapting the code we’ve already used for the main route, <code>/</code>. Specifically, we’ll detect if the user is submitting a POST request. If so, we’ll retrieve the submitted URL and redirect to the confirmation page. Below, you’ll find the expanded code for the route <code>/display_url/&lt;path:url&gt;</code>:</p>
+<div id="de7cd604" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            url2 <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url2))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Therefore, our updated Python code will look as follows:</p>
+<div id="8601201e" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Process the form data here (if needed)</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url))  <span class="co"># Redirect to a different endpoint</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            url2 <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Process the form data here (if needed)</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url2))</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Great! now if we register a URL and refresh the page, the POST request won’t be made again.</p>
+</section>
+</section>
+<section id="adding-style-to-our-results-container" class="level3">
+<h3 class="anchored" data-anchor-id="adding-style-to-our-results-container">Adding style to our results container</h3>
+<p>Finally, let’s enhance the visual presentation of the confirmation message. Currently, it’s displayed as plain text directly below the “Register URL” without any clear distinction, as depicted in <a href="#fig-confirmation-result" class="quarto-xref">Figure&nbsp;7</a>. If you recall from section <a href="#sec-using-templates" class="quarto-xref">Section&nbsp;1.4.1</a>, we encapsulated the confirmation message within a &lt;div&gt; element that we identified with the id <code>resultcontainer</code>. Hence, we can utilize this unique identifier (id) to delineate a distinctive style for this element within our CSS. For instance, we could envelop the confirmation message within a rounded-corner box (specified by <code>border-radius</code>, for example, <code>5px</code>) embellished with shadowed borders (defined by <code>box-shadow</code>, such as <code>0 2px 4px rgba(0, 0, 0, 0.1)</code>), featuring a slightly variant shade of gray compared to other application components (e.g., setting the <code>background-color</code> to <code>#f0eaea</code>). Below, you can find the style defined for this ID:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#resultContainer</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this addition to the CSS file, our confirmation text will now be displayed within a clearly defined container. For instance, upon registering <em>www.google.com</em>, the confirmation message verifying the successful registration of this URL will be neatly enclosed in a well-defined box, as depicted in <a href="#fig-confirmation-container" class="quarto-xref">Figure&nbsp;9</a>.</p>
+<div id="fig-confirmation-container" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confirmation-container-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/confirmation_container_with_CSS.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confirmation-container-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Confirmation message container after updating CSS file
+</figcaption>
+</figure>
+</div>
+<p>However, implementing this change will introduce a minor issue. Upon returning to the main page—by removing the <em>/display_url/www.google.com</em> portion from the URL and pressing ENTER—you’ll notice that the confirmation container still remains despite no confirmation being displayed, as illustrated in <a href="#fig-container-without-confirmation" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<div id="fig-container-without-confirmation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-container-without-confirmation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/container_appearing_no_confirmation.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-container-without-confirmation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Unintended confirmation container visibility
+</figcaption>
+</figure>
+</div>
+<p>This issue can be addressed simply by adjusting our HTML template. Specifically the part of the template which shows the confirmation message. Currently, that part appears as follows:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"resultContainer"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  {% if url %}</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You have registered the following URL: {{ url }}<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Display URL registration confirmation --&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  {% endif %}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In our current template, the text “<em>You have registered the following URL: [entered URL]</em>” is displayed only when a user submits a URL. However, the div element with the id <code>resultContainer</code> enclosing this text is shown in all cases, regardless of whether a URL is provided or not.</p>
+<p>What we aim for is to display both the text and its enclosing box only when a URL is entered. If there’s no URL, neither the text nor the box should appear. Nevertheless, right now, the confirmation box is always displayed as depicted in <a href="#fig-container-without-confirmation" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<p>To rectify this issue, we only need to relocate the control structure <code>{% if url %}</code> <code>{% endif %}</code> to not just wrap around the paragraph containing the text “<em>You have registered the following URL: [entered URL]</em>”, but also around the enclosing div. Hence, the part of template responsible for displaying the confirmation message would now appear as follows:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>{% if url %}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"resultContainer"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You have registered the following URL: {{ url }}<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Display URL registration confirmation --&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By implementing this adjustment, if we navigate to the main page without registering any URL, the container won’t be visible.</p>
+</section>
+</section>
+<section id="final-code" class="level2">
+<h2 class="anchored" data-anchor-id="final-code">Final code</h2>
+<p>Here’s the finalized code implementation incorporating all the necessary adjustments.</p>
+<section id="python---app.py" class="level3">
+<h3 class="anchored" data-anchor-id="python---app.py">Python - app.py</h3>
+<div id="b8b6560c" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Process the form data here (if needed)</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url))  <span class="co"># Redirect to a different endpoint</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>            url2 <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Process the form data here (if needed)</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> redirect(url_for(<span class="st">'display_url'</span>, url<span class="op">=</span>url2))</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, url<span class="op">=</span>url)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A small change
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that in this block of code, we have added two additional lines that we hadn’t mentioned before:</p>
+<div id="b3659fc4" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This modification indicates that when the Python script is executed directly, for instance using the command <code>python app.py</code>, the application will initiate in debugging mode. Importantly, these lines will remain inactive when the application is run through other methods, such as <code>flask run</code>, ensuring they are executed only under specific conditions.</p>
+</div>
+</div>
+</section>
+<section id="html---index.html" class="level3">
+<h3 class="anchored" data-anchor-id="html---index.html">HTML - index.html</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"{{ url_for('static', filename='/styles/home.css')}}"</span><span class="dt">&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"content"</span><span class="dt">&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>What is your favorite website?<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">"post"</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Specify method="post" for form submission --&gt;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">"text"</span><span class="ot"> name</span><span class="op">=</span><span class="st">"urlInput"</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">"Enter URL"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"form-text-input"</span><span class="ot"> required</span><span class="dt">&gt;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">"submit"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"submit-btn"</span><span class="dt">&gt;</span>Register URL<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            {% if url %}</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"resultContainer"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You have registered the following URL: {{ url }}<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span>  <span class="co">&lt;!-- Display URL registration confirmation --&gt;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>            {% endif %}</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="css---home.css" class="level3">
+<h3 class="anchored" data-anchor-id="css---home.css">CSS - home.css</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span> <span class="co">/* Sets the text font for the entire document body /</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">margin: 0; / Removes the default margin /</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">padding: 0; / Removes the default padding /</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">height: 100vh; / Sets the body height to 100% of the viewport */</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span> <span class="co">/* Uses the flexbox model for content /</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">justify-content: center; / Centers the content horizontally /</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co">align-items: center; / Centers the content vertically /</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co">height: 100%; / Sets the content height to 100% of the viewport /</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co">background-color: #f0f0f0; / Sets the background color of the content /</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co">flex-direction: column; / Arranges child elements in columns */</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text within the container */</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="fu">.url-input</span> {</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field /</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co">padding: 10px; / Adds padding around the input field /</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co">font-size: 16px; / Sets the font size of the input field /</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co">border: 1px solid #ccc; / Sets a 1px solid border with a light gray color /</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="co">border-radius: 5px; / Applies rounded corners to the input field /</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co">margin-bottom: 20px; / Adds bottom margin to separate the input field from the button */</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button /</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co">color: white; / Sets the text color of the submit button /</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="co">padding: 10px 20px; / Adds padding around the text of the submit button /</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a><span class="co">font-size: 16px; / Sets the font size of the text of the submit button /</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a><span class="co">border: none; / Removes the border of the submit button /</span></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="co">border-radius: 5px; / Applies rounded corners to the submit button /</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="co">cursor: pointer; / Changes the cursor to a pointer when hovering over the button /</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co">transition: background-color 0.3s; / Adds a smooth transition to the background color of the button */</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the background color of the button when hovered over */</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text within the container /</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="co">margin-bottom: 20px; / Adds bottom margin to separate the form from the result */</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a><span class="pp">#resultContainer</span> {</span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In the first post of this series, we built the foundation of our web application, by starting its Home page using Flask. We implemented a simple form allowing users to submit their favorite websites, providing them with confirmation upon successful submission.</p>
+<p>To achieve this functionality, we leveraged Flask’s routing capabilities to define how the application responds to user interactions. We captured the submitted URL and used Flask’s templating system to display a confirmation message. Additionally, we implemented the Post/Redirect/Get (PRG) pattern to prevent accidental resubmissions when users refresh the page. This involved using Flask’s <code>redirect</code> and <code>url_for</code> functions, along with Flask converters.</p>
+<p>While currently, submitted URLs are not stored, the next post will delve into connecting our application to an SQL database. This will enable us to save user-submitted URLs, allowing us to create a new page that dynamically displays the most popular websites among users.</p>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Application overview</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Building the Home page: Favorite website registration and confirmation flow</span>
+</div>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="giscus">
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</div></body></html>
