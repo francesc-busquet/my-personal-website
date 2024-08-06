@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-01-07">
 
-<title>Francesc Busquet - Introductory voice analytics with R</title>
+<title>Introductory voice analytics with R – Francesc Busquet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <ul>
   <li><a href="#voice-analytics-decoding-the-vocal-spectrum" id="toc-voice-analytics-decoding-the-vocal-spectrum" class="nav-link active" data-scroll-target="#voice-analytics-decoding-the-vocal-spectrum">Voice analytics: Decoding the vocal spectrum</a></li>
   <li><a href="#the-analytical-process-from-acquisition-to-statistical-analysis" id="toc-the-analytical-process-from-acquisition-to-statistical-analysis" class="nav-link" data-scroll-target="#the-analytical-process-from-acquisition-to-statistical-analysis">The analytical process: From acquisition to statistical analysis</a></li>
-  <li><a href="#understanding-user-frustration" id="toc-understanding-user-frustration" class="nav-link" data-scroll-target="#understanding-user-frustration">Understanding User frustration</a></li>
+  <li><a href="#understanding-user-frustration" id="toc-understanding-user-frustration" class="nav-link" data-scroll-target="#understanding-user-frustration">Understanding user frustration</a></li>
   <li><a href="#data-acquisition-and-processing" id="toc-data-acquisition-and-processing" class="nav-link" data-scroll-target="#data-acquisition-and-processing">Data acquisition and processing</a>
   <ul class="collapse">
   <li><a href="#data-acquisition" id="toc-data-acquisition" class="nav-link" data-scroll-target="#data-acquisition">Data acquisition</a></li>
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p>Following this preparatory phase, the subsequent step involves reading and preprocessing the voice files. This encompasses data preprocessing and transformation by primarily eliminating extraneous elements, such as irrelevant utterances and background noise. These preprocessing steps are crucial for ensuring the quality of the data.</p>
 <p>After preprocessing the audio files, we can extract the vocal features of interest, such as amplitude and fundamental frequency. These features can subsequently be explored through visualization and the computation of summary statistics to gain a deeper understanding. This exploration may reveal further anomalies, or matters requiring additional processing may be detected. Consequently, we may proceed to further preprocess the audio files. Once the data attains sufficient quality, the process culminates in statistical analysis. In this phase, the extracted vocal features may be compared through statistical tests or used to train prediction models. This whole process is depicted in <a href="#fig-voice-analytics-pipeline" class="quarto-xref">Figure&nbsp;1</a>.</p>
 <p>It is imperative to recognize that the process just described here is a simplified abstraction of the voice analytics process. Practical voice analytics is characterized by flexibility and adaptability rather than a rigidly linear progression. This iterative nature accommodates refinements and adjustments, ultimately enhancing the robustness and accuracy of the analytical outcomes.</p>
-<div id="fig-voice-analytics-pipeline" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-voice-analytics-pipeline" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-voice-analytics-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/voice-analytics-pipeline.png" class="invertImage img-fluid figure-img">
@@ -283,7 +283,7 @@ Figure&nbsp;1: Streamlined view of the voice analytics pipeline
 <p>To illustrate how voice analytics operates in a real-world context, we offer a simple, practical tutorial using R. This tutorial walks you through the fundamental steps of the voice analytics pipeline, from reading audio files to extracting vocal features and drawing basic inferences.</p>
 </section>
 <section id="understanding-user-frustration" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-user-frustration">Understanding User frustration</h2>
+<h2 class="anchored" data-anchor-id="understanding-user-frustration">Understanding user frustration</h2>
 <p>In this tutorial, we will analyze a compelling video featuring a female Scottish user attempting, albeit humorously, to issue a command to Amazon Alexa to play a song on Spotify. This viral video, though amusing, highlights a common frustration many users encounter when trying to communicate effectively with voice-controlled interfaces.</p>
 <p><video src="assets/alexa_video.mp4" class="img-fluid" controls=""><a href="assets/alexa_video.mp4">Video</a></video></p>
 </section>
@@ -527,7 +527,7 @@ Wave Object
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove all unvoiced frames of a soundwave</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cmd1.nosil <span class="ot">&lt;-</span> <span class="fu">zapsilw</span>(cmd1, <span class="at">output=</span><span class="st">"Wave"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillogram-before-after-silence-removal" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-oscillogram-before-after-silence-removal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oscillogram-before-after-silence-removal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-1.png" class="img-fluid figure-img" width="672">
@@ -576,7 +576,7 @@ Wave Object
 <div class="cell invertImage">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cmd1.nosil2 <span class="ot">&lt;-</span> <span class="fu">zapsilw</span>(cmd1, <span class="at">threshold=</span><span class="fl">0.3</span>, <span class="at">output=</span><span class="st">"Wave"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillogram-before-after-silence-removal-threshold-03" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-oscillogram-before-after-silence-removal-threshold-03" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oscillogram-before-after-silence-removal-threshold-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-oscillogram-before-after-silence-removal-threshold-03-1.png" class="img-fluid figure-img" width="672">
@@ -732,7 +732,7 @@ Amplitude
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">oscillo</span>(cmd2.filtered, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span>.<span class="dv">7</span>, <span class="at">colwave=</span><span class="st">"blue"</span>, <span class="at">collab=</span><span class="st">"red"</span>, </span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">"Second Command - wake word Only"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-oscillograms" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-oscillograms" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oscillograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-oscillograms-1.png" class="img-fluid figure-img" width="672">
@@ -746,7 +746,7 @@ Figure&nbsp;4: Oscillograms for the first and second command, including the wake
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div id="fig-detailed-oscillogram-cmd1" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-detailed-oscillogram-cmd1" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-detailed-oscillogram-cmd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/Oscillogram_command1_detailed.png" class="invertImage img-fluid figure-img">
@@ -756,7 +756,7 @@ Figure&nbsp;5: Detailed view of the oscillogram for the first command, including
 </figcaption>
 </figure>
 </div>
-<div id="fig-detailed-oscillogram-cmd2" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-detailed-oscillogram-cmd2" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-detailed-oscillogram-cmd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/Oscillogram_command2_detailed.png" class="invertImage img-fluid figure-img">
@@ -833,7 +833,7 @@ Wave Object
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#We add a separation line, between the wake word 1 and wake word 2</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.635</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-pitch" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-pitch" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pitch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-pitch-1.png" class="img-fluid figure-img" width="672">
@@ -856,7 +856,7 @@ Figure&nbsp;7: Pitch track for the two wake words
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w1<span class="sc">@</span>left, <span class="at">fs=</span>w1<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">formanttrack</span>(w2<span class="sc">@</span>left, <span class="at">fs=</span>w2<span class="sc">@</span>samp.rate, <span class="at">formants=</span><span class="dv">3</span>, <span class="at">periodicity=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-formanttrack" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-formanttrack" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-formanttrack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-formanttrack-1.png" class="img-fluid figure-img" width="672">
@@ -884,7 +884,7 @@ Figure&nbsp;8: <span style="color:#000000; font-weight:600">First</span>, <span 
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spectro</span>(wake_all, <span class="at">osc=</span><span class="cn">TRUE</span>, <span class="at">flim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.5</span>))</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.62</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-spectrograms" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-spectrograms" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-spectrograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-spectrograms-1.png" class="img-fluid figure-img" width="672">
@@ -1271,13 +1271,13 @@ When the spectrum is flat, indicating a balanced energy distribution, the Wiener
 <h3 class="anchored" data-anchor-id="vocal-features-summary">Vocal features summary</h3>
 <p>After extracting the various vocal features from the two commands, we present a well-organized table, <a href="#tbl-vocal-features" class="quarto-xref">Table&nbsp;1</a>, which encapsulates these characteristics for each command. Furthermore, we also include the vocal characteristics for the isolated wake words associated with both commands.</p>
 <div class="table-wrapper">
-<div id="tbl-vocal-features" class="quarto-float anchored">
+<div id="tbl-vocal-features" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vocal-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Vocal features for the two commands and isolated wake words
 </figcaption>
 <div aria-describedby="tbl-vocal-features-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
 <col style="width: 20%">
@@ -1650,18 +1650,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1693,7 +1682,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1701,7 +1712,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2021-09-25">
 
-<title>Francesc Busquet - Statistics Foundations: Populations and samples</title>
+<title>Statistics Foundations: Populations and samples – Francesc Busquet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p>Hence, we can promptly delve into the examination of the data distribution, which we can observe through a histogram, depicted in <span class="invertImage"><a href="#fig-population-distribution" class="quarto-xref">Figure&nbsp;1</a></span>. This analysis unveils that the distribution of customer incomes exhibits an approximate normality, featuring an average annual income of $120,950 with a moderate degree of variability (Standard Deviation = $38,110). This implies that a substantial proportion of customers have incomes that closely align with the mean value, while fewer customers fall within the income extremes. Additionally, it is worth noting a slight rightward skew in the plot, indicating a minority of individuals with substantially higher incomes compared to the majority.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-population-distribution" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-population-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-population-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-population-distribution-1.png" class="img-fluid figure-img" width="672">
@@ -298,7 +298,7 @@ Log-normal distribution
 <p>In the earlier paragraph, we highlighted that the “distribution of customer incomes exhibits an approximate normality.” To be more precise, the distribution we are discussing is formally identified as the log-normal distribution. Although it visually resembles a normal distribution, featuring a slightly bell-shaped curve, the log-normal distribution distinguishes itself by having a lower bound at zero and a positively skewed nature, leading to a more elongated right tail. The name “log-normal” stems from the phenomenon that transforming the variable into its logarithm results in a normal distribution. <span class="invertImage"><a href="#fig-population-distribution-log" class="quarto-xref">Figure&nbsp;2</a></span> visually presents the original distribution of the customer’s annual income on the left and, on the right, showcases the result of applying a logarithmic transformation to the variable. This illustration vividly demonstrates how the logarithm transformation effectively transforms the distribution into a normal distribution.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-population-distribution-log" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-population-distribution-log" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-population-distribution-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-population-distribution-log-1.png" class="img-fluid figure-img" width="672">
@@ -320,7 +320,7 @@ Figure&nbsp;2: Original (left) and logarithmically transformed (right) customer 
 <p>Firstly, we observe that certain income brackets, present in the population data, remain absent in our sample. Additionally, we notice a higher proportion of high-income customers in comparison to the population. These disparities culminate in a higher average customer annual income (Mean = $137,320) and increased variability (Standard Deviation = $47,770) within the sample. Consequently, if we were to draw inferences based on this data, our conclusions would suggest that individuals in the sample exhibit a higher average income and greater income variability compared to the population, thus drawing into <strong>error</strong>.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-20-sample-distribution" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-20-sample-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-20-sample-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-20-sample-distribution-1.png" class="img-fluid figure-img" width="672">
@@ -340,7 +340,7 @@ Figure&nbsp;3: Customer annual income distribution for our sample with 20 observ
 <p>One might naturally question whether increasing the sample size could enhance the richness of our sample and consequently enable us to better capture the nuances present in the population. This would ultimately result in a more faithful representation. To investigate this, we will generate samples of varying sizes, specifically seven additional samples consisting of 40, 80, 120, 150, 300, 500, and 1000 randomly selected consumers from our population. <span class="invertImage"><a href="#fig-anim-sample-distributions" class="quarto-xref">Figure&nbsp;4</a></span> visually illustrates, through histograms, how the distribution changes for each of these sample sizes, including the initially created one with 20 consumers.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-anim-sample-distributions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-anim-sample-distributions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-anim-sample-distributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-anim-sample-distributions-1.gif" class="img-fluid figure-img">
@@ -696,18 +696,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -739,7 +728,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -747,7 +758,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

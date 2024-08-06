@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2021-12-28">
 
-<title>Francesc Busquet - Statistics Foundations: Sampling error</title>
+<title>Statistics Foundations: Sampling error – Francesc Busquet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -196,7 +196,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -211,7 +211,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -289,7 +289,7 @@ window.Quarto = {
 <p>Let’s envision a scenario: our objective is to rapidly glean insights into the annual income of our customers. One straightforward strategy to achieve this is by computing the mean income, which furnishes us with a succinct metric representing the central tendency around which the majority of our customers’ annual incomes gravitate. In this endeavor, we observe that the mean annual income stands at a noteworthy $120,950, serving as a prominent reference point around which the annual incomes of our customers tend to concentrate.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-population-distribution-error" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-population-distribution-error" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-population-distribution-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-population-distribution-error-1.png" class="img-fluid figure-img" width="672">
@@ -306,7 +306,7 @@ Figure&nbsp;1: Customer annual income distribution (thousands, $)
 <p>In this hypothetical case, we possess information about the sample. Consequently, we can obtain information about our population without any error by directly observing it. Therefore, now we know that our population has an average annual income of $120,950. However, in real-life scenarios, and as previously said, obtaining data for the whole population may be unfeasible or even not possible. For this reason, we will assume that we extract a random sample of 40 customers and compute the mean annual income from this sample.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-40-sample-distribution-error" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-40-sample-distribution-error" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-40-sample-distribution-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-40-sample-distribution-error-1.png" class="img-fluid figure-img" width="672">
@@ -327,7 +327,7 @@ Figure&nbsp;2: Customer annual income distribution for our sample with 40 observ
 <p><span class="invertImage"><a href="#fig-anim-different-40-sample-distributions" class="quarto-xref">Figure&nbsp;3</a></span> illustrates the annual income distribution of various samples, each consisting of 40 customers randomly selected from our initial population (including the sample we previously examined). It becomes evident that the distribution undergoes fluctuations across these diverse samples. Consequently, this variability gives rise to a spectrum of computed means, ranging from as low as $106,600 to as high as $137,320.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-anim-different-40-sample-distributions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-anim-different-40-sample-distributions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-anim-different-40-sample-distributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-anim-different-40-sample-distributions-1.gif" class="img-fluid figure-img">
@@ -345,7 +345,7 @@ Figure&nbsp;3: Customer annual income distribution for different samples of 40 c
 <p>To deepen our comprehension of the variance in computed means, we embark on a more extensive analysis by replicating the previous procedure but on a much larger scale: generating precisely 10,000 samples, each composed of 40 individuals. For every one of these 10,000 samples, we compute the mean annual income. The resulting distribution of these 10,000 means, each originating from distinct samples of 40 individuals randomly selected from our complete population, is visually represented in <span class="invertImage"><a href="#fig-10000-40-samples-mean" class="quarto-xref">Figure&nbsp;4</a></span> through a histogram.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-10000-40-samples-mean" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-10000-40-samples-mean" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-10000-40-samples-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-10000-40-samples-mean-1.png" class="img-fluid figure-img" width="672">
@@ -369,7 +369,7 @@ Figure&nbsp;4: Average income distribution of 10,000 samples of 40 customers (th
 <p><span class="invertImage"><a href="#fig-10000-150-samples-mean" class="quarto-xref">Figure&nbsp;5</a></span> provides a visual comparison between the distributions of means computed using 10,000 samples, each with 40 observations, and another set of samples, each comprising 150 observations.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-10000-150-samples-mean" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-10000-150-samples-mean" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-10000-150-samples-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-10000-150-samples-mean-1.gif" class="img-fluid figure-img">
@@ -854,18 +854,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -897,7 +886,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -905,7 +916,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

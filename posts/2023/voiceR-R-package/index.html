@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-09-12">
 
-<title>Francesc Busquet - My first R package: voiceR</title>
+<title>My first R package: voiceR – Francesc Busquet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <section id="what-is-voicer" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-voicer">What is voiceR?</h2>
 <p>voiceR is an R package specifically designed to streamline and automate voice analytics for social science research. This package simplifies the entire process, from data processing and extraction to analysis and reporting of voice recording data in the behavioral and social sciences. It provides an intuitive and user-friendly interface, including an interactive Shiny app, making it accessible for researchers. One of its key features is batch processing, enabling the simultaneous reading and analysis of multiple voice files. Moreover, voiceR automates the extraction of crucial vocal features, facilitating further in-depth analysis. Notably, it goes a step further by automatically generating APA-formatted reports tailored for typical between-group comparisons in experimental social science research. <a href="#fig-voiceR-video" class="quarto-xref">Figure&nbsp;1</a> offers a video summary of voiceR’s key features.</p>
-<div id="fig-voiceR-video" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-voiceR-video" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-voiceR-video-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <video src="assets/voiceR.mp4" class="img-fluid" controls=""><a href="assets/voiceR.mp4">Video</a></video>
@@ -304,7 +304,7 @@ Figure&nbsp;1: Overview of the main voiceR features
 <p>If there are parts of the file name that are not any of the required components, you can use the <code>Null</code> placeholder to avoid them. For example, if you have additional information in the file name that does not belong to any of the categories that voiceR processes, you can use the <code>Null</code> placeholder to ignore that information.</p>
 <p>For example, imagine you have a file named <code>Audio_Participant345_Happy.wav</code>. The <code>Audio</code> component of the file name is not required, so you could define the following pattern: <code>Null_ID_Condition</code>. This file name would still be valid, and voiceR would ignore the first component given that we used the <code>Null</code> placeholder.</p>
 <p><a href="#fig-file-naming" class="quarto-xref">Figure&nbsp;2</a> showcases how the voiceR package uses the name pattern structure to identify the different components.</p>
-<div id="fig-file-naming" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-file-naming" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-file-naming-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/voiceR_file_pattern.gif" class="invertImage img-fluid figure-img">
@@ -321,10 +321,10 @@ Figure&nbsp;2: Examples of File Name Patterns
 <h2 class="anchored" data-anchor-id="comprehensive-functionality">Comprehensive functionality</h2>
 <p>voiceR offers a suite of functions designed to simplify the voice analytics process. These functions cover reading and preprocessing audio files, automatic feature extraction, visualization of results, and even automatic report generation.</p>
 <p><a href="#fig-voiceR-function-overview" class="quarto-xref">Figure&nbsp;3</a> offers a simple overview of the key voiceR functions, highlighting their scope within the voice analytics pipeline.</p>
-<div id="fig-voiceR-function-overview" class="invertImage lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-voiceR-function-overview" class="invertImage lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-voiceR-function-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="assets/overview of voiceR functions.PNG" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="assets/overview of voiceR functions.PNG" class="invertImage img-fluid figure-img"></a>
+<a href="assets/overview of voiceR functions.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;3: Overview of the main voiceR functions"><img src="assets/overview of voiceR functions.PNG" class="invertImage img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voiceR-function-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Overview of the main voiceR functions
@@ -360,7 +360,7 @@ Figure&nbsp;3: Overview of the main voiceR functions
 <section id="the-no-code-approach-the-voicer-shiny-app" class="level2">
 <h2 class="anchored" data-anchor-id="the-no-code-approach-the-voicer-shiny-app">The no code approach: the voiceR shiny app</h2>
 <p>For users who prefer not to code, voiceR offers the <code>voiceRApp()</code> function. By invoking this function, you can launch the voiceR Shiny app, simplifying the selection and subsequent analysis of multiple audio files. It provides a dynamic view of results and the ability to download a comprehensive report summarizing the key findings. <a href="#fig-voiceR-app" class="quarto-xref">Figure&nbsp;4</a> provides a snapshot of the voiceR app’s initial screen.</p>
-<div id="fig-voiceR-app" class="roundedEdgeImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-voiceR-app" class="roundedEdgeImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-voiceR-app-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/voiceR-App.jpeg" class="roundedEdgeImage img-fluid figure-img">
@@ -372,9 +372,6 @@ Figure&nbsp;4: voiceR shiny app
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;3: Overview of the main voiceR functions</span>
-</div>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -558,18 +555,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -601,7 +587,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -609,7 +617,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -933,30 +941,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

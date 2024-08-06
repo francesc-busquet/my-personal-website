@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-10-25">
 
-<title>Francesc Busquet - Money and the ascent of Bitcoin</title>
+<title>Money and the ascent of Bitcoin – Francesc Busquet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -357,7 +357,7 @@ Note
 <p>This newfound stability motivated investors, prompting numerous major companies like Ferrari to announce their willingness to accept Bitcoin as a payment method. Additionally and primarily, steps taken by Blackrock to launch a Bitcoin ETF further intensified demand, subsequently driving up its price.</p>
 <div class="cell invertImage">
 <div class="cell-output-display">
-<div id="fig-btc-downside-risk" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-btc-downside-risk" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-btc-downside-risk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-btc-downside-risk-1.png" class="img-fluid figure-img" width="672">
@@ -374,7 +374,7 @@ Figure&nbsp;1: Bitcoin downside risk
 <p>Finally, if Bitcoin’s function as a medium of exchange were to develop, it would increase its popularity and at the same time solidify its position as a store of value. Enabling future economic agents to start accounting with Bitcoin, i.e., opening the possibility of development to the function of unit of account.</p>
 <p>Therefore, <strong>we cannot say that Bitcoin is in the process of becoming money, but we can say that Bitcoin is currently in the process of becoming a store of value</strong>. That said, whether such a function is widely recognized depends on the maintenance of the trend in which it is now present: further decrease in its downward volatility without giving up its current popularity. Moreover, the development of other functions as a generalized medium of exchange and unit of account is still a long way off and is conditional on the soundness of the development of the store of value function. In addition, <strong>even if at some point the store of value function is fully developed, the development of other functions will still remain highly uncertain.</strong></p>
 <p><a href="#fig-monetization" class="quarto-xref">Figure&nbsp;2</a> summarizes the process by which Bitcoin could obtain the functions of money and thus become money. Take into account that this figure is an abstraction and does not consider various factors that could influence this process. This includes the potential impact of external shocks, exemplified by the events of 2022, as well as the variable durations of each transition phase. Moreover, it’s essential to acknowledge the non-linear nature of this progression, where steps forward can be accompanied by steps backward, adding complexity to the overall monetization process.</p>
-<div id="fig-monetization" class="invertImage quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-monetization" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-monetization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/BitcoinProcess.jpg" class="invertImage img-fluid figure-img">
@@ -659,18 +659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -702,7 +691,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -710,7 +721,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
