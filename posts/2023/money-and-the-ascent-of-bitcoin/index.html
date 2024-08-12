@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -374,10 +377,10 @@ Figure&nbsp;1: Bitcoin downside risk
 <p>Finally, if Bitcoin’s function as a medium of exchange were to develop, it would increase its popularity and at the same time solidify its position as a store of value. Enabling future economic agents to start accounting with Bitcoin, i.e., opening the possibility of development to the function of unit of account.</p>
 <p>Therefore, <strong>we cannot say that Bitcoin is in the process of becoming money, but we can say that Bitcoin is currently in the process of becoming a store of value</strong>. That said, whether such a function is widely recognized depends on the maintenance of the trend in which it is now present: further decrease in its downward volatility without giving up its current popularity. Moreover, the development of other functions as a generalized medium of exchange and unit of account is still a long way off and is conditional on the soundness of the development of the store of value function. In addition, <strong>even if at some point the store of value function is fully developed, the development of other functions will still remain highly uncertain.</strong></p>
 <p><a href="#fig-monetization" class="quarto-xref">Figure&nbsp;2</a> summarizes the process by which Bitcoin could obtain the functions of money and thus become money. Take into account that this figure is an abstraction and does not consider various factors that could influence this process. This includes the potential impact of external shocks, exemplified by the events of 2022, as well as the variable durations of each transition phase. Moreover, it’s essential to acknowledge the non-linear nature of this progression, where steps forward can be accompanied by steps backward, adding complexity to the overall monetization process.</p>
-<div id="fig-monetization" class="invertImage quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-monetization" class="invertImage lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-monetization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/BitcoinProcess.jpg" class="invertImage img-fluid figure-img">
+<a href="assets/BitcoinProcess.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2: Bitcoin monetization process"><img src="assets/BitcoinProcess.jpg" class="invertImage img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monetization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Bitcoin monetization process
@@ -1045,6 +1048,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -224,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ensuring-data-validity-and-security" id="toc-ensuring-data-validity-and-security" class="nav-link active" data-scroll-target="#ensuring-data-validity-and-security">Ensuring Data Validity and Security</a>
+  <li><a href="#ensuring-data-validity-and-security" id="toc-ensuring-data-validity-and-security" class="nav-link active" data-scroll-target="#ensuring-data-validity-and-security">Ensuring data validity and security</a>
   <ul class="collapse">
   <li><a href="#creating-a-function-to-validate-urls" id="toc-creating-a-function-to-validate-urls" class="nav-link" data-scroll-target="#creating-a-function-to-validate-urls">Creating a function to validate URLs</a></li>
   <li><a href="#modifying-the-applications-behavior-to-validate-and-confirm-urls" id="toc-modifying-the-applications-behavior-to-validate-and-confirm-urls" class="nav-link" data-scroll-target="#modifying-the-applications-behavior-to-validate-and-confirm-urls">Modifying the application’s behavior to validate and confirm URLs</a></li>
@@ -268,17 +271,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<p>In the <a href="../../../posts/2024/intro-to-flask/">previous post</a>, we built a basic Flask application that enabled users to register their favorite websites by inputting a URL and receive a confirmation that the URL had been successfully registered. While this was a useful starting point, the application had a significant limitation: it did not store the registered URLs. As a result, the inputted information was not preserved and could not be accessed or used later. Without a mechanism to save this data, the application lacked practical utility—after all, registering a URL is pointless if it can’t be retrieved and used in the future.</p>
+<p>In the <a href="../../../posts/2024/intro-to-flask/">previous post of the data driven web applications basics</a>, we built a basic Flask application that enabled users to register their favorite websites by inputting a URL and receive a confirmation that the URL had been successfully registered. While this was a useful starting point, the application had a significant limitation: it did not store the registered URLs. As a result, the inputted information was not preserved and could not be accessed or used later. Without a mechanism to save this data, the application lacked practical utility—after all, registering a URL is pointless if it can’t be retrieved and used in the future.</p>
 <p>Without a system to store the registered URLs, we cannot, for instance, track which URLs users have submitted, determine which sites are most popular, or analyze user preferences. Therefore, to make our application more useful, we need a way to store information persistently. This requires a reliable storage solution that allows data to be saved, retrieved, and managed efficiently.</p>
 <p>Initially, using Excel might seem like a convenient solution—especially for small-scale applications or for users familiar with spreadsheet software. For example, when a user registers a URL, the application could write the URL to a new row in an Excel file. However, this method has significant limitations. Excel is not designed to handle large volumes of data or support simultaneous access and modifications by multiple users. In addition, as the number of records grows, performance can degrade significantly, and Excel files have size limitations that can lead to corruption and potential data loss.</p>
 <p>To address these limitations, we turn to databases, which are purpose-built for efficient data management. Databases offer faster read and write operations, support concurrent access by multiple users, and ensure data integrity.</p>
 <p>Among the various types of databases, relational databases are the most common due to their intuitive data model. They use a well-defined schema organized in a tabular format with rows and columns, simplifying data organization, querying, and management. Relational databases also support the creation of multiple tables and the establishment of relationships between them. This ability to link data across tables is why they are called “relational.”</p>
 <p>Relational databases are typically accessed and manipulated using SQL (Structured Query Language), a standardized language designed specifically for interacting with relational data. As a result, relational databases are often referred to as SQL databases.</p>
 <p>To overcome the limitation of data persistence, we will enhance our Flask application by integrating a relational database to store the URLs submitted by users. This means that each time a user registers a URL, it will be saved in an SQL database, ensuring the data is preserved, as illustrated in <a href="#fig-schematic-saving-data-db" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="fig-schematic-saving-data-db" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-schematic-saving-data-db" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-schematic-saving-data-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/saving_data_to_db_schematic.png" class="img-fluid figure-img">
+<a href="assets/saving_data_to_db_schematic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Storing user-submitted URLs in a relational database"><img src="assets/saving_data_to_db_schematic.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schematic-saving-data-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Storing user-submitted URLs in a relational database
@@ -287,10 +290,10 @@ Figure&nbsp;1: Storing user-submitted URLs in a relational database
 </div>
 <p>Integrating a relational database into our application will allow us to leverage the data submitted by users. With this addition, we will use the stored data to identify and showcase the most popular websites. To achieve this, we will add a new page to the application that retrieves and counts the different registered URLs, displaying the ones registered the most times. This process is schematically illustrated in <a href="#fig-schematic-retrieving-data-db" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <p>Moreover, since our application will now feature multiple pages, and as you may have already spot in the previous Figure, we will add a navigation bar to facilitate easy navigation between pages.</p>
-<div id="fig-schematic-retrieving-data-db" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-schematic-retrieving-data-db" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-schematic-retrieving-data-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/retrieving_data_from_db_schematic.png" class="img-fluid figure-img">
+<a href="assets/retrieving_data_from_db_schematic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Retrieving user-submitted URLs to create a “Top Favorite Websites” page"><img src="assets/retrieving_data_from_db_schematic.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schematic-retrieving-data-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Retrieving user-submitted URLs to create a “Top Favorite Websites” page
@@ -304,7 +307,7 @@ Figure&nbsp;2: Retrieving user-submitted URLs to create a “Top Favorite Websit
 <li><p>A navigation bar to facilitate easy navigation between pages.</p></li>
 </ol>
 <section id="ensuring-data-validity-and-security" class="level2">
-<h2 class="anchored" data-anchor-id="ensuring-data-validity-and-security">Ensuring Data Validity and Security</h2>
+<h2 class="anchored" data-anchor-id="ensuring-data-validity-and-security">Ensuring data validity and security</h2>
 <p>Given that we will be storing user-generated data, it is crucial to ensure that the data is both valid and secure before it is saved. This means that users should not be able to save arbitrary or incorrect data in our database. Ensuring data validity involves checking that the data conforms to the desired format and requirements. For example, if users are supposed to enter a URL, we need to validate that the input is indeed in a valid URL format before accepting it.</p>
 <p>In the previous example, we did not implement any format validation for user input. While our goal was to have users submit URLs, there was no enforcement to ensure that users actually entered a proper URL. As a result, users could input any value or format they wished. For instance, if a user typed “hello” and clicked the “Register URL” button, the application would erroneously confirm that the URL was registered, as illustrated in <a href="#fig-registering-hello" class="quarto-xref">Figure&nbsp;3</a>.</p>
 <div id="fig-registering-hello" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -320,7 +323,7 @@ Figure&nbsp;3: Registering a text entry instead of a URL
 <section id="creating-a-function-to-validate-urls" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-function-to-validate-urls">Creating a function to validate URLs</h3>
 <p>To address this issue, we need to ensure that only valid URLs are registered. We can achieve this by creating a function that verifies whether the user input is a valid URL. This function will return <code>True</code> if the input is a valid URL and <code>False</code> otherwise. We could name this function <code>is_valid_url()</code>, and its behavior can be summarized as follows:</p>
-<div id="a7addef6" class="cell" data-execution_count="1">
+<div id="e28f0200" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Given a value for the parameter 'url'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if it is a valid URL</span></span>
@@ -355,7 +358,7 @@ Figure&nbsp;3: Registering a text entry instead of a URL
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Beware: This Regular Expression Isn’t Perfect
+Beware: This regular expression isn’t perfect
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -368,7 +371,7 @@ Beware: This Regular Expression Isn’t Perfect
 <p>Now that we have our regex pattern for detecting URLs, we can put it to use in Python to validate user input.</p>
 <p>To do so, we will leverage the <code>re</code> library, which handles regular expression operations in Python. First, we’ll define our pattern and then use the <code>fullmatch()</code> function from the <code>re</code> library to check if the user-provided URL matches the pattern exactly. Note that <code>fullmatch()</code> doesn’t return a simple boolean value; instead, it provides a <code>Match</code> object if there’s a match, or <code>None</code> if there isn’t. To convert this result into a boolean, we can use the <code>bool()</code> function—<code>bool()</code> will return <code>True</code> for any value other than <code>None</code>, and <code>False</code> for <code>None</code>.</p>
 <p>Using this approach, we can write our function to validate whether user input follows a correct URL format as follows:</p>
-<div id="a15ceb33" class="cell" data-execution_count="2">
+<div id="565f875e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re  <span class="co"># We need to import the re library</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url):</span>
@@ -386,7 +389,7 @@ Best practice: Adding type hints to strengthen your Python functions
 </div>
 <div class="callout-body-container callout-body">
 <p>When creating functions, it’s advisable to specify the types of the arguments and the expected return type. For example, in this case, the parameter <code>url</code> should be a string (<code>str</code>), and the output of this function should be a boolean (<code>bool</code>). We can specify this as follows:</p>
-<div id="eecea3a5" class="cell" data-execution_count="3">
+<div id="6a95da3c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
@@ -402,7 +405,7 @@ Best practice: Adding type hints to strengthen your Python functions
 <h3 class="anchored" data-anchor-id="modifying-the-applications-behavior-to-validate-and-confirm-urls">Modifying the application’s behavior to validate and confirm URLs</h3>
 <p>We have now incorporated a function to check if a user’s input is a valid URL. With this in place, we can adjust the part of the code found in <em>app.py</em> responsible for rendering the page that displays the URL confirmation.</p>
 <p>To recap, here is the code we built for the main route (<code>/</code>) in the previous post:</p>
-<div id="8d32d516" class="cell" data-execution_count="4">
+<div id="d7b7e7e7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -415,7 +418,7 @@ Best practice: Adding type hints to strengthen your Python functions
 <p>For this reason, we want to enhance this code by adding a validation step to ensure that the submitted URL is valid before doing anything with it. To accomplish this, we will use the <code>is_valid_url()</code> function that we have just created.</p>
 <p>If <code>is_valid_url()</code> returns <code>True</code>, it confirms that the submitted URL is valid, and we will then display a confirmation message to the user, indicating that the URL has been successfully registered. However, if <code>is_valid_url()</code> returns <code>False</code>, an error message will be displayed to inform the user that the URL is invalid.</p>
 <p>To implement this, we can modify our code by adding an <code>if-else</code> statement based on the result of <code>is_valid_url(url)</code>. If the URL is valid, we will reuse the code we previously had, i.e., redirect the user to a confirmation page using <code>redirect(url_for('display_url', url=url))</code>. Conversely, if the URL is invalid, we will add a <code>return</code> statement with the following message: <code>"The URL you entered is not valid. Please check the format and try again."</code> In Flask, returning a string generates a plain HTML page containing that message. Therefore, our code would now look as displayed below:</p>
-<div id="a1187894" class="cell" data-execution_count="5">
+<div id="321dada5" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -457,7 +460,7 @@ Figure&nbsp;4: Result of the URL validation submitted by the user
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, there is no predefined text inside the container; the full message is provided by the backend.</p>
 <p>In addition, we need to update the backend code (<em>app.py</em>) so that it not only sends the URL but also includes a message based on the URL’s validity. If the URL is valid, it should prepend the text “Has entrado la URL:” to the URL. If the URL is invalid, it should display the text “Error URL incorrecta!”:</p>
-<div id="e037f312" class="cell" data-execution_count="6">
+<div id="41a98d9d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -472,7 +475,7 @@ Figure&nbsp;4: Result of the URL validation submitted by the user
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we need to make the same updates to the <code>/display_url/&lt;path:url&gt;</code> route. This route, as you might remember, is where users are redirected to see the confirmation container after registering a URL. Since users can also register new URLs from this route, it’s important to apply these updates here as well. Below is the revised code for this route:</p>
-<div id="5de144d6" class="cell" data-execution_count="7">
+<div id="53ebdb22" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -514,7 +517,7 @@ Figure&nbsp;5: Updated URL validation behavior
 <p>As our codebase grows, it becomes more complex and harder to read. This often leads to repetitive code in different parts of our application. Recognizing and addressing code repetition allows us to simplify our code by consolidating repetitive logic into functions. This approach, known as encapsulation, helps us avoid duplicating code and makes our application more maintainable. Instead of copying and pasting the same code repeatedly, we can create reusable functions.</p>
 <p>For instance, the code we’ve added for both routes can be consolidated into a single function, which we might call <code>process_url</code>. This function will handle the URL processing and return the appropriate confirmation text.</p>
 <p>We can define the <code>process_url</code> function as follows:</p>
-<div id="1b814d7b" class="cell" data-execution_count="8">
+<div id="4e7e0969" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        confirmation_message <span class="op">=</span> <span class="st">"You have successfully registered the following URL: "</span> <span class="op">+</span> url</span>
@@ -523,7 +526,7 @@ Figure&nbsp;5: Updated URL validation behavior
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>By using this function, we can simplify the code for the <code>home</code> and <code>display_url</code> routes as shown below:</p>
-<div id="508cb236" class="cell" data-execution_count="9">
+<div id="c77a24aa" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -574,10 +577,10 @@ Note
 </div>
 <p>To get started, you need to create a free account on Supabase. Once your account is set up and you’re logged in, you can initiate a new project.</p>
 <p>Navigate to the “Projects” section—this is usually the main screen you see after logging in—and click on “New Project,” as highlighted in red in the <a href="#fig-new-project-supabase" class="quarto-xref">Figure&nbsp;6</a>. By following these steps, you will have access to a dedicated PostgreSQL database in the cloud, allowing you to efficiently manage and scale your database needs.</p>
-<div id="fig-new-project-supabase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-new-project-supabase" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-new-project-supabase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_new_project.png" class="img-fluid figure-img">
+<a href="assets/supabase_new_project.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;6: Click “New Project” in the Projects view to create a new project"><img src="assets/supabase_new_project.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-new-project-supabase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Click “New Project” in the Projects view to create a new project
@@ -596,10 +599,10 @@ Figure&nbsp;7: Project creation menu
 </figure>
 </div>
 <p>After creating a project, you’ll be redirected to the project view, as shown in <a href="#fig-setting-up-project" class="quarto-xref">Figure&nbsp;8</a>. You might notice a brief delay in being able to perform any actions; this is indicated by the status icon next to the project name, which will show that the project is being set up (highlighted in red in <a href="#fig-setting-up-project" class="quarto-xref">Figure&nbsp;8</a>). If you encounter any issues with redirection, you can alternatively access the project by going to the “Projects” section and clicking on the specific project.</p>
-<div id="fig-setting-up-project" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-setting-up-project" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-setting-up-project-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_setting_up_project.png" class="img-fluid figure-img">
+<a href="assets/supabase_setting_up_project.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;8: Project redirection view"><img src="assets/supabase_setting_up_project.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-setting-up-project-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: Project redirection view
@@ -610,10 +613,10 @@ Figure&nbsp;8: Project redirection view
 <section id="retrieving-the-database-connection-information" class="level3">
 <h3 class="anchored" data-anchor-id="retrieving-the-database-connection-information">Retrieving the database connection information</h3>
 <p>Once the project is set up, you will notice that the project view content updates and a green status indicator appears at the top right corner of the page. This green status means your database is available. Next to this status indicator, you’ll find a “Connect” button, which is highlighted in red in <a href="#fig-connection-button-supabase" class="quarto-xref">Figure&nbsp;9</a>.</p>
-<div id="fig-connection-button-supabase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-connection-button-supabase" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-connection-button-supabase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_connect.png" class="img-fluid figure-img">
+<a href="assets/supabase_connect.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;9: Project view after setup is complete"><img src="assets/supabase_connect.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-connection-button-supabase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9: Project view after setup is complete
@@ -621,10 +624,10 @@ Figure&nbsp;9: Project view after setup is complete
 </figure>
 </div>
 <p>Clicking this button will open a panel displaying the details required to connect to your database. Be sure to select the “Python” tab, as highlighted in red in <a href="#fig-panel-connection" class="quarto-xref">Figure&nbsp;10</a>, to get the specific connection values needed for Python.</p>
-<div id="fig-panel-connection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-panel-connection" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-panel-connection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_connection_panel.png" class="img-fluid figure-img">
+<a href="assets/supabase_connection_panel.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;10: Connection panel showcasing python connection details"><img src="assets/supabase_connection_panel.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-connection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10: Connection panel showcasing python connection details
@@ -655,7 +658,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
             |
             |- home.css    (CSS file to style the main page)</code></pre>
 <p>The content of this <strong>.env</strong> file will be as follows:</p>
-<div id="7ce412f8" class="cell" data-execution_count="10">
+<div id="5a5fa5d7" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DB_USER <span class="op">=</span> <span class="st">'your_username'</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>DB_PASSWORD <span class="op">=</span> <span class="st">'your_password'</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>DB_HOST <span class="op">=</span> <span class="st">'database_host'</span></span>
@@ -664,7 +667,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 </div>
 <p>Since the database connection parameters are defined in a separate <strong>.env</strong> file, we need to import them into the backend of our application, specifically into <strong>app.py</strong>. To achieve this, we will use the <code>os</code> module, which provides functionality for interacting with the operating system. One useful feature of the <code>os</code> module is the <code>os.getenv()</code> method. This method retrieves the value of an environment variable if it exists; otherwise, it returns <code>None</code> or a default value if specified.</p>
 <p>Therefore, we will make two key updates to our <strong>app.py</strong> file: (1) we will import the <code>os</code> module, and (2) we will use the <code>os.getenv()</code> method to retrieve the database connection parameters. Specifically, these additions will look like this in Python:</p>
-<div id="73cab43f" class="cell" data-execution_count="11">
+<div id="096f2645" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the os module</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -677,7 +680,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 </div>
 <p>Now that we have the necessary values to connect to our database available within our <strong>app.py</strong> file, we can proceed with establishing the connection. To accomplish this, we’ll use the <code>psycopg2</code> library, which facilitates connecting to and managing Postgres databases through Python.</p>
 <p>First, we need to import the <code>psycopg2</code> library. Our next step is to create a connection to the database using the <code>connect</code> function provided by <code>psycopg2</code>. This function will use the connection parameters that we have loaded from the <strong>.env</strong> file. Here’s how you can set up the connection:</p>
-<div id="33ca9310" class="cell" data-execution_count="12">
+<div id="3e5deefc" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import psycopg2 library</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -691,7 +694,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To make our code more modular and reusable, we can encapsulate this code within a function. Moreover, we can also add a try-catch statement to handle exceptions that might occur during the connection process and facilitating debugging. You can find the revised implementation below:</p>
-<div id="ab95a187" class="cell" data-execution_count="13">
+<div id="73e363a5" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> connect_to_database():</span>
@@ -740,7 +743,7 @@ A small note
 <li><p><strong>Close the Database Connection:</strong> Finally, once all changes have been made and saved, close the connection to the database.</p></li>
 </ol>
 <p>We can implement these steps in a function called <code>create_table()</code>. The code for this function is provided below:</p>
-<div id="008cc4c0" class="cell" data-execution_count="14">
+<div id="3d4c6a54" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table():</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Connect to the PostgreSQL database using the connect_to_database function</span></span>
@@ -792,7 +795,7 @@ Finally block
 <p>At this stage, it’s important to determine the most appropriate when and how to run our <code>create_table()</code> function. This function is responsible for setting up a database table, but it’s not something that needs to be executed every time we run our Flask application. Running it repeatedly would be inefficient because the table only needs to be created once, or checked occasionally, not on every application start. To avoid unnecessary checks and improve the efficiency of our application, we can create a custom Flask command that allows us to run <code>create_table()</code> only when we specifically want to.</p>
 <p>To accomplish this, Flask provides a convenient way to define custom commands using the <code>@app.cli.command</code> decorator. By attaching this decorator to a function, we can register a new command that can be executed through the Flask command-line interface (CLI). This means that instead of embedding the table creation logic directly into our application’s startup process, we can isolate it in a command that can be manually triggered whenever needed.</p>
 <p>For instance, we could define a command called <code>init-db-table</code> by using <code>@app.cli.command("init-db-table")</code> to the <code>create_table()</code> function as depicted below:</p>
-<div id="6bb02d17" class="cell" data-execution_count="15">
+<div id="134fcc85" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.cli.command</span>(<span class="st">"init-db-table"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table():</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
@@ -814,7 +817,7 @@ Finally block
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        conn.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With these adjustments, our <strong>app.py</strong> file will look in the following way:</p>
-<div id="7850f7fe" class="cell" data-execution_count="16">
+<div id="edc1a254" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
@@ -898,10 +901,10 @@ Finally block
 </div>
 <p>Once we have updated our <strong>app.py</strong> file, we can move on to creating the <code>registered_urls</code> table. To accomplish this, we need to use the new CLI command: <code>flask init-db-table</code>.</p>
 <p>To do this, we can open a terminal and navigate to the directory where the <strong>app.py</strong> file is located. Then, we can execute the command <code>flask init-db-table</code>, as shown below in <a href="#fig-cli-create-table" class="quarto-xref">Figure&nbsp;11</a>.</p>
-<div id="fig-cli-create-table" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-cli-create-table" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cli-create-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/create_table_cli.png" class="img-fluid figure-img">
+<a href="assets/create_table_cli.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;11: Running the flask init-db-table CLI command"><img src="assets/create_table_cli.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cli-create-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11: Running the <code>flask init-db-table</code> CLI command
@@ -909,10 +912,10 @@ Figure&nbsp;11: Running the <code>flask init-db-table</code> CLI command
 </figure>
 </div>
 <p>Great! The command seems to have executed successfully. Now, we need to ensure that the table has been created correctly. To do this, we will go back to the <a href="https://supabase.com/dashboard/projects">Supabase</a> project dashboard, where we will select the project we are working on. Once in our project, we will click on the “Table Editor” tab, found in the right-hand panel, as highlighted in red <a href="#fig-navigating-to-table-editor" class="quarto-xref">Figure&nbsp;12</a>.</p>
-<div id="fig-navigating-to-table-editor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-navigating-to-table-editor" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-navigating-to-table-editor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_navigating_table_view.png" class="img-fluid figure-img">
+<a href="assets/supabase_navigating_table_view.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;12: Navigating to the table editor in a Supabase project"><img src="assets/supabase_navigating_table_view.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-navigating-to-table-editor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12: Navigating to the table editor in a Supabase project
@@ -920,10 +923,10 @@ Figure&nbsp;12: Navigating to the table editor in a Supabase project
 </figure>
 </div>
 <p>After clicking on “Table Editor,” you’ll see all the tables created in your database. In this view, you should be able to find the table named <code>registered_urls</code>, which is highlighted in red in <a href="#fig-verifying-table-creation" class="quarto-xref">Figure&nbsp;13</a>.</p>
-<div id="fig-verifying-table-creation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-verifying-table-creation" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-verifying-table-creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_checking_created_table.png" class="img-fluid figure-img">
+<a href="assets/supabase_checking_created_table.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;13: Verifying the table creation in Supabase"><img src="assets/supabase_checking_created_table.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-verifying-table-creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13: Verifying the table creation in Supabase
@@ -931,10 +934,10 @@ Figure&nbsp;13: Verifying the table creation in Supabase
 </figure>
 </div>
 <p>Additionally, we can click on the table <code>registered_urls</code> to see its contents. Doing so will reveal that the table has two empty columns: id and url. Each column is also labeled with its data type—int4 for id and text for url—as shown in <a href="#fig-checking-table" class="quarto-xref">Figure&nbsp;14</a>.</p>
-<div id="fig-checking-table" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-checking-table" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-checking-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/supabase_checking_table.png" class="img-fluid figure-img">
+<a href="assets/supabase_checking_table.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;14: Checking the registered_urls table"><img src="assets/supabase_checking_table.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-checking-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;14: Checking the <code>registered_urls</code> table
@@ -958,7 +961,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <li><p>Finally, we need to confirm the changes using the <code>commit</code> method and close the connection.</p></li>
 </ol>
 <p>Therefore, the implementation of the <code>insert_url_into_database()</code> function in Python will look as follows:</p>
-<div id="4963e48f" class="cell" data-execution_count="17">
+<div id="b5772eea" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert_url_into_database(url: <span class="bu">str</span>):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> connect_to_database()</span>
@@ -971,7 +974,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        conn.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next step is to execute this function every time a valid URL has been submitted. To achieve this, we can modify the <code>process_url()</code> function, which, as you may recall, validates whether a URL is valid and generates the confirmation message to be displayed. Currently, this function looks like this:</p>
-<div id="81da05b9" class="cell" data-execution_count="18">
+<div id="7bd848d7" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        confirmation_message <span class="op">=</span> <span class="st">"You have successfully registered the following URL: "</span> <span class="op">+</span> url</span>
@@ -980,7 +983,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All we need to do now is call our new <code>insert_url_into_database()</code> function within the <code>if</code> statement. In other words, if the URL is valid, we will store it in our database. This will modify the function as follows:</p>
-<div id="97b9d38e" class="cell" data-execution_count="19">
+<div id="eb89c40d" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        insert_url_into_database(url)</span>
@@ -990,7 +993,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As a result, our code in <strong>app.py</strong> now looks as follows:</p>
-<div id="53863e3e" class="cell" data-execution_count="20">
+<div id="7f41877f" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
@@ -1119,7 +1122,7 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">count</span> <span class="kw">DESC</span> </span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Having created this query, we want to execute it through our backend to enable our application to retrieve the relevant information from the database. To accomplish this, and in line with our previous database interactions, we will create a function, which we will call <code>get_top_registered_urls()</code>. This function will connect to the database, execute the previous SQL query, and return the results. The code for this function is shown below:</p>
-<div id="adf41488" class="cell" data-execution_count="21">
+<div id="269bedd3" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_registered_urls():</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> connect_to_database()</span>
@@ -1234,8 +1237,8 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">%</span><span class="op">;</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">vh</span><span class="op">;</span>  <span class="co">/* Adds padding at the top to avoid overlap with the navbar we will create */</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">90.5</span><span class="dt">vh</span><span class="op">;</span>   <span class="co">/* Sets the height of the container to 90.5% of the viewport height, i.e., area remaining after navbar and top padding */</span></span>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span> <span class="co">/* Light gray background color */</span></span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span> <span class="co">/* Arrange children elements in a column */</span></span>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -1300,14 +1303,14 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <li><p>Render the <code>popular.html</code> page using the data obtained from <code>get_top_registered_urls()</code> to populate the table.</p></li>
 </ol>
 <p>To accomplish this, we will use similar approach to what we have employed for other routes in our application. In <strong>app.py</strong>, we will define a route handler function for the <code>/popular</code> route. This function will first gather the necessary data and then render the <strong>popular.html</strong> template, incorporating the retrieved data into the page. Consequently, the code for this route handler will be as follows:</p>
-<div id="eb539cf2" class="cell" data-execution_count="22">
+<div id="14eda3a9" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/popular"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tracked_page():</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    top_registered_urls <span class="op">=</span> get_top_registered_urls()</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'popular.html'</span>, top_registered_urls<span class="op">=</span>top_registered_urls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With all these changes implemented, the content of our <code>app.py</code> is now as follows:</p>
-<div id="31cbd679" class="cell" data-execution_count="23">
+<div id="718173e8" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
@@ -1435,7 +1438,7 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <img src="assets/popular_urls_page.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-popular-urls-page-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Página mostrando las Popular Websites
+Figure&nbsp;16: View of the most popular websites page
 </figcaption>
 </figure>
 </div>
@@ -1447,8 +1450,20 @@ Figure&nbsp;16: Página mostrando las Popular Websites
 </section>
 <section id="creating-a-navigation-bar" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-navigation-bar">Creating a navigation bar</h2>
-<p>As we have just noticed, navigating through the pages of our application is not very straightforward. Whenever we develop applications, we must prioritize user experience (UX), ensuring that users find it comfortable and easy to interact with and use our application.</p>
-<p>In this case, to improve navigation between pages, what we need is a navigation bar. Creating navigation bars with HTML is quite simple. We just need to use the <code>&lt;nav&gt;</code> tag to designate a section of our webpage specifically for navigation links. Within this <code>&lt;nav&gt;</code> section, we typically include an unordered list (<code>&lt;ul&gt;</code>) that contains list items (<code>&lt;li&gt;</code>) with hyperlinks (<code>&lt;a&gt;</code>) pointing to the various pages or sections of the site. For example, we could use the following HTML to create a navigation list containing the Home and Popular Websites pages:</p>
+<p>As we have just noticed, navigating through the pages of our application is not very straightforward. Whenever we develop applications, we must prioritize user experience (UX), ensuring that users find it comfortable and easy to interact with and use our application. In this case, to improve navigation between pages, what we need is a navigation bar.</p>
+<p>We will design this navigation bar to blend seamlessly with our existing theme. Specifically, we will use the same green accent color that characterizes our design to make the navigation bar stand out against the gray background of the pages. The navigation bar will feature the different pages of our application—such as the home page and the most popular websites—displayed on the right side using white text.</p>
+<p>To enhance usability, the currently active tab will be highlighted with a slightly brighter shade of green. This will provide users with clear visual feedback about their location within the application. This approach not only aims to improve navigation but also ensures consistency with our overall design aesthetic. <a href="#fig-schematic-nav-bar-design" class="quarto-xref">Figure&nbsp;17</a> visually illustrates the envisioned design for the navigation bar.</p>
+<div id="fig-schematic-nav-bar-design" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-schematic-nav-bar-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/schematic_navbar_view.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;17: Schematic design for the navigation bar"><img src="assets/schematic_navbar_view.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schematic-nav-bar-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Schematic design for the navigation bar
+</figcaption>
+</figure>
+</div>
+<p>To begin creating our navigation bar, we will start with HTML. Creating navigation bars with HTML is quite simple. We just need to use the <code>&lt;nav&gt;</code> tag to designate a section of our webpage specifically for navigation links. Within this <code>&lt;nav&gt;</code> section, we typically include an unordered list (<code>&lt;ul&gt;</code>) that contains list items (<code>&lt;li&gt;</code>) with hyperlinks (<code>&lt;a&gt;</code>) pointing to the various pages or sections of the site. For example, we could use the following HTML to create a navigation list containing the Home and Popular Websites pages:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- We create an unordered list: ul --&gt;</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
@@ -1521,10 +1536,11 @@ Figure&nbsp;16: Página mostrando las Popular Websites
 <span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this template, we use several patterns to structure our code effectively. The first pattern we see is the dynamic title block, <code>&lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;</code>, which allows the page title to change dynamically based on the value specified by the page using this template. This ensures that each page can have a unique title while still relying on the base template for the overall structure.</p>
-<p>Next, there is the styles extension block, which consists of a link to the base CSS file followed by <code>{% block styles %}{% endblock %}</code>. This structure permits other pages to extend the styles defined in the base template by incorporating their own CSS files, allowing for customized styling while maintaining consistency across the site. Following this, the <code>{% include 'navbar.html' %}</code> pattern is used to integrate the navigation bar into the template. This inclusion makes it easy to update the navigation bar across all pages by simply modifying the <strong>navbar.html</strong> file.</p>
-<p>Finally, we have the content block, <code>{% block content %}{% endblock %}</code>, which acts as a placeholder for the main content of any page that extends this base template. This setup enables us to define shared elements like the navigation bar and footer in one central location while allowing individual pages to inject their unique content where appropriate.</p>
-<p>Additionally, we have linked a CSS file named <strong>base_template.css</strong> to establish a consistent look and feel across all our templates. This file will include the shared styles that are common to all pages, ensuring uniformity in elements such as layout, typography, and color schemes throughout the site. Below, you can find the code for this CSS file:</p>
+<p>In this template, we use several Jinja2 features, including blocks and includes, to structure our code effectively.</p>
+<p><strong>Blocks</strong> allow child templates to insert or override specific content. They are defined using the <code>{% block %}</code> syntax and serve as content placeholders, allowing child templates to override or add content to these sections. For example, the <code>&lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;</code> block allows child templates of <strong>base_template.html</strong> to define their own titles.</p>
+<p>Another example is the <code>{% block styles %}{% endblock %}</code> block, which is used for adding custom styles. In this way, child templates can add their own CSS files within this block. Similarly, the <code>{% block content %}{% endblock %}</code> block acts as a placeholder for the main content of any page that extends this template.</p>
+<p><strong>Includes</strong> enable the reuse of common components, like a navigation bar, across multiple pages. Basically, they are used to insert content from one template into another. They are defined using the <code>{% include %}</code> statement. For example, in our template, we use <code>{% include 'navbar.html' %}</code> to insert the navigation bar from <strong>navbar.html</strong>. This promotes reusability and maintainability. If the navigation bar needs updating, you only need to modify the <strong>navbar.html</strong> file, and the changes will be reflected across all pages that extend this template or include the navigation bar from <strong>navbar.html</strong>.</p>
+<p>Additionally, we have linked a CSS file named <strong>base_template.css</strong> to this template, in order to establish a consistent look and feel across all our pages. This file will include the shared styles that are common to all pages, ensuring uniformity in elements such as layout, typography, and color schemes throughout the site. Below, you can find the code for this CSS file:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>body {</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
@@ -1535,12 +1551,12 @@ Figure&nbsp;16: Página mostrando las Popular Websites
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>     <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Provides spacing from the top to avoid overlapping with the navbar */</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">95.5</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Ensures the content area adjusts for the navbar height, which is 4.5% of the viewport height */</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">vh</span><span class="op">;</span>  <span class="co">/* Adds padding at the top to avoid overlap with the navbar */</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">90.5</span><span class="dt">vh</span><span class="op">;</span>   <span class="co">/* Sets the height of the container to 90.5% of the viewport height, i.e., area remaining after navbar and top padding */</span></span>
 <span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span></span>
 <span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span></span>
 <span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We can now rewrite our two main templates—the homepage (<strong>index.html</strong>) and the popular URLs page (<strong>popular.html</strong>)—using the base template to simplify their code.</p>
+<p>We can now rewrite our two main templates—the homepage (<strong>index.html</strong>) and the popular URLs page (<strong>popular.html</strong>)—as children of the base template, meaning that these templates will inherit the structure and layout defined in <code>base_template.html</code>, simplifying their code.</p>
 <p>Here’s how the <strong>index.html</strong> template will look after using the base template:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>{% extends "base_template.html" %}</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1565,54 +1581,59 @@ Figure&nbsp;16: Página mostrando las Popular Websites
 <span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>{% block styles %}</span>
 <span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"{{ url_for('static', filename='/styles/home.css')}}"</span><span class="dt">&gt;</span></span>
 <span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this updated version of the <strong>index.html</strong> template, we have removed all the elements that are already included in <code>base_template.html</code> and added the pattern <code>{% extends "base_template.html" %}</code> to indicate that the content of this template will be incorporated into the base template. The <code>{% block title %}Home{% endblock %}</code> pattern defines the title for this page, which will appear in the browser tab.</p>
-<p>The <code>{% block content %}{% endblock %}</code> section specifies the HTML content to be placed directly below the navigation bar. This content includes the main elements for the homepage, such as the URL checking form. Lastly, we indicate that this page will use an additional CSS file, <strong>home.css</strong>, through the <code>{% block styles %}{% endblock %}</code> pattern.</p>
+<p>In this updated version of the <strong>index.html</strong> template, we have removed all the elements already included in <strong>base_template.html</strong> and added the <code>{% extends "base_template.html" %}</code> statement to indicate that this template inherits from the base template.</p>
+<p>The <code>{% block title %}Home{% endblock %}</code> block sets the title for this page, which will appear in the browser tab.</p>
+<p>The <code>{% block content %}{% endblock %}</code> section specifies the HTML content to be placed within the main content area defined by the base template. This includes the main elements for the homepage, such as the URL checking form.</p>
+<p>Lastly, the <code>{% block styles %}{% endblock %}</code> block is used to include an additional CSS file, <code>home.css</code>, to apply specific styles to this page.</p>
 <p>We then update <strong>home.css</strong> by removing any styles that are already covered in <strong>base_template.css</strong>. The updated <strong>home.css</strong> will look like this:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the form from the result */</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a><span class="pp">#confirmationContainer</span> {</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span> <span class="co">/* Positions the container relative to the first positioned ancestor */</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">top</span><span class="ch">:</span> <span class="dv">45</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Vertically centers the container, accounting for 5% padding at the top to avoid navbar overlap */</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a><span class="pp">#confirmationContainer</span> {</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Similarly, for the popular URLs page (<code>popular.html</code> and <code>popular.css</code>), we follow the same approach: we remove the elements already defined in the base template and extend it. You will find the code for these files in the next section (link to the updated code for <a href="#sec-final-code-popular-html">popular.html</a> and <a href="#sec-final-code-popular-css">popular.css</a>).</p>
-<p>With these changes, our application will look as shown in <a href="#fig-app-with-navbar" class="quarto-xref">Figure&nbsp;17</a>, and as you can see, navigating between different pages is much easier and more convenient!</p>
-<div id="fig-app-with-navbar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>With these changes, our application will look as shown in <a href="#fig-app-with-navbar" class="quarto-xref">Figure&nbsp;18</a>, and as you can see, navigating between different pages is much easier and more convenient!</p>
+<div id="fig-app-with-navbar" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-app-with-navbar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/app_with_navbar.gif" class="img-fluid figure-img">
+<a href="assets/app_with_navbar.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;18: Application with navigation bar"><img src="assets/app_with_navbar.gif" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-app-with-navbar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Application with navigation bar
+Figure&nbsp;18: Application with navigation bar
 </figcaption>
 </figure>
 </div>
@@ -1652,7 +1673,7 @@ Figure&nbsp;17: Application with navigation bar
 </section>
 <section id="python---app.py" class="level3">
 <h3 class="anchored" data-anchor-id="python---app.py">Python - app.py</h3>
-<div id="a68e0cb9" class="cell" data-execution_count="24">
+<div id="b5fe99b7" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
@@ -1773,7 +1794,7 @@ Figure&nbsp;17: Application with navigation bar
 </section>
 <section id="environmental-variables-file---.env" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-variables-file---.env">Environmental variables file - .env</h3>
-<div id="eb392ede" class="cell" data-execution_count="25">
+<div id="857ff86c" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>DB_USER <span class="op">=</span> <span class="st">'your_username'</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>DB_PASSWORD <span class="op">=</span> <span class="st">'your_password'</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>DB_HOST <span class="op">=</span> <span class="st">'database_host'</span></span>
@@ -1814,8 +1835,8 @@ Figure&nbsp;17: Application with navigation bar
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>     <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Provides spacing from the top to avoid overlapping with the navbar */</span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">95.5</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Ensures the content area adjusts for the navbar height, which is 4.5% of the viewport height */</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">vh</span><span class="op">;</span>  <span class="co">/* Adds padding at the top to avoid overlap with the navbar */</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">90.5</span><span class="dt">vh</span><span class="op">;</span>   <span class="co">/* Sets the height of the container to 90.5% of the viewport height, i.e., area remaining after navbar and top padding */</span></span>
 <span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span></span>
 <span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span></span>
 <span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1908,39 +1929,42 @@ Figure&nbsp;17: Application with navigation bar
 <div class="sourceCode" id="cb50"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* Centers the text inside the container */</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the form from the result */</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
-<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a><span class="pp">#confirmationContainer</span> {</span>
-<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
-<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
-<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
-<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
-<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
-<span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span> <span class="co">/* Positions the container relative to the first positioned ancestor */</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">top</span><span class="ch">:</span> <span class="dv">45</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Vertically centers the container, accounting for 5% padding at the top to avoid navbar overlap */</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-text-input</span> {</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the width of the URL input field */</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the input field */</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the input field */</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the input field */</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds bottom margin to separate the input field from the button */</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span> {</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#4CAF50</span><span class="op">;</span> <span class="co">/* Sets the background color of the submit button */</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span> <span class="co">/* Sets the text color of the submit button */</span></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the button text */</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Sets the font size of the button text */</span></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Removes the border from the submit button */</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the submit button */</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span> <span class="co">/* Changes the cursor to a pointer when hovering over the button */</span></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition</span><span class="ch">:</span> <span class="dv">background-color 0.3</span><span class="dt">s</span><span class="op">;</span> <span class="co">/* Adds a smooth transition to the button's background color */</span></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a><span class="fu">.submit-btn</span><span class="in">:hover</span> {</span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3e8e41</span><span class="op">;</span> <span class="co">/* Changes the button's background color when hovering over it */</span></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="pp">#confirmationContainer</span> {</span>
+<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds padding around the content of the result container */</span></span>
+<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0eaea</span><span class="op">;</span> <span class="co">/* Sets the background color of the result container */</span></span>
+<span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span> <span class="co">/* Sets a 1px solid border with a light gray color */</span></span>
+<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Applies rounded corners to the result container */</span></span>
+<span id="cb50-38"><a href="#cb50-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> <span class="co">/* Adds a shadow effect to the result container */</span></span>
+<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="popular-websites-pages" class="level3">
@@ -1990,8 +2014,8 @@ Figure&nbsp;17: Application with navigation bar
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.content</span> {</span>
 <span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
 <span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">%</span><span class="op">;</span></span>
-<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">vh</span><span class="op">;</span>  <span class="co">/* Adds padding at the top to avoid overlap with the navbar */</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">90.5</span><span class="dt">vh</span><span class="op">;</span>   <span class="co">/* Sets the height of the container to 90.5% of the viewport height, i.e., area remaining after navbar and top padding */</span></span>
 <span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span> <span class="co">/* Light gray background color */</span></span>
 <span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span> <span class="co">/* Arrange children elements in a column */</span></span>
 <span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -2605,6 +2629,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
