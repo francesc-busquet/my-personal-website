@@ -434,7 +434,7 @@ An alternative approach to generate requirements files
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myenv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Activating the virtual environment ensures that any packages you install or any Python commands you run use the Python interpreter and libraries from within this environment, rather than the global Python installation. This helps maintain dependencies specific to your project and prevents potential conflicts.</p>
 <p>Once the environment is activated, you should install the libraries required for the current project. You can do this using <code>pip</code>:</p>
-<div id="0506b421" class="cell" data-execution_count="1">
+<div id="2b6df228" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pip install somepackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -555,7 +555,7 @@ Figure&nbsp;7: Visual overview of layered container image building
 <li><p><strong><code>-p 5000</code></strong>: This parameter specifies the port number on which Flask will listen for incoming connections. Port 5000 is the default for Flask applications, but this can be adjusted if necessary. It ensures that Flask is listening on the appropriate port inside the container.</p></li>
 </ul>
 <p>Therefore, the command to run the Flask application with the required parameters will be:</p>
-<div id="4e122d47" class="cell" data-execution_count="2">
+<div id="4cdfa7a3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>flask run <span class="op">-</span>h <span class="fl">0.0.0.0</span> <span class="op">-</span>p <span class="dv">5000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can execute this command every time the container is started by using the <code>CMD</code> instruction in our Dockerfile. Remember that the <code>CMD</code> instruction differs from the <code>RUN</code> instruction. The <code>RUN</code> instruction is used during the build process of the container image, whereas <code>CMD</code> specifies the command to run when the container is started.</p>
@@ -1267,7 +1267,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
