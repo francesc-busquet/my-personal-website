@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -270,16 +270,17 @@ Figure&nbsp;1: Application overview
 <p>To build this web application, we will follow a structured approach, breaking down the process across four comprehensive posts:</p>
 <ol type="1">
 <li><p><a href="#sec-building-the-home-page-with-flask"><strong>Post 1: Building the Home page with Flask.</strong></a> We will start by creating the home page for our application using Flask, along with basic HTML and CSS. This page will allow users to submit a URL to our backend and receive a confirmation response. In this post, we will only show the confirmation without storing the URL; the storage functionality will be implemented in the next post.</p></li>
-<li><p><a href="../../../posts/2024/connecting-db-app"><strong>Post 2: Completing the interface and connecting to a database.</strong></a> We will complete the interface, adding a “Popular” page where users can view top favorite websites. We will connect our application to a PostgreSQL server to store user data, ensuring we can save and retrieve the registered websites.</p></li>
+<li><p><a href="../../../posts/2024/connecting-db-app"><strong>Post 2: Completing the interface and connecting to a database.</strong></a> We will complete the interface, adding a <em>Top Favorite Websites</em> page where users can view top favorite websites. We will connect our application to a PostgreSQL server to store user data, ensuring we can save and retrieve the registered websites.</p></li>
 <li><p><a href="../../../posts/2024/intro-to-docker"><strong>Post 3: Containerizing the application with docker.</strong></a> To facilitate easy deployment and collaborative development, we’ll containerize our application using Docker. This will allow us to create a consistent environment for running our application, simplifying both development and deployment processes.</p></li>
-<li><p><strong>Post 4: Enhancing performance with Redis.</strong> Finally, we will enhance our application’s performance by integrating Redis. Redis will serve as a queue to manage high volumes of simultaneous user registrations, preventing our SQL server from being overwhelmed. Additionally, Redis will act as a cache for the “Popular” page, speeding up user interactions.</p></li>
+<li><p><a href="posts/2025/improving-architecture/"><strong>Post 4: Optimizing the architecture with batching and caching.</strong></a> In this post, we will focus on optimizing our application for production by reducing the load on our PostgreSQL database. We will achieve this by enqueuing submitted URLs and caching the top favorite URLs. To do this, we will integrate Redis, an in-memory database, and use Celery to manage background tasks, such as periodically batching enqueued URLs and caching the most popular websites.</p></li>
 </ol>
 <p>By following this series, you will learn how to:</p>
 <ul>
 <li><p>Set up and design a web application interface with Flask.</p></li>
 <li><p>Connect the application to a PostgreSQL server for data storage.</p></li>
 <li><p>Use Docker to containerize the application for easy deployment.</p></li>
-<li><p>Implement Redis for caching and queuing to enhance performance and scalability.</p></li>
+<li><p>Implement Redis for caching and queueing to boost performance.</p></li>
+<li><p>Use Celery to manage background tasks, such as batching URL submissions and periodically updating cached data.</p></li>
 </ul>
 <p>Each part will provide detailed, step-by-step instructions, making it easy to follow along and build a simple, but functional and efficient web application.</p>
 <section id="sec-building-the-home-page-with-flask" class="level2">
@@ -302,11 +303,11 @@ Figure&nbsp;2: Building the Home page: Favorite website registration and confirm
 <section id="loading-initial-libraries-and-initializing-a-flask-instance" class="level3">
 <h3 class="anchored" data-anchor-id="loading-initial-libraries-and-initializing-a-flask-instance">Loading initial libraries and initializing a Flask instance</h3>
 <p>To begin building our web application, we first import the essential components from the <code>flask</code> library. These include the <code>Flask</code> object, which is the core of our web app, the <code>requests</code> module for handling HTTP requests, and the <code>render_template</code> function, which allows us to render HTML files (or Flask templates).</p>
-<div id="70cf7efe" class="cell" data-execution_count="1">
+<div id="aa428299" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After importing the requirements, we will create an instance of the Flask application:</p>
-<div id="e8ecb68b" class="cell" data-execution_count="2">
+<div id="e9731417" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s break down what’s happening here:</p>
@@ -464,15 +465,15 @@ Figure&nbsp;5: Rendered HTML code with added CSS styling
             |- home.css    (CSS file to style the main page)</code></pre>
 <p><strong>Note:</strong> Following the modification of the file structure, it’s important to update the link to the CSS file in our HTML file.</p>
 <p>After having set up the HTML file and structured our Flask application, the next step is to integrate the HTML file with our backend. This means that our Python application will utilize the HTML file as the main page.</p>
-<p>To accomplish this, we’ll create a function that automatically executes when a user accesses the root path of the application, denoted as “APPLICATION URL/”. We achieve this by utilizing the <code>route()</code> decorator with the argument “/” and defining a function to be executed. In this scenario, our function will render the HTML file, <em>index.html</em>, using <code>render_template()</code>.</p>
-<p>Additionally, we’ll utilize the <code>methods</code> parameter within the route decorator to enable the <code>home()</code> function to accommodate both GET and POST requests. GET requests are typically utilized to fetch data from the server, such as when a user initially accesses a webpage. Conversely, POST requests are commonly employed when users submit data to the server, as is the case when they provide their favorite website URL in our case.</p>
+<p>To accomplish this, we’ll create a function that automatically executes when a user accesses the root path of the application, denoted as “APPLICATION URL/”. We achieve this by utilizing the <code>route</code> decorator with the argument “/” and defining a function to be executed. In this scenario, our function will render the HTML file, <em>index.html</em>, using the <code>render_template</code> function.</p>
+<p>Additionally, we’ll utilize the <code>methods</code> parameter within the route decorator to enable the <code>home</code> function to accommodate both GET and POST requests. GET requests are typically utilized to fetch data from the server, such as when a user initially accesses a webpage. Conversely, POST requests are commonly employed when users submit data to the server, as is the case when they provide their favorite website URL in our case.</p>
 <p>Thus, the combined process can be translated into code as follows:</p>
-<div id="d9eafc95" class="cell" data-execution_count="3">
+<div id="6c45b088" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Note</strong>: We define the name of the function as <code>home()</code>, but we could choose any other name.</p>
+<p><strong>Note</strong>: We define the name of the function as <code>home</code>, but we could choose any other name.</p>
 </section>
 <section id="adding-functionalities" class="level3">
 <h3 class="anchored" data-anchor-id="adding-functionalities">Adding functionalities</h3>
@@ -480,12 +481,12 @@ Figure&nbsp;5: Rendered HTML code with added CSS styling
 <p>When a button within a form is clicked, it initiates a “request,” specifically in our case a POST request, sending the form’s values to our backend. Utilizing the previously imported <code>request</code> object, we can access these values and manipulate them within our backend.</p>
 <p>The <code>request</code> object provides various attributes, including <code>form</code>, which facilitates the extraction of parameters submitted by a form. By using this attribute jointly with the <code>get</code> method, we can extract the desired data from the request. In this instance, we aim to retrieve the content entered by the user into the text field identified by the name <code>urlInput</code>.</p>
 <p>Therefore, we could write the following code to extract the value sent from that field and store it in an a variable called <code>url</code>:</p>
-<div id="51894ce0" class="cell" data-execution_count="4">
+<div id="9f4b2648" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> request.form.get(<span class="st">'urlInput'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="sec-using-templates" class="level4">
 <h4 class="anchored" data-anchor-id="sec-using-templates">Using templates</h4>
-<p>Keep in mind that up to the point we’ve utilized the <code>render_template()</code> function to display a static HTML file, specifically for rendering our <em>index.html</em> page. However, this function is named <code>render_template</code> rather than <code>render_html</code> for a reason.</p>
+<p>Keep in mind that up to the point we’ve utilized the <code>render_template</code> function to display a static HTML file, specifically for rendering our <em>index.html</em> page. However, this function is named <code>render_template</code> rather than <code>render_html</code> for a reason.</p>
 <p>Templates in Flask serve as dynamic canvases, enabling the incorporation of placeholders that the application dynamically populates. These placeholders, known as template variables, are encapsulated within double opening and closing brackets, like so: <code>{ template_variable }</code>. This lets us include variables right into the HTML, and our backend can then change them on the fly.</p>
 <p>Additionally, in Flask templates, we can utilize control structures to manage the flow of content. These include conditionals like if-else statements, for-loops, as well as advanced features such as macros and blocks. These control structures are enclosed within <code>{% %}</code> brackets, denoted as <code>{% control_structure %}</code>, and are concluded with <code>{% end_control_structure %}</code>. For example, these control structures allow us to show or hide different parts of the template based on certain conditions.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -501,9 +502,9 @@ Jinja 2
 <p>The template engine used by Flask is Jinja2. You can find more information about template creation on its website: <a href="https://jinja.palletsprojects.com/" class="uri">https://jinja.palletsprojects.com/</a></p>
 </div>
 </div>
-<p>One of the most basic applications of templates is to dynamically manage the locations of static files, such as CSS files. Hardcoding these paths can create issues if the file locations change over time. Instead, it’s preferable to use Flask’s URL generation function, <code>url_for()</code>. This function automatically generates URLs for specified routes or resources, which is particularly useful when project URLs undergo changes during deployment.</p>
-<p>For example, during development, URLs may follow a certain structure. However, upon deployment, it might be necessary to prefix all URLs with a specific identifier. With Flask’s <code>url_for()</code> function, this transition is handled without manual intervention. The function automatically adjusts the generated URLs to include the designated prefix without the need for manual code alterations.</p>
-<p>Consequently, we can enhance our HTML file to incorporate the link to the CSS file using <code>url_for()</code>:</p>
+<p>One of the most basic applications of templates is to dynamically manage the locations of static files, such as CSS files. Hardcoding these paths can create issues if the file locations change over time. Instead, it’s preferable to use Flask’s URL generation function, <code>url_for</code>. This function automatically generates URLs for specified routes or resources, which is particularly useful when project URLs undergo changes during deployment.</p>
+<p>For example, during development, URLs may follow a certain structure. However, upon deployment, it might be necessary to prefix all URLs with a specific identifier. With Flask’s <code>url_for</code> function, this transition is handled without manual intervention. The function automatically adjusts the generated URLs to include the designated prefix without the need for manual code alterations.</p>
+<p>Consequently, we can enhance our HTML file to incorporate the link to the CSS file using <code>url_for</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"{{ url_for('static', filename='/styles/home.css')}}"</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>However, templates offer more than just dynamically setting the CSS path; they enable us to add engaging features. For example, we can leverage templates to define the behavior of the confirmation message indicating that the entered URL has been successfully registered.</p>
 <p>To implement this, let’s first update our HTML file by introducing a new <code>&lt;div&gt;</code> element to contain the confirmation message. This message should only appear if the user has entered a URL, meaning the <code>url</code> variable holds a value. If the variable exists, we’ll display its value. Here’s how we can accomplish this:</p>
@@ -515,10 +516,10 @@ Jinja 2
 <p>In this code snippet, we’re utilizing an if control structure to conditionally display content based on whether the <code>url</code> variable holds a value. The content we want to display is enclosed within <code>{% if url %}</code> and <code>{% endif %}</code> tags. Inside the <code>{% if url %}</code> block, we include a message confirming the URL registration. To dynamically insert the value of the <code>url</code> variable into the message, we use double curly braces <code>{ url }</code> within a paragraph (<code>&lt;p&gt;</code>) element.</p>
 <section id="passing-variables-to-templates" class="level5">
 <h5 class="anchored" data-anchor-id="passing-variables-to-templates">Passing variables to templates</h5>
-<p>To make sure our template can access the <code>url</code> value, we need to transfer it from the backend to the frontend. In other words, we must make this variable available within the template. We can accomplish this by adjusting our <em>app.py</em> file, specifically by modifying the <code>render_template()</code> function.</p>
-<p>The <code>render_template()</code> function facilitates the passing of variables to the template we are rendering. To pass the <code>url</code> value to the <em>index.html</em> page and make it accessible with the same name (<code>url</code>), we employ the following code: <code>render_template('index.html', url=url)</code>. This ensures that the <code>url</code> variable is transmitted to the <em>index.html</em> page, where it can be utilized under the same name.</p>
-<p>However, we only intend to transfer the <code>url</code> value to the frontend if the user submits a URL via a POST request. In such instances, we render our HTML file while transmitting the provided URL value to it. Conversely, if the user does not submit a URL, we render the HTML file without transmitting any variables to it. To implement this logic, we need to adjust the <code>home()</code> function in <em>app.py</em>, as we show below:</p>
-<div id="67822117" class="cell" data-execution_count="5">
+<p>To make sure our template can access the <code>url</code> value, we need to transfer it from the backend to the frontend. In other words, we must make this variable available within the template. We can accomplish this by adjusting our <em>app.py</em> file, specifically by modifying the <code>render_template</code> function.</p>
+<p>The <code>render_template</code> function facilitates the passing of variables to the template we are rendering. To pass the <code>url</code> value to the <em>index.html</em> page and make it accessible with the same name (<code>url</code>), we employ the following code: <code>render_template('index.html', url=url)</code>. This ensures that the <code>url</code> variable is transmitted to the <em>index.html</em> page, where it can be utilized under the same name.</p>
+<p>However, we only intend to transfer the <code>url</code> value to the frontend if the user submits a URL via a POST request. In such instances, we render our HTML file while transmitting the provided URL value to it. Conversely, if the user does not submit a URL, we render the HTML file without transmitting any variables to it. To implement this logic, we need to adjust the <code>home</code> function in <em>app.py</em>, as we show below:</p>
+<div id="e87eb1bd" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -537,7 +538,7 @@ Jinja 2
 <h4 class="anchored" data-anchor-id="backend">Backend</h4>
 <section id="flask-application-app.py" class="level5">
 <h5 class="anchored" data-anchor-id="flask-application-app.py">Flask application: app.py</h5>
-<div id="236b3058" class="cell" data-execution_count="6">
+<div id="dcbfa464" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -677,7 +678,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 </ol>
 <p>To do this, we need to import two additional functions from the Flask library: <code>redirect</code> and <code>url_for</code>. What these functions do is quite obvious from their names. The <code>redirect</code> function redirects us to a URL we specify, while the <code>url_for</code> function allows us to dynamically create URLs within our application. If you recall, we previously utilized the <code>url_for</code> function to dynamically link the <em>index.html</em> file to our stylesheet.</p>
 <p>By using these functions, we can adjust our code so that when we get a POST request from a user registering a URL, instead of simply refreshing our template, we redirect them to a new URL, like <em>app_url/display_url/url</em>, where <em>url</em> refers to the URL provided by the user. This redirection is made possible with the line of code: <code>redirect(url_for('display_url', url=url))</code>. Here, <code>url_for</code> generates a URL pointing to the <em>display_url</em> view within the Flask application and passes the value of the url variable as a route parameter, yielding the desired URL. Thus, the Python code for our application appears as follows:</p>
-<div id="c0ab50b9" class="cell" data-execution_count="7">
+<div id="d18e4ffe" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -692,7 +693,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <p>Converters are defined using angle brackets <code>&lt; &gt;</code>, which serve as placeholders for dynamic content. We can define a dynamic route for this page using converters, such as <code>/display_url/&lt;url&gt;</code>, where <code>url</code> is the name of our converter that takes whatever value is placed in its position. Converters also allow us to capture these variable parts of the URL into Python variables. For example, <code>url</code> in the route <code>/display_url/&lt;url&gt;</code> captures whatever value is provided in place of <code>&lt;url&gt;</code> and allows us to access its value within Python by referring to the <code>url</code> variable.</p>
 <p>Moreover, we can specify the type we want to allow for these converter values by specifying the type followed by a colon (<code>:</code>) and then the name we want to assign to this converter. By default, they are set to strings (without slashes). However, since we want to accommodate URLs, which may contain slashes, we should specify the type as <code>path</code>, like <code>&lt;path:url&gt;</code>.</p>
 <p>Therefore, we can now proceed to define the route in our Flask application to which users will be redirected after inputting a URL, i.e., <code>/display_url/&lt;path:url&gt;</code>:</p>
-<div id="e2d5578b" class="cell" data-execution_count="8">
+<div id="391124f5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we need to specify the behavior for this route. In other words, we need to write the function that will execute each time the user is redirected to this URL. Specifically, we want to render our home page, <code>index.html</code>, showing a confirmation message that the inputted URL has been registered correctly.</p>
@@ -700,7 +701,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <p>Therefore, in this page we can do the following. First, we can check if the <code>url</code> variable contains a value. If <code>url</code> is not <code>None</code> (meaning a URL segment has been provided), we proceed to render the <code>index.html</code> template by using the <code>render_template</code> function and passing the <code>url</code> variable to the template. In this way, the confirmation message will be displayed to the user.</p>
 <p>However, if the <code>url</code> variable is <code>None</code>, indicating that no URL segment was provided, we redirect the user to the home page of the application. This is done using the <code>redirect</code> function in combination with <code>url_for</code>, generating a redirect response to the URL defined by <code>url_for('home')</code>. This redirection is specified to handle cases where the user manually sets the URL to <em>app_url/display_url/</em>.</p>
 <p>Taking all this into account, the code for this route would look like the following:</p>
-<div id="cd45b4fd" class="cell" data-execution_count="9">
+<div id="cde31d89" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -710,7 +711,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 </div>
 <p>Notice that in this case, we are solely transmitting information. However, envision a scenario where the user might continue registering new URLs, indicating a flow where we receive input from the user. This aspect is not presently accounted for in our code.</p>
 <p>To address this gap in functionality, we need to expand our code to capture the URLs that users intend to register when they visit a page with the route <code>/display_url/&lt;path:url&gt;</code>. We can accomplish this by adapting the code we’ve already used for the main route, <code>/</code>. Specifically, we’ll detect if the user is submitting a POST request. If so, we’ll retrieve the submitted URL and redirect to the confirmation page. Below, you’ll find the expanded code for the route <code>/display_url/&lt;path:url&gt;</code>:</p>
-<div id="7e580d37" class="cell" data-execution_count="10">
+<div id="2139ebce" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -723,7 +724,7 @@ Figure&nbsp;8: The request is automatically resent upon page refresh
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'home'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Therefore, our updated Python code will look as follows:</p>
-<div id="b35aaf6f" class="cell" data-execution_count="11">
+<div id="9f556114" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -804,7 +805,11 @@ Figure&nbsp;10: Unintended confirmation container visibility
 </section>
 <section id="final-code" class="level2">
 <h2 class="anchored" data-anchor-id="final-code">Final code</h2>
-<p>Here’s the finalized code implementation incorporating all the necessary adjustments.</p>
+<p>You can unfold the section below to see the code implementation incorporating all the necessary adjustments.</p>
+<details>
+<summary>
+File structure and files content
+</summary>
 <section id="final-file-structure" class="level3">
 <h3 class="anchored" data-anchor-id="final-file-structure">Final file structure</h3>
 <pre><code>- my_flask_app/            (Main folder of the application)
@@ -823,7 +828,7 @@ Figure&nbsp;10: Unintended confirmation container visibility
 </section>
 <section id="python---app.py" class="level3">
 <h3 class="anchored" data-anchor-id="python---app.py">Python - app.py</h3>
-<div id="ae2d4023" class="cell" data-execution_count="12">
+<div id="af8b88cc" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
@@ -862,7 +867,7 @@ A small change
 </div>
 <div class="callout-body-container callout-body">
 <p>Notice that in this block of code, we have added two additional lines that we hadn’t mentioned before:</p>
-<div id="ff761872" class="cell" data-execution_count="13">
+<div id="7472dbf4" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -953,8 +958,9 @@ A small change
 <span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* Adds top margin to visually separate the confirmation container from the form */</span></span>
 <span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></details>
 </section>
-</section>
+
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>In the first post of the data-driven web applications basics, we built the foundation of our web application, by starting its Home page using Flask. We implemented a simple form allowing users to submit their favorite websites, providing them with confirmation upon successful submission.</p>
@@ -1531,7 +1537,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

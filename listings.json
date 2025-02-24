@@ -2,6 +2,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2025/improving-architecture/index.html",
       "/posts/2024/intro-to-docker/index.html",
       "/posts/2024/connecting-db-app/index.html",
       "/posts/2024/intro-to-flask/index.html",

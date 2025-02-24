@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <ul class="collapse">
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
   </ul></li>
-  <li><a href="#first-step-creating-the-dockerfile" id="toc-first-step-creating-the-dockerfile" class="nav-link" data-scroll-target="#first-step-creating-the-dockerfile">First step: creating the Dockerfile</a>
+  <li><a href="#creating-a-dockerfile" id="toc-creating-a-dockerfile" class="nav-link" data-scroll-target="#creating-a-dockerfile">Creating a Dockerfile</a>
   <ul class="collapse">
   <li><a href="#from" id="toc-from" class="nav-link" data-scroll-target="#from">1. FROM</a></li>
   <li><a href="#workdir" id="toc-workdir" class="nav-link" data-scroll-target="#workdir">2. WORKDIR</a></li>
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <li><a href="#sección-CMD" id="toc-sección-CMD" class="nav-link" data-scroll-target="#sección-CMD">5. CMD</a></li>
   <li><a href="#env" id="toc-env" class="nav-link" data-scroll-target="#env">6. ENV</a></li>
   <li><a href="#expose" id="toc-expose" class="nav-link" data-scroll-target="#expose">7. EXPOSE</a></li>
-  <li><a href="#dockerfile-final" id="toc-dockerfile-final" class="nav-link" data-scroll-target="#dockerfile-final">Dockerfile Final</a></li>
+  <li><a href="#finished-dockerfile" id="toc-finished-dockerfile" class="nav-link" data-scroll-target="#finished-dockerfile">Finished Dockerfile</a></li>
   </ul></li>
   <li><a href="#building-our-container-image" id="toc-building-our-container-image" class="nav-link" data-scroll-target="#building-our-container-image"><strong>Building our container image</strong></a></li>
   <li><a href="#running-our-container" id="toc-running-our-container" class="nav-link" data-scroll-target="#running-our-container">Running our container</a></li>
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<p>In the previous posts of the data driven web applications basics, we incrementally built a first and functional version of our application: a web application that allows users to submit their favorite websites and view the most popular sites based on these submissions.</p>
+<p>In the previous posts of the data-driven web applications basics, we incrementally built a first and functional version of our application: a web application that allows users to submit their favorite websites and view the most popular sites based on these submissions.</p>
 <p>In the <a href="../../../posts/2024/intro-to-flask/">first post</a>, we focused on setting up the basic structure of our web application using Flask. This initial version of the application presented users with a one-page application containing a text input that allowed them to submit their favorite websites. However, at that stage, while we provided users with a confirmation message indicating their input had been received, we did not implement any mechanism to store the submitted data.</p>
 <p>For this reason, in the <a href="../../../posts/2024/connecting-db-app/">second post</a>, we addressed this limitation by integrating a database into our application. This upgrade allowed us to store user-submitted URLs persistently. As a result, we introduced a new page that displayed the most popular websites based on user submissions.</p>
 <p>With these updates, our application is now functional, allowing users to register their favorite websites and view a ranking of the most popular sites based on user input. At this point, we may share the application with other developers for testing and further enhancement, or even consider deployment. This raises an important question: how can we ensure the application runs consistently across different environments?</p>
@@ -301,8 +301,8 @@ Figure&nbsp;1: Docker containerization process
 <p>With this foundation in place, we can move on to the practical task of containerizing our application using Docker.</p>
 </section>
 </section>
-<section id="first-step-creating-the-dockerfile" class="level2">
-<h2 class="anchored" data-anchor-id="first-step-creating-the-dockerfile">First step: creating the Dockerfile</h2>
+<section id="creating-a-dockerfile" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-dockerfile">Creating a Dockerfile</h2>
 <p>As we have just seen, the first step step to create a container image is to generate a Dockerfile. This file contains a set of instructions that define how the container image should be built and configured. It specifies the base image to use, the software and dependencies to install, and any additional configuration required for your application.</p>
 <p>In essence, the Dockerfile serves as a blueprint for creating a container image, detailing a sequence of instructions that guide the Docker engine through the image-building process. Although there are numerous instructions available, some are fundamental to the process and are widely used in Dockerfiles. The following are among the most essential:</p>
 <ol type="1">
@@ -434,7 +434,7 @@ An alternative approach to generate requirements files
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myenv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Activating the virtual environment ensures that any packages you install or any Python commands you run use the Python interpreter and libraries from within this environment, rather than the global Python installation. This helps maintain dependencies specific to your project and prevents potential conflicts.</p>
 <p>Once the environment is activated, you should install the libraries required for the current project. You can do this using <code>pip</code>:</p>
-<div id="2b6df228" class="cell" data-execution_count="1">
+<div id="4df2d3c8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pip install somepackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -555,7 +555,7 @@ Figure&nbsp;7: Visual overview of layered container image building
 <li><p><strong><code>-p 5000</code></strong>: This parameter specifies the port number on which Flask will listen for incoming connections. Port 5000 is the default for Flask applications, but this can be adjusted if necessary. It ensures that Flask is listening on the appropriate port inside the container.</p></li>
 </ul>
 <p>Therefore, the command to run the Flask application with the required parameters will be:</p>
-<div id="4cdfa7a3" class="cell" data-execution_count="2">
+<div id="843de140" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>flask run <span class="op">-</span>h <span class="fl">0.0.0.0</span> <span class="op">-</span>p <span class="dv">5000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can execute this command every time the container is started by using the <code>CMD</code> instruction in our Dockerfile. Remember that the <code>CMD</code> instruction differs from the <code>RUN</code> instruction. The <code>RUN</code> instruction is used during the build process of the container image, whereas <code>CMD</code> specifies the command to run when the container is started.</p>
@@ -597,8 +597,8 @@ Figure&nbsp;7: Visual overview of layered container image building
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"flask"</span>, <span class="st">"run"</span>, <span class="st">"-h"</span>, <span class="st">"0.0.0.0"</span>, <span class="st">"-p"</span>, <span class="st">"5000"</span>]</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 5000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="dockerfile-final" class="level3">
-<h3 class="anchored" data-anchor-id="dockerfile-final">Dockerfile Final</h3>
+<section id="finished-dockerfile" class="level3">
+<h3 class="anchored" data-anchor-id="finished-dockerfile">Finished Dockerfile</h3>
 <p>After completing these steps, we have finalized our Dockerfile, which now defines everything needed to build a Docker image for our application. This file specifies the process for setting up the base environment, managing dependencies, and configuring the application’s runtime behavior.</p>
 <p>To quickly recap, we have specified that the Dockerfile starts with the official Python 3.12.4 base image. We then create a working directory inside the container and copy the <strong>requirements.txt</strong> file into this directory. This file specifies all the required Python libraries, which we use to install the libraries during the image build process.</p>
 <p>Next, we copy the application files into the container and set the <code>FLASK_APP</code> environment variable to specify the main file of our Flask application. We then use the <code>CMD</code> instruction to define the command that will run when the container starts and we expose port 5000 to allow external access to our Flask application.</p>
@@ -1267,7 +1267,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
