@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <p>To address these limitations, we turn to databases, which are purpose-built for efficient data management. Databases offer faster read and write operations, support concurrent access by multiple users, and ensure data integrity.</p>
 <p>Among the various types of databases, relational databases are the most common due to their intuitive data model. They use a well-defined schema organized in a tabular format with rows and columns, simplifying data organization, querying, and management. Relational databases also support the creation of multiple tables and the establishment of relationships between them. This ability to link data across tables is why they are called “relational.”</p>
 <p>Relational databases are typically accessed and manipulated using SQL (Structured Query Language), a standardized language designed specifically for interacting with relational data. As a result, relational databases are often referred to as SQL databases.</p>
-<p>To overcome the limitation of data persistence, we will enhance our Flask application by integrating a relational database to store the URLs submitted by users. This means that each time a user registers a URL, it will be saved in an SQL database, ensuring the data is preserved, as illustrated in <a href="#fig-schematic-saving-data-db" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<p>To overcome the limitation of data persistence, we will enhance our Flask application by integrating a relational database to store the URLs submitted by users. Specifically, we will use a PostgreSQL, also known as Postgres, an open-source, cross-platform, and highly scalable relational database management system designed to offer advanced features and strong performance in production environments. This means that each time a user registers a URL, it will be saved in the PostgreSQL database, ensuring the data is preserved, as illustrated in <a href="#fig-schematic-saving-data-db" class="quarto-xref">Figure&nbsp;1</a>.</p>
 <div id="fig-schematic-saving-data-db" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-schematic-saving-data-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -323,7 +323,7 @@ Figure&nbsp;3: Registering a text entry instead of a URL
 <section id="creating-a-function-to-validate-urls" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-function-to-validate-urls">Creating a function to validate URLs</h3>
 <p>To address this issue, we need to ensure that only valid URLs are registered. We can achieve this by creating a function that verifies whether the user input is a valid URL. This function will return <code>True</code> if the input is a valid URL and <code>False</code> otherwise. We could name this function <code>is_valid_url</code>, and its behavior can be summarized as follows:</p>
-<div id="2e2c0507" class="cell" data-execution_count="1">
+<div id="79854bd1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Given a value for the parameter 'url'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if it is a valid URL</span></span>
@@ -371,7 +371,7 @@ Beware: This regular expression isn’t perfect
 <p>Now that we have our regex pattern for detecting URLs, we can put it to use in Python to validate user input.</p>
 <p>To do so, we will leverage the <code>re</code> library, which handles regular expression operations in Python. First, we’ll define our pattern and then use the <code>fullmatch</code> function from the <code>re</code> library to check if the user-provided URL matches the pattern exactly. Note that <code>fullmatch</code> doesn’t return a simple boolean value; instead, it provides a <code>Match</code> object if there’s a match, or <code>None</code> if there isn’t. To convert this result into a boolean, we can use the <code>bool</code> function—<code>bool</code> will return <code>True</code> for any value other than <code>None</code>, and <code>False</code> for <code>None</code>.</p>
 <p>Using this approach, we can write our function to validate whether user input follows a correct URL format as follows:</p>
-<div id="0c3761a2" class="cell" data-execution_count="2">
+<div id="644f9121" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re  <span class="co"># We need to import the re library</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url):</span>
@@ -389,7 +389,7 @@ Best practice: Adding type hints to strengthen your Python functions
 </div>
 <div class="callout-body-container callout-body">
 <p>When creating functions, it’s advisable to specify the types of the arguments and the expected return type. For example, in this case, the parameter <code>url</code> should be a string (<code>str</code>), and the output of this function should be a boolean (<code>bool</code>). We can specify this as follows:</p>
-<div id="a7210c76" class="cell" data-execution_count="3">
+<div id="725185e0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_valid_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
@@ -405,7 +405,7 @@ Best practice: Adding type hints to strengthen your Python functions
 <h3 class="anchored" data-anchor-id="modifying-the-applications-behavior-to-validate-and-confirm-urls">Modifying the application’s behavior to validate and confirm URLs</h3>
 <p>We have now incorporated a function to check if a user’s input is a valid URL. With this in place, we can adjust the part of the code found in <em>app.py</em> responsible for rendering the page that displays the URL confirmation.</p>
 <p>To recap, here is the code we built for the main route (<code>/</code>) in the previous post:</p>
-<div id="9d2a5a00" class="cell" data-execution_count="4">
+<div id="70ba5716" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -418,7 +418,7 @@ Best practice: Adding type hints to strengthen your Python functions
 <p>For this reason, we want to enhance this code by adding a validation step to ensure that the submitted URL is valid before doing anything with it. To accomplish this, we will use the <code>is_valid_url()</code> function that we have just created.</p>
 <p>If <code>is_valid_url</code> returns <code>True</code>, it confirms that the submitted URL is valid, and we will then display a confirmation message to the user, indicating that the URL has been successfully registered. However, if <code>is_valid_url</code> returns <code>False</code>, an error message will be displayed to inform the user that the URL is invalid.</p>
 <p>To implement this, we can modify our code by adding an <code>if-else</code> statement based on the result of <code>is_valid_url(url)</code>. If the URL is valid, we will reuse the code we previously had, i.e., redirect the user to a confirmation page using <code>redirect(url_for('display_url', url=url))</code>. Conversely, if the URL is invalid, we will add a <code>return</code> statement with the following message: <code>"The URL you entered is not valid. Please check the format and try again."</code> In Flask, returning a string generates a plain HTML page containing that message. Therefore, our code would now look as displayed below:</p>
-<div id="482021bc" class="cell" data-execution_count="5">
+<div id="291aa5f7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -460,7 +460,7 @@ Figure&nbsp;4: Result of the URL validation submitted by the user
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, there is no predefined text inside the container; the full message is provided by the backend.</p>
 <p>In addition, we need to update the backend code (<em>app.py</em>) so that it not only sends the URL but also includes a message based on the URL’s validity. If the URL is valid, it should prepend the text “Has entrado la URL:” to the URL. If the URL is invalid, it should display the text “Error URL incorrecta!”:</p>
-<div id="77a004b0" class="cell" data-execution_count="6">
+<div id="ec478542" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -475,7 +475,7 @@ Figure&nbsp;4: Result of the URL validation submitted by the user
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we need to make the same updates to the <code>/display_url/&lt;path:url&gt;</code> route. This route, as you might remember, is where users are redirected to see the confirmation container after registering a URL. Since users can also register new URLs from this route, it’s important to apply these updates here as well. Below is the revised code for this route:</p>
-<div id="491206c5" class="cell" data-execution_count="7">
+<div id="4ee25296" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/display_url/&lt;path:url&gt;"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_url(url: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> url:</span>
@@ -517,7 +517,7 @@ Encapsulating code
 <p>As our codebase grows, it becomes more complex and harder to read. This often leads to repetitive code in different parts of our application. Recognizing and addressing code repetition allows us to simplify our code by consolidating repetitive logic into functions. This approach, known as encapsulation, helps us avoid duplicating code and makes our application more maintainable. Instead of copying and pasting the same code repeatedly, we can create reusable functions.</p>
 <p>For instance, the code we’ve added for both routes can be consolidated into a single function, which we might call <code>process_url</code>. This function will handle the URL processing and return the appropriate confirmation text.</p>
 <p>We can define the <code>process_url</code> function as follows:</p>
-<div id="bd7482fa" class="cell" data-execution_count="8">
+<div id="8921fb68" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        confirmation_message <span class="op">=</span> <span class="st">"You have successfully registered the following URL: "</span> <span class="op">+</span> url</span>
@@ -526,7 +526,7 @@ Encapsulating code
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>By using this function, we can simplify the code for the <code>home</code> and <code>display_url</code> routes as shown below:</p>
-<div id="d92c4428" class="cell" data-execution_count="9">
+<div id="e69f96aa" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> home():</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
@@ -561,7 +561,7 @@ Encapsulating code
 <p>Cloud databases offer excellent scalability, enabling you to easily adjust resources such as storage and computing power as your needs evolve. They also ensure high availability with built-in redundancy and failover options, and provide global access, which is ideal for distributed teams or global applications. However, cloud databases can be more expensive over time, particularly as your usage grows. They also offer less control over the database environment since the provider manages the infrastructure. Data security in the cloud depends on the provider’s security measures and compliance with relevant regulations. Proper security practices are essential regardless of where the database is hosted.</p>
 <section id="configuring-our-database-with-supabase" class="level3">
 <h3 class="anchored" data-anchor-id="configuring-our-database-with-supabase">Configuring Our Database with Supabase</h3>
-<p>For our purpose, we will use a cloud service, specifically Supabase, <a href="https://supabase.com/" class="uri">https://supabase.com/</a>, which allows us to create dedicated PostgreSQL databases and supporting a free tier. PostgreSQL, also known as Postgres, is an open-source, cross-platform, and highly scalable relational database management system designed to offer advanced features and strong performance in production environments.</p>
+<p>For our purpose, we will use a cloud service, specifically Supabase, <a href="https://supabase.com/" class="uri">https://supabase.com/</a>, which allows us to create dedicated PostgreSQL databases and supporting a free tier.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -658,7 +658,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
             |
             |- home.css    (CSS file to style the main page)</code></pre>
 <p>The content of this <strong>.env</strong> file will be as follows:</p>
-<div id="1a973f59" class="cell" data-execution_count="10">
+<div id="27047db8" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DB_USER <span class="op">=</span> <span class="st">'your_username'</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>DB_PASSWORD <span class="op">=</span> <span class="st">'your_password'</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>DB_HOST <span class="op">=</span> <span class="st">'database_host'</span></span>
@@ -669,7 +669,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 <p>Moreover, to ensure that these environment variables are properly loaded from the <code>.env</code> file, we will utilize the <code>dotenv</code> library and its <code>load_dotenv</code> function. The <code>load_dotenv</code> function reads the <code>.env</code> file and sets the environment variables in the current process.</p>
 <p>Without <code>load_dotenv</code>, the Python code may not automatically recognize or load the <code>.env</code> file, which could lead to missing or incorrect environment variable values. By explicitly calling <code>load_dotenv</code>, we make sure that these variables are available in the environment before we attempt to retrieve them with <code>os.getenv</code>.</p>
 <p>Therefore, we will make three key updates to our <strong>app.py</strong> file: (1) we will import the <code>os</code> module and the <code>load_dotenv</code> function from the <code>dotenv</code> library, (2) we will call <code>load_dotenv</code> to ensure the <code>.env</code> file is loaded properly, and (3) we will use the <code>os.getenv</code> method to retrieve the database connection parameters. These additions will look like this in Python:</p>
-<div id="764f8789" class="cell" data-execution_count="11">
+<div id="f05720c0" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the os module</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Import load_dotenv from the dotenv library</span></span>
@@ -687,7 +687,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 </div>
 <p>Now that we have the necessary values to connect to our database available within our <strong>app.py</strong> file, we can proceed with establishing the connection. To accomplish this, we’ll use the <code>psycopg</code> library, which facilitates connecting to and managing Postgres databases through Python.</p>
 <p>First, we need to import the <code>psycopg</code> library. Our next step is to create a connection to the database using the <code>connect</code> function provided by <code>psycopg</code>. This function will use the connection parameters that we have loaded from the <strong>.env</strong> file. Here’s how you can set up the connection:</p>
-<div id="540a5440" class="cell" data-execution_count="12">
+<div id="09798385" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import psycopg library</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -701,7 +701,7 @@ Figure&nbsp;10: Connection panel showcasing python connection details
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To make our code more modular and reusable, we can encapsulate this code within a function. Moreover, we can also add a try-catch statement to handle exceptions that might occur during the connection process and facilitating debugging. You can find the revised implementation below:</p>
-<div id="543b0bbf" class="cell" data-execution_count="13">
+<div id="f4b5b44b" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> connect_to_database() <span class="op">-&gt;</span> psycopg.Connection <span class="op">|</span> <span class="va">None</span>:</span>
@@ -750,7 +750,7 @@ A small note
 <li><p><strong>Close the Database Connection:</strong> Finally, once all changes have been made and saved, close the connection to the database.</p></li>
 </ol>
 <p>We can implement these steps in a function called <code>create_table</code>. The code for this function is provided below:</p>
-<div id="c4f7a1c9" class="cell" data-execution_count="14">
+<div id="b474f25b" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table() <span class="op">-&gt;</span> <span class="va">None</span>:</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Connect to the PostgreSQL database using the connect_to_database function</span></span>
@@ -802,7 +802,7 @@ Finally block
 <p>At this stage, it’s important to determine the most appropriate when and how to run our <code>create_table</code> function. This function is responsible for setting up a database table, but it’s not something that needs to be executed every time we run our Flask application. Running it repeatedly would be inefficient because the table only needs to be created once, or checked occasionally, not on every application start. To avoid unnecessary checks and improve the efficiency of our application, we can create a custom Flask command that allows us to run <code>create_table</code> only when we specifically want to.</p>
 <p>To accomplish this, Flask provides a convenient way to define custom commands using the <code>@app.cli.command</code> decorator. By attaching this decorator to a function, we can register a new command that can be executed through the Flask command-line interface (CLI). This means that instead of embedding the table creation logic directly into our application’s startup process, we can isolate it in a command that can be manually triggered whenever needed.</p>
 <p>For instance, we could define a command called <code>init-db-table</code> by using <code>@app.cli.command("init-db-table")</code> to the <code>create_table</code> function as depicted below:</p>
-<div id="e706e71d" class="cell" data-execution_count="15">
+<div id="a603c028" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.cli.command</span>(<span class="st">"init-db-table"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table() <span class="op">-&gt;</span> <span class="va">None</span>:</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
@@ -824,7 +824,7 @@ Finally block
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        conn.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can unfold the code below to see how <strong>app.py</strong> will look after these adjustments.</p>
-<div id="6f408e66" class="cell" data-execution_count="16">
+<div id="307010f6" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary><strong>app.py</strong> code after adjustments</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -974,7 +974,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <li><p>Finally, we need to confirm the changes using the <code>commit</code> method and close the connection.</p></li>
 </ol>
 <p>Therefore, the implementation of the <code>insert_url_into_database</code> function in Python will look as follows:</p>
-<div id="c2789809" class="cell" data-execution_count="17">
+<div id="17aa44e9" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert_url_into_database(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> connect_to_database()</span>
@@ -987,7 +987,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        conn.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next step is to execute this function every time a valid URL has been submitted. To achieve this, we can modify the <code>process_url</code> function, which, as you may recall, validates whether a URL is valid and generates the confirmation message to be displayed. Currently, this function looks like this:</p>
-<div id="fa4f3d16" class="cell" data-execution_count="18">
+<div id="711c15c2" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        confirmation_message <span class="op">=</span> <span class="st">"You have successfully registered the following URL: "</span> <span class="op">+</span> url</span>
@@ -996,7 +996,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All we need to do now is call our new <code>insert_url_into_database</code> function within the <code>if</code> statement. In other words, if the URL is valid, we will store it in our database. This will modify the function as follows:</p>
-<div id="92f5bce2" class="cell" data-execution_count="19">
+<div id="d51316eb" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_url(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_valid_url(url):</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        insert_url_into_database(url)</span>
@@ -1006,7 +1006,7 @@ Figure&nbsp;14: Checking the <code>registered_urls</code> table
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> confirmation_message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To view the updated <strong>app.py</strong> after these changes, unfold the code below:</p>
-<div id="61066866" class="cell" data-execution_count="20">
+<div id="4b2ee6a0" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary><strong>app.py</strong> code after adjustments</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -1141,7 +1141,7 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">count</span> <span class="kw">DESC</span> </span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Having created this query, we want to execute it through our backend to enable our application to retrieve the relevant information from the database. To accomplish this, and in line with our previous database interactions, we will create a function, which we will call <code>get_top_registered_urls()</code>. This function will connect to the database, execute the previous SQL query, and return the results. The code for this function is shown below:</p>
-<div id="b7a1ec3e" class="cell" data-execution_count="21">
+<div id="9ddba5b2" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_registered_urls() <span class="op">-&gt;</span> List[Tuple[<span class="bu">str</span>, <span class="bu">int</span>]] <span class="op">|</span> <span class="va">None</span>:</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> connect_to_database()</span>
@@ -1323,14 +1323,14 @@ Figure&nbsp;15: Verifying that the URLs registered in our application are correc
 <li><p>Render the <code>popular.html</code> page using the data obtained from <code>get_top_registered_urls</code> to populate the table.</p></li>
 </ol>
 <p>To accomplish this, we will use similar approach to what we have employed for other routes in our application. In <strong>app.py</strong>, we will define a route handler function for the <code>/popular</code> route. This function will first gather the necessary data and then render the <strong>popular.html</strong> template, incorporating the retrieved data into the page. Consequently, the code for this route handler will be as follows:</p>
-<div id="da5e77e1" class="cell" data-execution_count="22">
+<div id="fbbd6471" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/popular"</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> top_favorite_websites_page():</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    top_registered_urls <span class="op">=</span> get_top_registered_urls()</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'popular.html'</span>, top_registered_urls<span class="op">=</span>top_registered_urls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can unfold the code below to view the updated <strong>app.py</strong>:</p>
-<div id="4b62529c" class="cell" data-execution_count="23">
+<div id="c4ecdd56" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary><strong>app.py</strong> code after adjustments</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -1703,7 +1703,7 @@ Updated file structure and files content
 </section>
 <section id="python---app.py" class="level3">
 <h3 class="anchored" data-anchor-id="python---app.py">Python - app.py</h3>
-<div id="56be2998" class="cell" data-execution_count="24">
+<div id="f5423cd5" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
@@ -1827,7 +1827,7 @@ Updated file structure and files content
 </section>
 <section id="environmental-variables-file---.env" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-variables-file---.env">Environmental variables file - .env</h3>
-<div id="ebd38ac3" class="cell" data-execution_count="25">
+<div id="19c939c7" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>DB_USER <span class="op">=</span> <span class="st">'your_username'</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>DB_PASSWORD <span class="op">=</span> <span class="st">'your_password'</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>DB_HOST <span class="op">=</span> <span class="st">'database_host'</span></span>
@@ -2076,6 +2076,14 @@ Updated file structure and files content
 <span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#ddd</span><span class="op">;</span> <span class="co">/* Change table row background color on hover for better visibility */</span></span>
 <span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section></details>
+<p>Alternatively, click the download button below to get a zip file containing all the code, ready to run after extraction.</p>
+<div class="button_container">
+<form method="get" action="assets/my_flask_app.zip">
+<button type="submit" class="download_button">
+<p>Download</p>
+</button>
+</form>
+</div>
 </section>
 
 
@@ -2655,7 +2663,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

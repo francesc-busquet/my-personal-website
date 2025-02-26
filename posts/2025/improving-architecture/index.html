@@ -890,7 +890,7 @@ Using Redis pipelines in python
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Below, you can expand the code to see how <strong>celery_app.py</strong> looks up to this point.</p>
-<div id="6d38a3dd" class="cell" data-execution_count="1">
+<div id="84916c0b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary><strong>celery_app.py</strong> up to this point</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1137,7 +1137,7 @@ Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To see how all these pieces fit together, you can unfold the code below for the full <strong>celery_app.py</strong> file.</p>
-<div id="61413973" class="cell" data-execution_count="2">
+<div id="4909ceba" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>full <strong>celery_app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1339,7 +1339,7 @@ Figure&nbsp;14: Viewing the <code>top_favorite_websites</code> Key in RedisInsig
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        logging.error(<span class="ss">f"Error retrieving favorite websites from Redis: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we just need to call this function each time a user visits the <em>Top Favorite Websites</em> page, instead of calling <code>get_top_registered_urls</code> as we did before.</p>
 <p>After applying these changes, you can see how the <strong>app.py</strong> file would look by unfolding the code below.</p>
-<div id="cbfa9519" class="cell" data-execution_count="3">
+<div id="bf573c75" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>updated <strong>app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -1676,7 +1676,7 @@ In essence, Google Style docstrings contain the following section:</p>
 <h3 class="anchored" data-anchor-id="organizing-celery-code">Organizing Celery code</h3>
 <p>Next, we’ll refactor the Celery-related code. Instead of having all Celery-related logic in one file, we will distribute responsibilities across four new files in the <strong>celery_app</strong> folder:</p>
 <ul>
-<li><p><strong>celery_app.py</strong>: This file will exclusively handle Celery configuration, including setting up the Celery instance, defining the task broker, and configuring periodic tasks.</p></li>
+<li><p><strong>celery_config.py</strong>: This file will exclusively handle Celery configuration, including setting up the Celery instance, defining the task broker, and configuring periodic tasks.</p></li>
 <li><p><strong>db.py</strong>: This file will contain functions related to interacting with the PostgreSQL database.</p></li>
 <li><p><strong>redis.py</strong>: This file will manage all Redis-related interactions, such as managing the queue.</p></li>
 <li><p><strong>tasks.py</strong>: This file will be dedicated to defining the Celery tasks themselves.</p></li>
@@ -1688,7 +1688,7 @@ In essence, Google Style docstrings contain the following section:</p>
 |
 │- celery_config.py    (Celery configuration)
 |
-│- /utils
+│- utils/
 │   │
 │   │- __init__.py   
 │   │
@@ -1697,8 +1697,8 @@ In essence, Google Style docstrings contain the following section:</p>
 │   │- redis.py        (Redis utility functions)
 |
 │- tasks.py            (Celery task logic)</code></pre>
-<section id="celery-configuration-celery_app.py" class="level4">
-<h4 class="anchored" data-anchor-id="celery-configuration-celery_app.py">Celery configuration: celery_app.py</h4>
+<section id="celery-configuration-celery_config.py" class="level4">
+<h4 class="anchored" data-anchor-id="celery-configuration-celery_config.py">Celery configuration: celery_config.py</h4>
 <p>Let’s begin by creating the <strong>celery_config.py</strong> file, where we will move the Celery configuration. This file will only include the Celery app definition, the beat schedule configuration, and the necessary Celery-related imports. In order to import the celery broker details we can do so from the redis module in the shared folder we previously we created</p>
 <p>The resulting <strong>celery_config.py</strong> file will look like this:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1932,7 +1932,7 @@ In essence, Google Style docstrings contain the following section:</p>
 │ 
 │- routes.py           (Route handling and request processing)
 │ 
-│- /utils     
+│- utils/     
 │   │
 │   │- __init__.py
 │   │
@@ -1940,11 +1940,19 @@ In essence, Google Style docstrings contain the following section:</p>
 │   │
 │   │- validators.py   (URL validation functions)
 │   
-│- /services
+│- services/
 │   │
 │   │- __init__.py
 │   │
 │   │- processors.py   (Handles URL processing logic)
+│
+│- templates/    
+│   │
+│   │- (Templates files)
+│
+│- static/    
+│   │
+│   │- (Static files)
 │
 │- __init__.py</code></pre>
 <p>With this new structure in place, we can begin moving our code into these modular components.</p>
@@ -2319,24 +2327,28 @@ redis==5.2.1</code></pre>
 <div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-f</span> Dockerfile_celery_app <span class="at">-t</span> favurls_celery_app .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Once the image is built, we can run the Celery container. As with the Flask application, the Celery app needs to connect to Redis running locally, so <code>--network="host"</code> flag in order to access Redis running locally. However in this case we do not need to expose any port, so we do not need to set the -p</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--network</span><span class="op">=</span><span class="st">"host"</span> <span class="at">-e</span> REDIS_HOST=127.0.0.1 <span class="at">--name</span> favurls_celery_app_container favurls_celery_app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>With all these changes, our final file structure for our codebase will look like this:</p>
+<p>You can unfold the section below, to see how our file structure will look like after all these changes.</p>
+<details>
+<summary>
+Updated file structure
+</summary>
 <pre><code>favurls/
 |
-|-  app.py                 (Entrypoint for Flask application)
+|-  app.py                        (Entrypoint for Flask application)
 |
-|-  Dockerfile_celery_app  (Dockerfile for Celery application)
+|-  Dockerfile_celery_app         (Dockerfile for Celery application)
 |
-|-  Dockerfile_flask_app  (Dockerfile for Flask application)
+|-  Dockerfile_flask_app          (Dockerfile for Flask application)
 |
-|- shared/                 (Common utilities used by both Flask and Celery)
+|- shared/                        (Common utilities used by both Flask and Celery)
 |   │
 |   │- __init__.py
 |   |
-│   │- db.py               (PostgreSQL database connection)
+│   │- db.py                      (PostgreSQL database connection)
 |   |
-|   │- redis.py            (Redis connection)
+|   │- redis.py                   (Redis connection)
 |   |
-│   |- .env                (File to store environmental variables)
+│   |- .env                       (File to store environmental variables)
 │
 │- flask_app/
 │   │
@@ -2344,25 +2356,47 @@ redis==5.2.1</code></pre>
 │   │
 │   │- requirements.txt
 │   │
-|   │- flask_config.py     (Flask application setup and route registration)
+|   │- flask_config.py            (Flask application setup and route registration)
 |   │ 
-|   │- cli.py              (Database initialization command)
+|   │- cli.py                     (Database initialization command)
 |   │ 
-|   │- routes.py           (Route handling and request processing)
+|   │- routes.py                  (Route handling and request processing)
 |   │ 
-|   │- /utils   
+|   │- utils/   
 |   │   │
 |   │   │- __init__.py
 |   │   │
-|   │   │- redis.py        (Functions for interacting with Redis)
+|   │   │- redis.py               (Functions for interacting with Redis)
 │   │   │
-|   │   │- validators.py   (URL validation functions)
-│   
-│- /services
-│   │
-│   │- __init__.py
-│   │
-│   │- processors.py   (Handles URL processing logic)
+|   │   │- validators.py          (URL validation functions)
+|   │
+|   │- services/
+|   │   │
+|   │   │- __init__.py
+|   │   │
+|   │   │- processors.py           (Handles URL processing logic)
+|   │ 
+|   │- templates/                  (Folder to store HTML templates)
+|   │    |
+|   │    |- base_template.html     (HTML template for the base template)
+|   │    |
+|   │    |- index.html             (HTML template for the main page)
+|   │    |
+|   │    |- navbar.html            (HTML template for the navigation bar)
+|   │    |
+|   │    |- popular.html           (HTML template for the top favorite websites page)
+|   │
+|   │- static/                     (Folder to store static files such as CSS, JavaScript, images, etc.)
+|   │    |
+|   │    |- styles                 (Folder to store style sheets, such as CSS files)
+|   │    |
+|   │    |- base_template.css      (CSS file to style the base template elements)
+|   │    |
+|   │    |- home.css               (CSS file to style the main page)
+|   │    |
+|   │    |- navbar.css             (CSS file to style the navigation)
+|   │    |
+|   │    |- popular.css            (CSS file to style the top favorite websites page)
 |
 |- celery_app/
 │   │
@@ -2370,18 +2404,35 @@ redis==5.2.1</code></pre>
 │   │
 │   │- requirements.txt
 |   │ 
-|   │- celery_config.py    (Celery configuration)
+|   │- celery_config.py            (Celery configuration)
 |   │
-|   │- /utils
+|   │- utils/
 │   |   │
 │   |   │- __init__.py   
 │   |   │
-│   |   │- db.py           (PostgreSQL utility functions)
+│   |   │- db.py                   (PostgreSQL utility functions)
 │   |   │
-│   |   │- redis.py        (Redis utility functions)
+│   |   │- redis.py                (Redis utility functions)
 |   │
-|   │- tasks.py            (Celery task logic)
-|   │</code></pre>
+|   │- tasks.py                    (Celery task logic)</code></pre>
+</details>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can click button below to download the zip file containing all the refactored code, including the Dockerfiles.</p>
+<div class="button_container">
+<form method="get" action="assets/favurls.zip">
+<button type="submit" class="download_button">
+<p>Download</p>
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="summary" class="level2">
@@ -2961,7 +3012,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

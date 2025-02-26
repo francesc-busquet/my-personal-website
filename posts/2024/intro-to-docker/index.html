@@ -434,7 +434,7 @@ An alternative approach to generate requirements files
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myenv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Activating the virtual environment ensures that any packages you install or any Python commands you run use the Python interpreter and libraries from within this environment, rather than the global Python installation. This helps maintain dependencies specific to your project and prevents potential conflicts.</p>
 <p>Once the environment is activated, you should install the libraries required for the current project. You can do this using <code>pip</code>:</p>
-<div id="4df2d3c8" class="cell" data-execution_count="1">
+<div id="cd0c524a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pip install somepackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -466,7 +466,12 @@ psycopg==3.2.1</code></pre>
 <p>We now have all the necessary files to containerize our application: the application code, along with the requirements file, which specifies the the Python libraries not bundled with the base Python installation required for our application.</p>
 <p>However, before we proceed with specifying the <code>COPY</code> instructions in the Dockerfile to copy these files into the container image, it’s important to recall how Docker builds images. Docker images are constructed using a layered structure, where each instruction in the Dockerfile creates a new layer on top of the previous ones. This structure allows Docker to rebuild only the layers that have changed and any subsequent layers to these, while reusing previous layers. This optimization is intended to speed up the rebuild process.</p>
 <p>Given this, it is advantageous to separate the application files from the requirements file. The application code is likely to change frequently, leading to multiple image rebuilds. In contrast, the required libraries typically remain stable and do not change as often. By separating these components, we avoid reinstalling the libraries during each rebuild in which our code has changed, as the layer containing the libraries remains unchanged.</p>
-<p>To achieve this, we will first make a slight adjustment to our file structure. Specifically, we will move the application files into a folder named <strong>src</strong>, while leaving the Dockerfile and the requirements file outside of this folder. This separation helps us to clearly differentiate between the application code and the files used for containerization. The updated file structure will look as follows:</p>
+<p>To achieve this, we will first make a slight adjustment to our file structure. Specifically, we will move the application files into a folder named <strong>src</strong>, while leaving the Dockerfile and the requirements file outside of this folder. This separation helps us to clearly differentiate between the application code and the files used for containerization.</p>
+<p>You can unfold the section below, to see how our file structure will look like after all these changes.</p>
+<details>
+<summary>
+Updated file structure
+</summary>
 <pre><code>- my_flask_app/                        (Main folder of the application)
     |
     |- Dockerfile                      (File specifying how to build the Docker image for our application)
@@ -500,6 +505,7 @@ psycopg==3.2.1</code></pre>
                 |- navbar.css          (CSS file to style the navigation)
                 |
                 |- popular.css         (CSS file to style the top favorite websites page)</code></pre>
+</details>
 <p>With our file structure adjusted, we can proceed to copy these files into the container.</p>
 <p>To achieve this, we use the <code>COPY</code> instruction in the Dockerfile. This instruction allows us to specify the source path and filename relative to the Dockerfile’s location, as well as the destination path within the container. In our setup, we will copy the <strong>requirements.txt</strong> file and the <strong>src</strong> directory into the <code>/app</code> directory inside the container, which serves as our working directory. As a result, our Dockerfile will look like this:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> python:3.12.4</span>
@@ -555,7 +561,7 @@ Figure&nbsp;7: Visual overview of layered container image building
 <li><p><strong><code>-p 5000</code></strong>: This parameter specifies the port number on which Flask will listen for incoming connections. Port 5000 is the default for Flask applications, but this can be adjusted if necessary. It ensures that Flask is listening on the appropriate port inside the container.</p></li>
 </ul>
 <p>Therefore, the command to run the Flask application with the required parameters will be:</p>
-<div id="843de140" class="cell" data-execution_count="2">
+<div id="07bcd6f9" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>flask run <span class="op">-</span>h <span class="fl">0.0.0.0</span> <span class="op">-</span>p <span class="dv">5000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can execute this command every time the container is started by using the <code>CMD</code> instruction in our Dockerfile. Remember that the <code>CMD</code> instruction differs from the <code>RUN</code> instruction. The <code>RUN</code> instruction is used during the build process of the container image, whereas <code>CMD</code> specifies the command to run when the container is started.</p>
@@ -624,6 +630,23 @@ Figure&nbsp;7: Visual overview of layered container image building
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Expose port 5000 for external access</span></span>
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 5000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can click button below to download the zip file containing all the code, ready for containerization.</p>
+<div class="button_container">
+<form method="get" action="assets/my_flask_app.zip">
+<button type="submit" class="download_button">
+<p>Download</p>
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="building-our-container-image" class="level2">
@@ -1267,7 +1290,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
