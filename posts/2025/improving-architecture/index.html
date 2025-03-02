@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-6c7e3f1c34892e0a9bdcbd024bcdb2c6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-f94391c9484f03829d123dd1c092557f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<p>In the previous posts of our series on building data-driven web applications, we developed a web application that allows users to submit their favorite websites and view a ranking of the most popular sites based on those submissions. We began by setting up the basic structure of the app using Flask, a lightweight web framework, and then integrated a PostgreSQL database to store user submissions, ensuring data persistence. Next, to leverage the stored data, we created a new page, the <em>Top Favorite Websites</em> page, where users could view the most popular websites based on the number of submissions. Finally, we containerized the application using Docker to streamline deployment across different environments and facilitate scalability.</p>
+<p>In the previous posts of our series on building data-driven web applications, we developed a web application that allows users to submit their favorite websites and view a ranking of the most popular sites based on those submissions. We began by setting up the basic structure of the app using Flask, a lightweight web framework, and then integrated a PostgreSQL database to store user submissions, ensuring data persistence. Next, to leverage the stored data, we created a new page, the <em>Top Favorite Websites</em> page, where users could view the most popular websites based on the number of submissions. Finally, we contaibnerized the application using Docker to streamline deployment across different environments and facilitate scalability.</p>
 <p>Now that the app is fully functional, we may start to think about deploying it for real-world usage. However, before moving forward, we need to evaluate whether there are any potential bottlenecks or areas of the application that might cause issues under real-world conditions. To do so, let’s take a moment to refresh our memory on how our application operates by reviewing what each page of the application does.</p>
 <p>The <strong>Home page</strong> serves as the data submission component of the application. Here, users interact with the system by submitting their favorite website URLs. The page contains a simple form where users can input the URL of a website they want to submit. Upon entering a URL and clicking the <em>Register URL</em> button, the backend performs input validation to ensure that the submitted URL is properly formatted and valid. This step is crucial to prevent invalid data from being stored in the database. If the validation is successful, the URL is then stored in a PostgreSQL database. Once the URL has been successfully added to the database, the user receives a confirmation message indicating that their submission was successful.</p>
 <p>In contrast, the <strong>Top Favorite Websites</strong> page serves as the data presentation component of the application. This page provides a user-friendly interface where users can view the ten most popular websites based on the submissions from the Home page. When a user accesses this page, the backend queries the database to count how many times each website has been submitted. These counts are then sorted in descending order, with the most frequently submitted websites appearing at the top of the list. The data is dynamically processed and used to render a table on the page, displaying the ten most popular websites.</p>
@@ -890,7 +890,7 @@ Using Redis pipelines in python
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Below, you can expand the code to see how <strong>celery_app.py</strong> looks up to this point.</p>
-<div id="84916c0b" class="cell" data-execution_count="1">
+<div id="726bcd90" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary><strong>celery_app.py</strong> up to this point</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1137,7 +1137,7 @@ Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To see how all these pieces fit together, you can unfold the code below for the full <strong>celery_app.py</strong> file.</p>
-<div id="4909ceba" class="cell" data-execution_count="2">
+<div id="fbc78a5d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>full <strong>celery_app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1339,7 +1339,7 @@ Figure&nbsp;14: Viewing the <code>top_favorite_websites</code> Key in RedisInsig
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        logging.error(<span class="ss">f"Error retrieving favorite websites from Redis: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we just need to call this function each time a user visits the <em>Top Favorite Websites</em> page, instead of calling <code>get_top_registered_urls</code> as we did before.</p>
 <p>After applying these changes, you can see how the <strong>app.py</strong> file would look by unfolding the code below.</p>
-<div id="bf573c75" class="cell" data-execution_count="3">
+<div id="2d277f12" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>updated <strong>app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -2422,7 +2422,7 @@ Updated file structure
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You can click button below to download the zip file containing all the refactored code, including the Dockerfiles.</p>
+<p>You can click the button below to download the zip file containing all the refactored code, including the Dockerfiles.</p>
 <div class="button_container">
 <form method="get" action="assets/favurls.zip">
 <button type="submit" class="download_button">
@@ -2673,8 +2673,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -2785,7 +2783,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -3012,7 +3009,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
