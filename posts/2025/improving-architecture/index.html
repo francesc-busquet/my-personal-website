@@ -75,8 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-6c7e3f1c34892e0a9bdcbd024bcdb2c6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-f94391c9484f03829d123dd1c092557f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-3f088a02403e8683932b2950233dc0ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-10c0546d0492140bb12ac896f38eb2f8.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -265,19 +265,10 @@ document.addEventListener('DOMContentLoaded', function () {
 <p>The <strong>Home page</strong> serves as the data submission component of the application. Here, users interact with the system by submitting their favorite website URLs. The page contains a simple form where users can input the URL of a website they want to submit. Upon entering a URL and clicking the <em>Register URL</em> button, the backend performs input validation to ensure that the submitted URL is properly formatted and valid. This step is crucial to prevent invalid data from being stored in the database. If the validation is successful, the URL is then stored in a PostgreSQL database. Once the URL has been successfully added to the database, the user receives a confirmation message indicating that their submission was successful.</p>
 <p>In contrast, the <strong>Top Favorite Websites</strong> page serves as the data presentation component of the application. This page provides a user-friendly interface where users can view the ten most popular websites based on the submissions from the Home page. When a user accesses this page, the backend queries the database to count how many times each website has been submitted. These counts are then sorted in descending order, with the most frequently submitted websites appearing at the top of the list. The data is dynamically processed and used to render a table on the page, displaying the ten most popular websites.</p>
 <p>All this information is graphically summarized in <a href="#fig-conceptual-interaction-data-flow-diagram" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="fig-conceptual-interaction-data-flow-diagram" class="quarto-layout-panel">
+<div id="fig-conceptual-interaction-data-flow-diagram" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-conceptual-interaction-data-flow-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/overview-app-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Application interaction and data flow diagram"><img src="assets/overview-app-dark-mode.png" class="dark-figure img-fluid figure-img"></a></p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/overview-app.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;1: Application interaction and data flow diagram"><img src="assets/overview-app.png" class="light-figure img-fluid figure-img"></a></p>
-</div>
-</div>
+<a href="assets/overview-app.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Application interaction and data flow diagram"><img src="assets/overview-app.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conceptual-interaction-data-flow-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Application interaction and data flow diagram
@@ -294,19 +285,10 @@ Figure&nbsp;1: Application interaction and data flow diagram
 <p>A potential solution to this issue is to group multiple submissions into a single insert operation. Rather than processing each submission individually, submissions can be aggregated and inserted in one batch. For instance, instead of executing ten separate insert commands for ten submissions, the system could combine these into a single operation that inserts all ten URLs simultaneously. This reduces the number of database writes, alleviating system load and enhancing performance during high-traffic periods. This method of consolidating tasks or operations to process them collectively is known as batching.</p>
 <p>To implement batching effectively, we can introduce a queue—a data structure that temporarily holds and organizes incoming submissions—to manage the process. When users submit URLs, these submissions are stored in the queue, which accumulates them over a short time interval or until a predefined threshold is met. Once the batch is ready, the system processes all submissions in a single insert operation.</p>
 <p>To better illustrate this, let’s consider an example, Over a short period, three users submit URLs: User 1 submits <em>www.google.com</em> as one of their favorite websites, User 2 also submits <em>www.google.com</em>, and User 3 submits <em>www.facebook.com</em>. These URLs are stored in the queue as they arrive. After some time, once the system determines that enough submissions have accumulated or the predefined time interval has passed, it checks the queue and processes the entire batch. All the URLs are then inserted into the database in a single insert operation, reducing overhead and improving efficiency. This example is schematically represented in <a href="#fig-schematic-example-batching-with-queue" class="quarto-xref">Figure&nbsp;2</a>.</p>
-<div id="fig-schematic-example-batching-with-queue" class="quarto-layout-panel">
+<div id="fig-schematic-example-batching-with-queue" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-schematic-example-batching-with-queue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/batching-schematic-representation-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: Schematic example of URLs submission batching process"><img src="assets/batching-schematic-representation-dark-mode.png" class="dark-figure img-fluid figure-img"></a></p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/batching-schematic-representation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;2: Schematic example of URLs submission batching process"><img src="assets/batching-schematic-representation.png" class="light-figure img-fluid figure-img"></a></p>
-</div>
-</div>
+<a href="assets/batching-schematic-representation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Schematic example of URLs submission batching process"><img src="assets/batching-schematic-representation.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schematic-example-batching-with-queue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Schematic example of URLs submission batching process
@@ -370,19 +352,10 @@ Celery in a nutshell
 </div>
 </div>
 <p><a href="#fig-updated-home-page-interaction-diagram" class="quarto-xref">Figure&nbsp;4</a> visually illustrates the updated architecture when submitting URLs on the Home page. Whenever a user submits a URL, such as www.google.com, it’s added to the Redis queue. Every 5 minutes, a Celery worker processes the queue and inserts all the URLs in a batch to the PostgreSQL database.</p>
-<div id="fig-updated-home-page-interaction-diagram" class="quarto-layout-panel">
+<div id="fig-updated-home-page-interaction-diagram" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-updated-home-page-interaction-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/improving-app-with-batching-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;4: Home page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-batching-dark-mode.png" class="dark-figure img-fluid figure-img"></a></p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/improving-app-with-batching.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;4: Home page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-batching.png" class="light-figure img-fluid figure-img"></a></p>
-</div>
-</div>
+<a href="assets/improving-app-with-batching.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;4: Home page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-batching.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-updated-home-page-interaction-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: <em>Home</em> page interaction and data flow diagram with Redis and Celery integration
@@ -409,19 +382,10 @@ Figure&nbsp;4: <em>Home</em> page interaction and data flow diagram with Redis a
 <p>Once the cache is in place, we’ll modify the backend to fetch the precomputed data directly from Redis instead of querying the PostgreSQL database every time a user visits the <em>Top Favorite Websites</em> page.</p>
 <p><a href="#fig-updated-top-favorite-page-interaction-diagram" class="quarto-xref">Figure&nbsp;5</a> visually illustrates the updated architecture for displaying the <em>Top Favorite Websites</em> page. When a user visits this page, the backend fetches a precomputed table of popular URLs directly from Redis.</p>
 <p>In the background, a Celery worker runs every 30 minutes. It connects to the PostgreSQL database, extracts the top 10 most popular URLs, and updates the cached table in Redis.</p>
-<div id="fig-updated-top-favorite-page-interaction-diagram" class="quarto-layout-panel">
+<div id="fig-updated-top-favorite-page-interaction-diagram" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-updated-top-favorite-page-interaction-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/improving-app-with-caching-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;5: Top Favorite Websites page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-caching-dark-mode.png" class="dark-figure img-fluid figure-img"></a></p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/improving-app-with-caching.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;5: Top Favorite Websites page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-caching.png" class="light-figure img-fluid figure-img"></a></p>
-</div>
-</div>
+<a href="assets/improving-app-with-caching.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;5: Top Favorite Websites page interaction and data flow diagram with Redis and Celery integration"><img src="assets/improving-app-with-caching.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-updated-top-favorite-page-interaction-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: <em>Top Favorite Websites</em> page interaction and data flow diagram with Redis and Celery integration
@@ -437,19 +401,10 @@ Figure&nbsp;5: <em>Top Favorite Websites</em> page interaction and data flow dia
 <p>For the <em>Home</em> page, URL submissions are no longer written directly to the database. Instead, they are added to a Redis queue, decoupling user interactions from immediate database operations. A Celery worker processes the queue every five minutes, batching submissions into a single bulk insert to PostgreSQL. This reduces the frequency of database writes, ensuring smooth performance even under heavy traffic.</p>
 <p>The <em>Top Favorite Websites</em> page has been similarly optimized. Instead of querying the database for every user request, the backend now retrieves precomputed results from a Redis cache. These results, representing the top ten most submitted URLs, are updated every thirty minutes by a Celery worker that queries PostgreSQL, calculates the top URLs, and refreshes the cache. This eliminates redundant queries and ensures faster response times.</p>
 <p>These enhancements are visually summarized in <a href="#fig-updated-interaction-data-flow-diagram" class="quarto-xref">Figure&nbsp;6</a>, highlighting how user interactions with the two pages are now handled. This is a significant improvement over the previous architecture, depicted in <a href="#fig-conceptual-interaction-data-flow-diagram" class="quarto-xref">Figure&nbsp;1</a>, where user interactions directly accessed the PostgreSQL database, leading to performance bottlenecks during peak usage.</p>
-<div id="fig-updated-interaction-data-flow-diagram" class="quarto-layout-panel">
+<div id="fig-updated-interaction-data-flow-diagram" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-updated-interaction-data-flow-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/updated-overview-app-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;6: Application interaction and data flow diagram with Redis and Celery integration"><img src="assets/updated-overview-app-dark-mode.png" class="dark-figure img-fluid figure-img"></a></p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p><a href="assets/updated-overview-app.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;6: Application interaction and data flow diagram with Redis and Celery integration"><img src="assets/updated-overview-app.png" class="light-figure img-fluid figure-img"></a></p>
-</div>
-</div>
+<a href="assets/updated-overview-app-dark-mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;6: Application interaction and data flow diagram with Redis and Celery integration"><img src="assets/updated-overview-app-dark-mode.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-updated-interaction-data-flow-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Application interaction and data flow diagram with Redis and Celery integration
@@ -520,7 +475,7 @@ Managing Docker containers
 <div id="fig-output-docker-ps-a" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-output-docker-ps-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="assets/docker containers info.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;8: docker ps -a output"><img src="assets/docker containers info.png" class="img-fluid figure-img"></a>
+<a href="assets/docker containers info.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;8: docker ps -a output"><img src="assets/docker containers info.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-output-docker-ps-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: <code>docker ps -a</code> output
@@ -890,7 +845,7 @@ Using Redis pipelines in python
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Below, you can expand the code to see how <strong>celery_app.py</strong> looks up to this point.</p>
-<div id="726bcd90" class="cell" data-execution_count="1">
+<div id="9dcd2345" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary><strong>celery_app.py</strong> up to this point</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1036,7 +991,7 @@ Figure&nbsp;12: Starting Celery worker and scheduler for task execution
 <div id="fig-dequeue-task-changes-redis-and-db" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dequeue-task-changes-redis-and-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="assets/worker-running-dequeue.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL"><img src="assets/worker-running-dequeue.gif" class="img-fluid figure-img"></a>
+<a href="assets/worker-running-dequeue.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL"><img src="assets/worker-running-dequeue.gif" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dequeue-task-changes-redis-and-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL
@@ -1137,7 +1092,7 @@ Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To see how all these pieces fit together, you can unfold the code below for the full <strong>celery_app.py</strong> file.</p>
-<div id="fbc78a5d" class="cell" data-execution_count="2">
+<div id="9a2ad864" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>full <strong>celery_app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1339,7 +1294,7 @@ Figure&nbsp;14: Viewing the <code>top_favorite_websites</code> Key in RedisInsig
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        logging.error(<span class="ss">f"Error retrieving favorite websites from Redis: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we just need to call this function each time a user visits the <em>Top Favorite Websites</em> page, instead of calling <code>get_top_registered_urls</code> as we did before.</p>
 <p>After applying these changes, you can see how the <strong>app.py</strong> file would look by unfolding the code below.</p>
-<div id="2d277f12" class="cell" data-execution_count="3">
+<div id="aa6533b6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>updated <strong>app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
@@ -3009,6 +2964,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script type="application/javascript" src="dark-light-images.js"></script>
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
