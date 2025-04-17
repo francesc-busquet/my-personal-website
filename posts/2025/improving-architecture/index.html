@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap-3f088a02403e8683932b2950233dc0ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-10c0546d0492140bb12ac896f38eb2f8.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-5f9e92661aa335a3961823f7e9ad616e.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -845,7 +845,7 @@ Using Redis pipelines in python
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Below, you can expand the code to see how <strong>celery_app.py</strong> looks up to this point.</p>
-<div id="9dcd2345" class="cell" data-execution_count="1">
+<div id="06aed29b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary><strong>celery_app.py</strong> up to this point</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1092,7 +1092,7 @@ Figure&nbsp;13: Watching Redis Queue Empty as URLs Are Moved to PostgreSQL
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    },</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To see how all these pieces fit together, you can unfold the code below for the full <strong>celery_app.py</strong> file.</p>
-<div id="9a2ad864" class="cell" data-execution_count="2">
+<div id="0901f50b" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>full <strong>celery_app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> celery <span class="im">import</span> Celery</span>
@@ -1294,7 +1294,7 @@ Figure&nbsp;14: Viewing the <code>top_favorite_websites</code> Key in RedisInsig
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        logging.error(<span class="ss">f"Error retrieving favorite websites from Redis: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we just need to call this function each time a user visits the <em>Top Favorite Websites</em> page, instead of calling <code>get_top_registered_urls</code> as we did before.</p>
 <p>After applying these changes, you can see how the <strong>app.py</strong> file would look by unfolding the code below.</p>
-<div id="aa6533b6" class="cell" data-execution_count="3">
+<div id="9e8ea98c" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>updated <strong>app.py</strong></summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, render_template, redirect, url_for</span>
